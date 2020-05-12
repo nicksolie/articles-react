@@ -6,7 +6,6 @@ import apiUrl from '../../apiConfig'
 import Layout from '../Shared/Layout'
 
 const ShowCollection = (props) => {
-  console.log('props are', props)
   const [collection, setCollection] = useState(null)
   const [deleted, setDeleted] = useState(false)
 

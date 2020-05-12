@@ -17,6 +17,7 @@ import CreateCollection from '../Routes/CreateCollection'
 import ShowCollection from '../Routes/ShowCollection'
 import IndexCollections from '../Routes/IndexCollections'
 import Welcome from '../Routes/Welcome/Welcome'
+import EditCollection from '../Routes/EditCollection'
 
 class App extends Component {
   constructor () {
@@ -81,6 +82,9 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} exact path='/collections/:id' render={({ match }) => (
             <ShowCollection user={user} match={match} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/collections/:id/edit' render={({ match }) => (
+            <EditCollection user={user} match={match} />
           )} />
         </main>
       </Fragment>

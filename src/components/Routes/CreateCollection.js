@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 
-// import CollectionForm from '../Shared/CollectionForm'
-// import Layout from '../Shared/Layout'
+import CollectionForm from '../Shared/CollectionForm'
+import Layout from '../Shared/Layout'
 
 const CreateCollection = (props, cancelPath) => {
   const [collection, setCollection] = useState({
@@ -38,42 +38,41 @@ const CreateCollection = (props, cancelPath) => {
   if (createdCollectionId) {
     return <Redirect to={`/collections/${createdCollectionId}`} />
   }
-  console.log(props)
-  console.log(collection)
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>Name</label>
-        <input
-          placeholder="Collection Name"
-          value={collection.name}
-          name="name"
-          onChange={handleChange}
-        />
-
-        <label>Description</label>
-        <input
-          placeholder="Description"
-          value={collection.description}
-          name="description"
-          onChange={handleChange}
-        />
-
-        <button type="submit">Submit</button>
-        <Link to={cancelPath}>
-          <button>Cancel</button>
-        </Link>
-      </form>
-    </div>
+    <Layout>
+      <CollectionForm
+        collection={collection}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        cancelPath='/'
+      />
+    </Layout>
   )
 }
-// <Layout>
-//   <CollectionForm
-//     collection={collection}
-//     handleChange={handleChange}
-//     handleSubmit={handleSubmit}
-//     cancelPath='/'
-//   />
-// </Layout>
+//
+// <div>
+//   <form onSubmit={handleSubmit}>
+//     <label>Name</label>
+//     <input
+//       placeholder="Collection Name"
+//       value={collection.name}
+//       name="name"
+//       onChange={handleChange}
+//     />
+//
+//     <label>Description</label>
+//     <input
+//       placeholder="Description"
+//       value={collection.description}
+//       name="description"
+//       onChange={handleChange}
+//     />
+//
+//     <button type="submit">Submit</button>
+//     <Link to={cancelPath}>
+//       <button>Cancel</button>
+//     </Link>
+//   </form>
+// </div>
 
 export default CreateCollection
