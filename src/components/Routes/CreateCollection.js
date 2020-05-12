@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-// import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
-import { Link } from 'react-router-dom'
 
 // import CollectionForm from '../Shared/CollectionForm'
 // import Layout from '../Shared/Layout'
@@ -11,11 +10,12 @@ const CreateCollection = (props, cancelPath) => {
   console.log(props)
   const [collection, setCollection] = useState({
     name: '',
-    description: ''
+    description: '',
+    user_id: props.user.id
   })
 
-  // const [createdCollectionId, setCreatedCollectionId] = useState(null)
-  const [setCreatedCollectionId] = useState(null)
+  const [createdCollectionId, setCreatedCollectionId] = useState(null)
+  // const [setCreatedCollectionId] = useState(null)
 
   const handleChange = event => {
     event.persist()
@@ -25,7 +25,7 @@ const CreateCollection = (props, cancelPath) => {
   const handleSubmit = event => {
     event.preventDefault()
     axios({
-      url: apiUrl + '/collecctions',
+      url: apiUrl + '/collections',
       method: 'POST',
       headers: {
         'Authorization': `Token token=${props.user.token}`
@@ -36,9 +36,9 @@ const CreateCollection = (props, cancelPath) => {
       .catch(console.error)
   }
 
-  // if (createdCollectionId) {
-  //   return <Redirect to={'/collections'} />
-  // }
+  if (createdCollectionId) {
+    return <Redirect to={`/collections/${createdCollectionId}`} />
+  }
   return (
     <div>
       <form onSubmit={handleSubmit}>
