@@ -7,7 +7,6 @@ import apiUrl from '../../apiConfig'
 // import Layout from '../Shared/Layout'
 
 const CreateCollection = (props, cancelPath) => {
-  console.log(props)
   const [collection, setCollection] = useState({
     name: '',
     description: '',
@@ -39,6 +38,8 @@ const CreateCollection = (props, cancelPath) => {
   if (createdCollectionId) {
     return <Redirect to={`/collections/${createdCollectionId}`} />
   }
+  console.log(props)
+  console.log(collection)
   return (
     <div>
       <form onSubmit={handleSubmit}>

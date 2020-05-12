@@ -4,20 +4,19 @@ import { Route, withRouter } from 'react-router-dom'
 // Template imports
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
+import Header from '../Shared/Header'
 
-// Auth
+// Auth imports
 import SignUp from '../Routes/Auth/SignUp'
 import SignIn from '../Routes/Auth/SignIn'
 import SignOut from '../Routes/Auth/SignOut'
 import ChangePassword from '../Routes/Auth/ChangePassword'
+
+// Collection imports
 import CreateCollection from '../Routes/CreateCollection'
-
-import Header from '../Shared/Header'
-// import Welcome from '../Routes/Welcome/Welcome'
-
-// <Route path='/' render={() => (
-//   <Welcome />
-// )} />
+import ShowCollection from '../Routes/ShowCollection'
+import IndexCollections from '../Routes/IndexCollections'
+import Welcome from '../Routes/Welcome/Welcome'
 
 class App extends Component {
   constructor () {
@@ -52,7 +51,10 @@ class App extends Component {
           />
         ))}
         <main className="container">
-          {/* Unauthenticated routes */}
+          {/* Unauthenticated auth routes */}
+          <Route exact path='/' render={() => (
+            <Welcome />
+          )} />
           <Route path='/sign-up' render={() => (
             <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />
@@ -60,15 +62,25 @@ class App extends Component {
             <SignIn msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />
 
-          {/* Authenticated routes */}
+          {/* Authenticated auth routes */}
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
-          <AuthenticatedRoute user={user} path='/collections' render={() => (
+
+          {/* Unauthenticated collection routes */}
+          <Route exact path='/collections' render={() => (
+            <IndexCollections msgAlert={this.msgAlert} />
+          )} />
+
+          {/* Authenticated collection routes */}
+          <AuthenticatedRoute user={user} exact path='/collections-create' render={() => (
             <CreateCollection user={user} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/collections/:id' render={({ match }) => (
+            <ShowCollection user={user} match={match} />
           )} />
         </main>
       </Fragment>
