@@ -19,6 +19,12 @@ import IndexCollections from '../Routes/IndexCollections'
 import Welcome from '../Routes/Welcome/Welcome'
 import EditCollection from '../Routes/EditCollection'
 
+// Entry imports
+import CreateEntry from '../Routes/CreateEntry'
+import IndexEntries from '../Routes/IndexEntries'
+import ShowEntry from '../Routes/ShowEntry'
+import EditEntry from '../Routes/EditEntry'
+
 class App extends Component {
   constructor () {
     super()
@@ -85,6 +91,20 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} exact path='/collections/:id/edit' render={({ match }) => (
             <EditCollection user={user} match={match} />
+          )} />
+
+          {/* Authenticated entry routes */}
+          <AuthenticatedRoute user={user} exact path='/create-entry/:id' render={({ match }) => (
+            <CreateEntry user={user} match={match} collectionId={match.params.id} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/entries' render={({ match }) => (
+            <IndexEntries user={user} match={match} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/entries/:id' render={({ match }) => (
+            <ShowEntry user={user} match={match} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/entries/:id/edit' render={({ match }) => (
+            <EditEntry user={user} match={match} />
           )} />
         </main>
       </Fragment>

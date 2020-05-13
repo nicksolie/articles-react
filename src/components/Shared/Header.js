@@ -6,6 +6,7 @@ const authenticatedOptions = (
   <Fragment>
     <Nav.Link href="#collections-create">Create a Collection</Nav.Link>
     <Nav.Link href="#collections">Collections</Nav.Link>
+    <Nav.Link href="#entries">Entries</Nav.Link>
     <Nav.Link href="#sign-out">Sign Out</Nav.Link>
     <Nav.Link href="#change-password">Change Password</Nav.Link>
   </Fragment>

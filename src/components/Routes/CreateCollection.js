@@ -49,30 +49,5 @@ const CreateCollection = (props, cancelPath) => {
     </Layout>
   )
 }
-//
-// <div>
-//   <form onSubmit={handleSubmit}>
-//     <label>Name</label>
-//     <input
-//       placeholder="Collection Name"
-//       value={collection.name}
-//       name="name"
-//       onChange={handleChange}
-//     />
-//
-//     <label>Description</label>
-//     <input
-//       placeholder="Description"
-//       value={collection.description}
-//       name="description"
-//       onChange={handleChange}
-//     />
-//
-//     <button type="submit">Submit</button>
-//     <Link to={cancelPath}>
-//       <button>Cancel</button>
-//     </Link>
-//   </form>
-// </div>
 
 export default CreateCollection

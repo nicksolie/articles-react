@@ -23,14 +23,10 @@ const IndexCollections = (props) => {
 
   return (
     <div>
+      <h1>Collections</h1>
       { collectionsJsx }
     </div>
   )
-  // const mappedCollections = collections.map(collection => (
-  //   <li key={collection.id}>
-  //     <Link to={`/collections/${collection.id}`}>{collection.name}</Link>
-  //   </li>
-  // ))
 }
 
 export default IndexCollections

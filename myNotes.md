@@ -10,6 +10,7 @@ OpenSearch documentation
 https://github.com/dewitt/opensearch/blob/master/opensearch-1-1-draft-6.md
 
 
+https://chroniclingamerica.loc.gov/lccn/sn83030483/1789-04-15/ed-1/seq-1/
 
 
 ## stretch goals

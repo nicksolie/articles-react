@@ -32,9 +32,15 @@ const ShowCollection = (props) => {
 
   if (deleted) {
     return <Redirect to={
-      { pathname: '/', state: { msg: 'collection succesfully deleted!' } }
+      { pathname: '/collections', state: { msg: 'collection succesfully deleted!' } }
     } />
   }
+
+  console.log('ShowCollection props are:', props)
+  console.log('collection:', collection)
+  const entriesJsx = collection.entries.map(entry => (
+    <p key={entry.id}>{entry.title}</p>
+  ))
 
   return (
     <Layout>
@@ -44,9 +50,19 @@ const ShowCollection = (props) => {
       <Link to={`/collections/${props.match.params.id}/edit`}>
         <button>Edit</button>
       </Link>
-      <Link to="/collections">Back to all Collections</Link>
+      <Link to="/collections">
+        <button>Back to all Collections</button>
+      </Link>
+      <Link to={`/create-entry/${props.match.params.id}`} >
+        <button>Create an Entry</button>
+      </Link>
+      <h4>Entries: {entriesJsx}</h4>
     </Layout>
   )
 }
+
+// create a form for an entry
+// axios call for entry where collection id is linked
+// display entries inside of ShowCollection
 
 export default ShowCollection
