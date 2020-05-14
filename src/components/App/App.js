@@ -25,6 +25,9 @@ import IndexEntries from '../Routes/IndexEntries'
 import ShowEntry from '../Routes/ShowEntry'
 import EditEntry from '../Routes/EditEntry'
 
+// Search imports
+import Search from '../Routes/Search'
+
 class App extends Component {
   constructor () {
     super()
@@ -105,6 +108,10 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} exact path='/entries/:id/edit' render={({ match }) => (
             <EditEntry user={user} match={match} />
+          )} />
+
+          <Route path='/search' render={() => (
+            <Search msgAlert={this.msgAlert} />
           )} />
         </main>
       </Fragment>

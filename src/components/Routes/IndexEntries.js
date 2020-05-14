@@ -5,7 +5,6 @@ import apiUrl from '../../apiConfig'
 
 const IndexEntries = (props) => {
   const [entries, setEntries] = useState([])
-  console.log(entries)
 
   useEffect(() => {
     axios(`${apiUrl}/entries`)
