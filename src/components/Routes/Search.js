@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+// import React, { useState } from 'react'
+// import React, { useEffect } from 'react'
 import axios from 'axios'
 
 const Search = () => {
@@ -6,23 +8,29 @@ const Search = () => {
   // const [search] = useState([])
 
   useEffect(() => {
-    axios('https://chroniclingamerica.loc.gov/lccn/sn86069873/1897-01-08/ed-1/seq-1.json')
-      .then(res => setSearch(res.data.pdf))
+    axios('https://chroniclingamerica.loc.gov/lccn/sn86069873/1897-01-08/ed-1.json')
+      .then(response => response.data.pages)
+      .then(pages => setSearch(pages))
+      // .then(data => console.log(data))
       .catch(console.error)
   }, [])
-  console.log(search)
-  // const searchJsx = search.pdf.map(search => (
-  //   <p key={search.id}><embed src={search} /></p>
-  // ))
 
-  // const searchJsx = ${search}
+  const searchJsx = search.map(result => (
+    <li key={result.sequence}>
+      <p>{result.url}</p>
+    </li>
+  ))
+  // console.log(search)
 
   return (
     <div>
       <h1>Search</h1>
-      <p><embed src={search} type="application/pdf" height="400px" width="400px" /></p>
+      {searchJsx}
     </div>
   )
 }
+
+// Format
+// <p><embed src={search} type="application/pdf" height="600px" width="600px" /></p>
 
 export default Search

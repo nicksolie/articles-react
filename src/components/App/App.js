@@ -98,7 +98,7 @@ class App extends Component {
 
           {/* Authenticated entry routes */}
           <AuthenticatedRoute user={user} exact path='/create-entry/:id' render={({ match }) => (
-            <CreateEntry user={user} match={match} collectionId={match.params.id} />
+            <CreateEntry user={user} match={match} />
           )} />
           <AuthenticatedRoute user={user} exact path='/entries' render={({ match }) => (
             <IndexEntries user={user} match={match} />
