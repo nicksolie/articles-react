@@ -40,7 +40,10 @@ const ShowEntry = (props) => {
   return (
     <Layout>
       <h4>{entry.name}</h4>
-      <p>Date relased: {entry.description}</p>
+      <p>Title: {entry.title}</p>
+      <p>Description: {entry.description}</p>
+      <p>Date: {entry.date}</p>
+      <p>Url: {entry.url}</p>
       <button onClick={destroy}>Delete Entry</button>
       <Link to={`/entries/${props.match.params.id}/edit`}>
         <button>Edit</button>

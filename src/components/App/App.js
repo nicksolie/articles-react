@@ -81,8 +81,8 @@ class App extends Component {
           )} />
 
           {/* Unauthenticated collection routes */}
-          <Route exact path='/collections' render={() => (
-            <IndexCollections msgAlert={this.msgAlert} />
+          <AuthenticatedRoute user={user} exact path='/collections' render={() => (
+            <IndexCollections msgAlert={this.msgAlert} user={user} />
           )} />
 
           {/* Authenticated collection routes */}
@@ -110,8 +110,8 @@ class App extends Component {
             <EditEntry user={user} match={match} />
           )} />
 
-          <Route path='/search' render={() => (
-            <Search msgAlert={this.msgAlert} />
+          <AuthenticatedRoute path='/search' user={user} render={() => (
+            <Search user={user} msgAlert={this.msgAlert} />
           )} />
         </main>
       </Fragment>

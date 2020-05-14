@@ -21,6 +21,9 @@ const IndexCollections = (props) => {
     </li>
   ))
 
+  if (!collections) {
+    return <p>Loading...</p>
+  }
   return (
     <div>
       <h1>Collections</h1>
