@@ -54,14 +54,16 @@ DELETE | /entries/:id  |
 ## Images
 
 #### App Screenshot:
-![screenshot]('./images/v1ArticlesScreenshots.png')
+![screenshot]('https://i.imgur.com/t0WyKOg.png')
 
 ---
 
 #### Wireframe:
-![wireframe](https://lucidchart.zendesk.com/hc/article_attachments/360001080866/Facebook_Wireframe_-_New_Page.png)
+![Wireframe Front Page]('https://i.imgur.com/P0W2xfK.jpg')
+![Wireframe Gallery]('https://i.imgur.com/5Hkw0pJ.jpg')
+![]('https://i.imgur.com/xXHAuJd.jpg')
 
 ---
 
 #### ERD:
-![ERD](https://www.smartdraw.com/entity-relationship-diagram/img/cardinality.jpg?bn=1510011144)
+![ERD]('https://i.imgur.com/YO0wK8Z.jpg')
