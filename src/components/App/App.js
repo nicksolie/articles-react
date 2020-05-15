@@ -27,6 +27,7 @@ import EditEntry from '../Routes/EditEntry'
 
 // Search imports
 import Search from '../Routes/Search'
+import SearchForm from '../Routes/SearchForm'
 
 class App extends Component {
   constructor () {
@@ -110,8 +111,12 @@ class App extends Component {
             <EditEntry user={user} match={match} />
           )} />
 
-          <AuthenticatedRoute path='/search' user={user} render={() => (
-            <Search user={user} msgAlert={this.msgAlert} />
+          {/* Authenticated search routes */}
+          <AuthenticatedRoute path='/search' user={user} render={({ match }) => (
+            <Search user={user} match={match} msgAlert={this.msgAlert} />
+          )} />
+          <Route path='/search-form' user={user} render={({ match }) => (
+            <SearchForm user={user} match={match} msgAlert={this.msgAlert} />
           )} />
         </main>
       </Fragment>

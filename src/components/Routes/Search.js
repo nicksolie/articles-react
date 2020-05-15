@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const Search = () => {
-  const [search, setSearch] = useState([])
+  const [pdfs, setPdfs] = useState([])
 
   useEffect(() => {
     axios('https://chroniclingamerica.loc.gov/lccn/sn86069873/1897-01-08/ed-1.json')
@@ -12,13 +12,13 @@ const Search = () => {
       .then(pages => pages.forEach(result => (
         axios(result.url)
           // set search state to push a new link to the end of seach
-          .then(response => setSearch(searches => [...searches, response.data]))
+          .then(response => setPdfs(searches => [...searches, response.data]))
       )))
       .catch(console.error)
   }, [])
 
   // Transform search into a list of pdf links
-  const searchJsx = search.map(data =>
+  const searchJsx = pdfs.map(data =>
     <p key={data.sequence}><embed src={data.pdf} type="application/pdf" height="800px" width="800px" /></p>
   )
 
