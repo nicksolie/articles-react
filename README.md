@@ -1,6 +1,6 @@
 # Articles Description
 
-This
+A web app to search through the Library of Congress’s digitized newspaper archive.. Users can search with Chronicling America’s API to find high resolution PDFs of various newspaper publications dating back to the 1600s.
 
 ## Important Links
 
@@ -10,7 +10,11 @@ This
 
 ## Planning Story
 
-Lorem ipsum dolor amet cloud bread letterpress squid actually, single-origin coffee williamsburg af poutine fingerstache austin semiotics paleo man braid vexillologist. Tumeric literally banjo pickled disrupt cold-pressed thundercats shoreditch try-hard health goth intelligentsia pop-up small batch skateboard farm-to-table. Meh tofu fam, direct trade tattooed stumptown etsy everyday carry activated charcoal. Neutra cornhole polaroid literally salvia, listicle tofu.
+For my final project with GA, I wanted to push myself to utilize a third party API. I decided to try my luck with the Library of Congress’s newspaper archive program, Chronicling America. They ofter, free of charge, access to their collection of digitized newspapers dating back several centuries. After combing through their API’s documentation, I tested the types of responses I could get using Postman. Based of the JSON objects they return from a query, and due to a tight project week time constraint, I planned my app around a simple key term search that would return all corresponding publications. From there, users could select a newspaper issue from the returned JSON and query again to return all pages associated with the issue. What would be displayed to the user are high resolution PDFs that are able to be individually zoomed in on.
+
+I’m currently working to allow a user’s browser to accept all returns from the API, since I’ve currently run into a series of CORS alerts. While the current deployed version does not allow for a unique search, it does demonstrate the quality of PDFs returned from the Library of Congress. Once I get a larger grasp of the nuances with their API, I will be able to finish the search MVP for the app.
+
+Special thanks to everyone at GA Boston for helping me with my project.
 
 ### User Stories
 
@@ -48,22 +52,22 @@ DELETE | /entries/:id  |
 
 ### Unsolved Problems
 
-- I am currently working on building out the search features so users can search title keywords and view related newspapers issues.
-- Aside from understanding the Library of Congress's API further, I will improve my user experience with styling and design.
+1. I am currently working on building out the search features so users can search title keywords and view related newspapers issues.
+2. Aside from understanding the Library of Congress's API further, I will improve user experience with styling and design.
 
 ## Images
 
 #### App Screenshot:
-![screenshot]('https://i.imgur.com/t0WyKOg.png')
+![screenshot](images/articlesScreenshotV1.png "V1 Screenshot")
 
 ---
 
 #### Wireframe:
-![Wireframe Front Page]('https://i.imgur.com/P0W2xfK.jpg')
-![Wireframe Gallery]('https://i.imgur.com/5Hkw0pJ.jpg')
-![]('https://i.imgur.com/xXHAuJd.jpg')
+![Wireframe Front Page](images/Page1.jpg)
+![Wireframe Gallery](images/Page2wireframes.jpg)
+![](images/Page3.jpg)
 
 ---
 
 #### ERD:
-![ERD]('https://i.imgur.com/YO0wK8Z.jpg')
+![ERD](images/erd.jpg)
