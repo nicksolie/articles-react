@@ -2,6 +2,13 @@
 
 A web app to search through the Library of Congress’s digitized newspaper archive.. Users can search with Chronicling America’s API to find high resolution PDFs of various newspaper publications dating back to the 1600s.
 
+## Setup Steps
+
+1. Fork and clone this repository.
+2. Run `npm install` to install all dependencies
+3. Use `npm start` to spin up the server.
+4. Go to [API Repo](https://github.com/nicksolie/articles-api) for backend information.
+
 ## Important Links
 
 - [API Link](https://github.com/nicksolie/articles-api)
