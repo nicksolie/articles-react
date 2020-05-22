@@ -38,7 +38,7 @@ const SearchForm = () => {
   console.log(publications)
 
   const publicationJsx = publications.map(issues =>
-    <p key={issues.name}>{issues.lccn}</p>
+    <p key={issues.url}>{issues.lccn}</p>
   )
 
   return (
