@@ -27,8 +27,10 @@ const SearchForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault()
-    axios('http://chroniclingamerica.loc.gov/suggest/titles/?q=bourbon+news&format=json')
+    axios(`https://chroniclingamerica.loc.gov/search/titles/results/?terms=${search}&format=json`)
       .then(response => console.log(response))
+    // axios(`https://chroniclingamerica.loc.gov/search/titles/results/?terms=${search}&format=json`)
+    //   .then(response => console.log(response))
   }
 
   // const urlJsx = url.map(data =>
