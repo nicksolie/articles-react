@@ -6,38 +6,40 @@ const SearchForm = () => {
   const [search, setSearch] = useState({
     keyword1: ''
   })
-  const [url] = useState([])
+
+  const [publications, setPublications] = useState([])
+
+  // const [url] = useState([])
   const handleChange = event => {
     event.persist()
+    // eslint-disable-next-line no-unused-vars
     setSearch(search => (event.target.value))
   }
-  // const handleSubmit = event => {
-  //   event.preventDefault()
-  //   axios(`https://chroniclingamerica.loc.gov/search/titles/results/?terms=${search}&format=json`)
-  //   // axios('https://chroniclingamerica.loc.gov/lccn/sn87056230.json')
-  //     // .then(response => console.log(response))
-  //     .then(response => response.data.items)
-  //     .then(items => items.forEach(item => (
-  //       axios(item.url)
-  //         // .then(response => setUrl(url => [...url, response.item]))
-  //         .then(item => console.log(item.data.url))
-  //     )))
-  //     .catch(console.error)
-  // }
 
   const handleSubmit = event => {
     event.preventDefault()
+    // Add search term to query
     axios(`https://chroniclingamerica.loc.gov/search/titles/results/?terms=${search}&format=json`)
-      .then(response => console.log(response))
-    // axios(`https://chroniclingamerica.loc.gov/search/titles/results/?terms=${search}&format=json`)
-    //   .then(response => console.log(response))
+      // Filter response to array
+      .then(response => response.data.items)
+      // Iterate through array of items to find urls
+      .then(items => items.forEach(result =>
+        // Go to url for publication information
+        axios(result.url)
+          // If publications.includes response
+          .then(response => setPublications(searches => [...searches, response.data]))
+      ))
+      .catch(console.error)
+
+    console.log(search)
+    console.log('publications are', publications)
   }
 
-  // const urlJsx = url.map(data =>
-  //   <p key={data.id}>{data.url}</p>
-  // )
-  console.log('url is', url)
-  console.log('search is', search)
+  console.log(publications)
+
+  const publicationJsx = publications.map(issues =>
+    <p key={issues.name}>{issues.lccn}</p>
+  )
 
   return (
     <div>
@@ -53,8 +55,12 @@ const SearchForm = () => {
         <button type="submit">Submit</button>
       </form>
       <h3>results</h3>
+      {publicationJsx}
     </div>
   )
 }
+// --------------------READ------------------------
+// display publication information
+// Give link to newspaper object, for future access to pdfs.
 
 export default SearchForm

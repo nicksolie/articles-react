@@ -17,6 +17,7 @@ const Search = () => {
       .catch(console.error)
   }, [])
 
+  console.log(pdfs)
   // Transform search into a list of pdf links
   const searchJsx = pdfs.map(data =>
     <p key={data.sequence}><embed src={data.pdf} type="application/pdf" height="800px" width="800px" /></p>
