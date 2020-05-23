@@ -44,6 +44,8 @@ const Search = (props) => {
   return (
     <div>
       <h1>Search</h1>
+      <p>Please allow up to a minute for all pages to load. Future versions will limit the number of PDFs your browser needs to render.</p>
+      <p>Below are the results of your search!</p>
       {searchJsx}
     </div>
   )

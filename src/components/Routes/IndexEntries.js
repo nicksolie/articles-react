@@ -21,6 +21,7 @@ const IndexEntries = () => {
   return (
     <div>
       <h1>Entries</h1>
+      <p>Collections and Entries are currently not connected to queries. Please wait for future versions! Oops!</p>
       { entriesJsx }
     </div>
   )
