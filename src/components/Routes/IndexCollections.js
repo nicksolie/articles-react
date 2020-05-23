@@ -5,9 +5,8 @@ import axios from 'axios'
 import apiUrl from '../../apiConfig'
 // import Layout from '../shared/Layout'
 
-const IndexCollections = (props) => {
+const IndexCollections = () => {
   const [collections, setCollections] = useState([])
-  // const [deleted, setDeleted] = useState(false)
 
   useEffect(() => {
     axios(`${apiUrl}/collections`)

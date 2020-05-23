@@ -1,13 +1,14 @@
-// import React from 'react'
 import React, { useState } from 'react'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
 const SearchForm = () => {
   const [search, setSearch] = useState({
     keyword1: ''
   })
 
-  const [publications, setPublications] = useState([])
+  const [publicationsList, setPublicationsList] = useState([])
+  const [publication, setPublication] = useState()
 
   // const [url] = useState([])
   const handleChange = event => {
@@ -26,24 +27,52 @@ const SearchForm = () => {
       .then(items => items.forEach(result =>
         // Go to url for publication information
         axios(result.url)
-          // If publications.includes response
-          .then(response => setPublications(searches => [...searches, response.data]))
+          .then(response => setPublicationsList(searches => [...searches, response.data]))
       ))
       .catch(console.error)
-
-    console.log(search)
-    console.log('publications are', publications)
   }
 
-  console.log(publications)
-
-  const publicationJsx = publications.map(issues =>
-    <p key={issues.url}>{issues.lccn}</p>
+  // Filter out publications with no issues.
+  const newList = publicationsList.filter((publicationsList) =>
+    publicationsList.issues.length !== 0
   )
+
+  // const handlePublicationSubmit = (event, issues) => {
+  //   event.preventDefault()
+  //   setPublication(issues.url)
+  // }
+
+  // Filtered publication list that is rendered on page
+  const filteredListJsx = newList.map(issues =>
+    // Url is the only unique ID in object
+    <div key={issues.url}>
+      <h4><a href={issues.url}>{issues.name}</a></h4>
+      <p>Start Year: {issues.start_year}</p>
+      <p>End Year: {issues.end_year}</p>
+      <p>Place of publication: {issues.place_of_publication}</p>
+      <button onClick={() => setPublication(issues.url)}>View</button>
+    </div>
+  )
+
+  // If user selects a publication - redirect
+  if (publication) {
+    return <Redirect to={{
+      pathname: '/search',
+      state: { url: publication }
+    }} />
+  }
+  // console.log(props)
+  console.log(newList)
+  console.log(publication)
+
+  // ------------------------Notes------------------
+  // Select a publication
+  // Reroute to Search w/ props
 
   return (
     <div>
-      <h1>Enter key words</h1>
+      <h1>Enter key word</h1>
+      <p>Example: &quot;bourbon+news&quot;</p>
       <form onSubmit={handleSubmit}>
         <label>Input word 1</label>
         <input
@@ -51,16 +80,12 @@ const SearchForm = () => {
           name="word1"
           onChange={handleChange}
         />
-
         <button type="submit">Submit</button>
       </form>
-      <h3>results</h3>
-      {publicationJsx}
+      <h3>Publications</h3>
+      {filteredListJsx}
     </div>
   )
 }
-// --------------------READ------------------------
-// display publication information
-// Give link to newspaper object, for future access to pdfs.
 
 export default SearchForm

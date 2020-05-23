@@ -6,7 +6,7 @@ import apiUrl from '../../apiConfig'
 import EntryForm from '../Shared/EntryForm'
 import Layout from '../Shared/Layout'
 
-const CreateEntry = (props, match, location, cancelPath) => {
+const CreateEntry = (props) => {
   const [entry, setEntry] = useState({
     title: '',
     description: '',

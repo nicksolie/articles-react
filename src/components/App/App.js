@@ -112,8 +112,8 @@ class App extends Component {
           )} />
 
           {/* Authenticated search routes */}
-          <AuthenticatedRoute path='/search' user={user} render={({ match }) => (
-            <Search user={user} match={match} msgAlert={this.msgAlert} />
+          <AuthenticatedRoute path='/search' user={user} render={({ match, location }) => (
+            <Search user={user} match={match} location={location} msgAlert={this.msgAlert} />
           )} />
           <Route path='/search-form' user={user} render={({ match }) => (
             <SearchForm user={user} match={match} msgAlert={this.msgAlert} />

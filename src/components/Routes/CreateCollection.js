@@ -6,7 +6,7 @@ import apiUrl from '../../apiConfig'
 import CollectionForm from '../Shared/CollectionForm'
 import Layout from '../Shared/Layout'
 
-const CreateCollection = (props, cancelPath) => {
+const CreateCollection = (props) => {
   const [collection, setCollection] = useState({
     name: '',
     description: '',
