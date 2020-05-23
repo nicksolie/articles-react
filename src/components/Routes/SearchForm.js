@@ -37,16 +37,11 @@ const SearchForm = () => {
     publicationsList.issues.length !== 0
   )
 
-  // const handlePublicationSubmit = (event, issues) => {
-  //   event.preventDefault()
-  //   setPublication(issues.url)
-  // }
-
   // Filtered publication list that is rendered on page
   const filteredListJsx = newList.map(issues =>
     // Url is the only unique ID in object
     <div key={issues.url}>
-      <h4><a href={issues.url}>{issues.name}</a></h4>
+      <h4>{issues.name}</h4>
       <p>Start Year: {issues.start_year}</p>
       <p>End Year: {issues.end_year}</p>
       <p>Place of publication: {issues.place_of_publication}</p>
@@ -61,20 +56,16 @@ const SearchForm = () => {
       state: { url: publication }
     }} />
   }
-  // console.log(props)
-  console.log(newList)
-  console.log(publication)
-
-  // ------------------------Notes------------------
-  // Select a publication
-  // Reroute to Search w/ props
 
   return (
     <div>
       <h1>Enter key word</h1>
-      <p>Example: &quot;bourbon+news&quot;</p>
+      <h5>Search is limited to publication titles. Future versions will include article title in search.</h5>
+      <p>Note: some publications return blank. If this occurs, select a new term.</p>
+      <p>WARNING: some searches can result in 1,000+ pdfs and will cause slowdowns. </p>
+      <p>Example: &quot;Washington&quot; or &quot;Bourbon+News&quot;</p>
       <form onSubmit={handleSubmit}>
-        <label>Input word 1</label>
+        <label>Input terms:</label>
         <input
           placeholder="word 1"
           name="word1"
@@ -82,7 +73,7 @@ const SearchForm = () => {
         />
         <button type="submit">Submit</button>
       </form>
-      <h3>Publications</h3>
+      <h3>Publications:</h3>
       {filteredListJsx}
     </div>
   )

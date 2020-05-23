@@ -5,7 +5,6 @@ import Navbar from 'react-bootstrap/Navbar'
 const authenticatedOptions = (
   <Fragment>
     <Nav.Link href="#search-form">Search Form</Nav.Link>
-    <Nav.Link href="#search">Search</Nav.Link>
     <Nav.Link href="#collections-create">Create a Collection</Nav.Link>
     <Nav.Link href="#collections">Collections</Nav.Link>
     <Nav.Link href="#entries">Entries</Nav.Link>
@@ -18,8 +17,6 @@ const unauthenticatedOptions = (
   <Fragment>
     <Nav.Link href="#sign-up">Register</Nav.Link>
     <Nav.Link href="#sign-in">Sign In</Nav.Link>
-    <Nav.Link href="#search-form">Search Form</Nav.Link>
-    <Nav.Link href="#search">Search</Nav.Link>
   </Fragment>
 )
 
