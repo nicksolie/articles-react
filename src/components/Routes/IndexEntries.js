@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 
-const IndexEntries = (props) => {
+const IndexEntries = () => {
   const [entries, setEntries] = useState([])
 
   useEffect(() => {

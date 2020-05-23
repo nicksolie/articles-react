@@ -43,6 +43,7 @@ Special thanks to everyone at GA Boston for helping me with my project.
 - HTML/CSS
 - Bootstrap
 - Javascript
+- Axios
 
 ### Catalog of Routes
 
