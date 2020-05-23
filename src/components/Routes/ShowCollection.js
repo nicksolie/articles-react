@@ -36,8 +36,6 @@ const ShowCollection = (props) => {
     } />
   }
 
-  console.log('ShowCollection props are:', props)
-  console.log('collection:', collection)
   const entriesJsx = collection.entries.map(entry => (
     <p key={entry.id}>{entry.title}</p>
   ))

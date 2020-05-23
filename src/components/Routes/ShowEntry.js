@@ -34,9 +34,6 @@ const ShowEntry = (props) => {
     } />
   }
 
-  console.log('ShowEntry props are:', props)
-  console.log('entry:', entry)
-
   return (
     <Layout>
       <h4>{entry.name}</h4>

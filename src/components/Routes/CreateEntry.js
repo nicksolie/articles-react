@@ -40,7 +40,7 @@ const CreateEntry = (props) => {
   if (createdEntryId) {
     return <Redirect to={`/entries/${createdEntryId}`} />
   }
-  console.log('create entry props:', props)
+  
   return (
     <Layout>
       <EntryForm
