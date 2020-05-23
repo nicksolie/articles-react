@@ -6,7 +6,7 @@ import apiUrl from '../../apiConfig'
 import EntryForm from '../Shared/EntryForm'
 import Layout from '../Shared/Layout'
 
-const EditEntry = (props, match, location, cancelPath) => {
+const EditEntry = (props) => {
   const [entry, setEntry] = useState({
     title: '',
     description: '',
@@ -24,7 +24,7 @@ const EditEntry = (props, match, location, cancelPath) => {
 
   const handleChange = event => {
     event.persist()
-    setEntry(collection => ({ ...entry, [event.target.name]: event.target.value }))
+    setEntry(entry => ({ ...entry, [event.target.name]: event.target.value }))
   }
 
   const handleSubmit = event => {

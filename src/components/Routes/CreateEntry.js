@@ -40,7 +40,7 @@ const CreateEntry = (props) => {
   if (createdEntryId) {
     return <Redirect to={`/entries/${createdEntryId}`} />
   }
-  
+
   return (
     <Layout>
       <EntryForm
