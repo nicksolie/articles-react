@@ -1,45 +1,66 @@
+// import React, { useState, useEffect } from 'react'
 import React, { useState, useEffect } from 'react'
+
 import axios from 'axios'
 
 const Search = (props) => {
-  const [pdfs, setPdfs] = useState([])
-  // const [pdfs] = useState([])
+  // const [pdfs, setPdfs] = useState([])
+  const [pdfs] = useState([])
+  const [firstEditions, setFirstEditions] = useState([])
+  const [pagesIndex, setPagesIndex] = useState([])
+  // const [firstEditions] = useState([])
 
+  // -----------------------------Index ALL pages from query--------------------------------
   // useEffect(() => {
-  //   axios('https://chroniclingamerica.loc.gov/lccn/sn86069873/1897-01-08/ed-1.json')
+  //   Props... looks like, https://chroniclingamerica.loc.gov/lccn/sn86069872.json
+  //   axios(props.location.state.url)
   //     // Filter response down to a issue's pages array
-  //     .then(response => response.data.pages)
-  //     // ForEach page, make a call to the pdf
-  //     .then(pages => pages.forEach(result => (
+  //     .then(response => response.data.issues)
+  //     .then(issues => issues.forEach(result =>
   //       axios(result.url)
-  //         // set search state to push a new link to the end of seach
-  //         .then(response => setPdfs(searches => [...searches, response.data]))
-  //     )))
-  //     .catch(console.error)
+  //         .then(response => response.data.pages)
+  //         .then(pages => pages.forEach(result => (
+  //           axios(result.url)
+  //             .then(response => setPdfs(searches => [...searches, response.data]))
+  //         )))
+  //     ))
+  //     // ForEach page, make a call to the pdf
   // }, [])
+  // ------------------------------------------------------------------------------------------
 
+  // -----------------------------Select ALL page from first edition -------------------------------------------
+  // useEffect(() => {
+  //   axios(props.location.state.url)
+  //     .then(response => response.data.issues)
+  //     // Find all first editions of the query
+  //     .then(issues => setFirstEditions(issues.pop()))
+  // }, [])
   useEffect(() => {
-    axios(props.location.state.url)
-      // Filter response down to a issue's pages array
-      .then(response => response.data.issues)
-      .then(issues => issues.forEach(result =>
-        axios(result.url)
-          .then(response => response.data.pages)
-          .then(pages => pages.forEach(result => (
-            axios(result.url)
-              .then(response => setPdfs(searches => [...searches, response.data]))
-          )))
-      ))
-      // ForEach page, make a call to the pdf
-  }, [])
+    if (firstEditions.length === 0) {
+      axios(props.location.state.url)
+        // Find all first editions of the query
+        .then(response => setFirstEditions(response.data.issues.pop()))
+    } else {
+      const promises = []
+      axios(firstEditions.url)
+        .then(response => response.data.pages.forEach(result => {
+          promises.push(axios(result.url))
+          axios.all(promises).then(response => setPagesIndex(searches => [...searches, response.pdf]))
+        }))
+    }
+  })
+  // .then(response => setPagesIndex(searches => [...searches, response.data.pdf]))
 
-  console.log(pdfs)
+  console.log(pagesIndex)
+
+  // ---------NOTES--------
+  // -------------------------------------------------------------------------------------------
+
+  // console.log(pdfs)
   // Transform search into a list of pdf links
   const searchJsx = pdfs.map(data =>
     <p key={data.sequence}><embed src={data.pdf} type="application/pdf" height="800px" width="800px" /></p>
   )
-
-  console.log(props.location.state.url)
 
   return (
     <div>
