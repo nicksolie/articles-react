@@ -12,7 +12,7 @@ A web app to search through the Library of Congress’s digitized newspaper arch
 ## Important Links
 
 - [API Link](https://github.com/nicksolie/articles-api)
-- [Deployed API](https://mysterious-springs-88508.herokuapp.com/)
+- [Deployed API](https://articles-search-api.herokuapp.com/)
 - [Deployed Client](https://nicksolie.github.io/articles-react/#/)
 
 ## Planning Story
