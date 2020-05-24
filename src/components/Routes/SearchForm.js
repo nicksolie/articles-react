@@ -59,11 +59,11 @@ const SearchForm = () => {
 
   return (
     <div>
-      <h1>Enter key word</h1>
-      <h5>Search is limited to publication titles. Future versions will include article title in search.</h5>
+      <h1>This page takes an inputted name from you to search the Library of Congress&apos;s newspaper archive for all matches.</h1>
+      <h5>Search is limited to publication names. Future versions will include the article title in the search.</h5>
       <p>Note: some publications return blank. If this occurs, select a new term.</p>
-      <p>WARNING: some searches can result in 1,000+ pdfs and will cause slowdowns.</p>
-      <p>Example: &quot;Washington&quot; or &quot;Bourbon+News&quot;</p>
+      <p>Note: use &quot;+&quot; rather than a space.</p>
+      <p>Example searches: &quot;Washington&quot; or &quot;Bourbon+News&quot;</p>
       <form onSubmit={handleSubmit}>
         <label>Input terms:</label>
         <input
