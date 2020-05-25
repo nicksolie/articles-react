@@ -8,27 +8,27 @@ import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
 import Header from '../Shared/Header'
 
 // Auth imports
-import SignUp from '../Routes/Auth/SignUp'
-import SignIn from '../Routes/Auth/SignIn'
-import SignOut from '../Routes/Auth/SignOut'
-import ChangePassword from '../Routes/Auth/ChangePassword'
+import SignUp from '../Auth/SignUp'
+import SignIn from '../Auth/SignIn'
+import SignOut from '../Auth/SignOut'
+import ChangePassword from '../Auth/ChangePassword'
 
 // Collection imports
-import CreateCollection from '../Routes/CreateCollection'
-import ShowCollection from '../Routes/ShowCollection'
-import IndexCollections from '../Routes/IndexCollections'
-import Welcome from '../Routes/Welcome/Welcome'
-import EditCollection from '../Routes/EditCollection'
+import CreateCollection from '../Collections/CreateCollection'
+import ShowCollection from '../Collections/ShowCollection'
+import IndexCollections from '../Collections/IndexCollections'
+import Welcome from '../Welcome/Welcome'
+import EditCollection from '../Collections/EditCollection'
 
 // Entry imports
-import CreateEntry from '../Routes/CreateEntry'
-import IndexEntries from '../Routes/IndexEntries'
-import ShowEntry from '../Routes/ShowEntry'
-import EditEntry from '../Routes/EditEntry'
+import CreateEntry from '../Entries/CreateEntry'
+import IndexEntries from '../Entries/IndexEntries'
+import ShowEntry from '../Entries/ShowEntry'
+import EditEntry from '../Entries/EditEntry'
 
 // Search imports
-import Search from '../Routes/Search'
-import SearchForm from '../Routes/SearchForm'
+import Search from '../Search/Search'
+import SearchForm from '../Search/SearchForm'
 
 class App extends Component {
   constructor () {
