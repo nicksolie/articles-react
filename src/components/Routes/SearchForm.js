@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
 
 const SearchForm = () => {
   const [search, setSearch] = useState({
@@ -9,6 +10,13 @@ const SearchForm = () => {
 
   const [publicationsList, setPublicationsList] = useState([])
   const [publication, setPublication] = useState()
+
+  const filteredStyles = {
+    border: "1px solid black",
+    marginBottom: '10px',
+    padding: '10px',
+    textAlign:'center'
+  }  
 
   // const [url] = useState([])
   const handleChange = event => {
@@ -40,7 +48,7 @@ const SearchForm = () => {
   // Filtered publication list that is rendered on page
   const filteredListJsx = newList.map(issues =>
     // Url is the only unique ID in object
-    <div key={issues.url}>
+    <div style={filteredStyles} key={issues.url}>
       <h4>{issues.name}</h4>
       <p>Start Year: {issues.start_year}</p>
       <p>End Year: {issues.end_year}</p>
@@ -58,23 +66,24 @@ const SearchForm = () => {
   }
 
   return (
-    <div>
-      <h1>This page takes an inputted name from you to search the Library of Congress&apos;s newspaper archive for all matches.</h1>
-      <h5>Search is limited to publication names. Future versions will include the article title in the search.</h5>
+    <div style={{textAlign:'center'}}>
+      <h1>Search by Publication title</h1>
       <p>Note: some publications return blank. If this occurs, select a new term.</p>
       <p>Note: use &quot;+&quot; rather than a space.</p>
       <p>Example searches: &quot;Washington&quot; or &quot;Bourbon+News&quot;</p>
       <form onSubmit={handleSubmit}>
-        <label>Input terms:</label>
+        <label style={{marginRight:'10px'}}>Input terms:</label>
         <input
           placeholder="word 1"
           name="word1"
           onChange={handleChange}
         />
-        <button type="submit">Submit</button>
+        <Button variant="secondary" style={{marginTop:'15px', marginBottom:'20px', marginLeft:'8px'}} type="submit">Submit</Button>
       </form>
-      <h3>Publications:</h3>
-      {filteredListJsx}
+      <div style={{textItems:'center'}}>
+        <h3 style={{marginBottom:'20px'}}>Available Publications:</h3>
+        {filteredListJsx}
+      </div>
     </div>
   )
 }

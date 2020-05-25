@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Route, withRouter } from 'react-router-dom'
+import styles from './../../index.scss'
 
 // Template imports
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
@@ -61,7 +62,7 @@ class App extends Component {
             message={msgAlert.message}
           />
         ))}
-        <main className="container">
+        <main style={styles} className="container">
           {/* Unauthenticated auth routes */}
           <Route exact path='/' render={() => (
             <Welcome />
