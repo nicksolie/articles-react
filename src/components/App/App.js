@@ -27,8 +27,9 @@ import ShowEntry from '../Entries/ShowEntry'
 import EditEntry from '../Entries/EditEntry'
 
 // Search imports
+import Home from './../Home'
 import Search from '../Search/Search'
-import SearchForm from '../Search/SearchForm'
+import SearchPublication from '../Search/SearchPublication'
 
 class App extends Component {
   constructor () {
@@ -82,12 +83,10 @@ class App extends Component {
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
 
-          {/* Unauthenticated collection routes */}
+          {/* Authenticated collection routes */}
           <AuthenticatedRoute user={user} exact path='/collections' render={() => (
             <IndexCollections msgAlert={this.msgAlert} user={user} />
           )} />
-
-          {/* Authenticated collection routes */}
           <AuthenticatedRoute user={user} exact path='/collections-create' render={() => (
             <CreateCollection user={user} />
           )} />
@@ -113,11 +112,14 @@ class App extends Component {
           )} />
 
           {/* Authenticated search routes */}
+          <AuthenticatedRoute user={user} exact path='/home' render={() => (
+            <Home msgAlert={this.msgAlert} user={user} />
+          )} />
           <AuthenticatedRoute path='/search' user={user} render={({ match, location }) => (
             <Search user={user} match={match} location={location} msgAlert={this.msgAlert} />
           )} />
-          <Route path='/search-form' user={user} render={({ match }) => (
-            <SearchForm user={user} match={match} msgAlert={this.msgAlert} />
+          <AuthenticatedRoute path='/search-publication' user={user} render={({ match }) => (
+            <SearchPublication user={user} match={match} msgAlert={this.msgAlert} />
           )} />
         </main>
       </Fragment>

@@ -25,27 +25,27 @@ const Search = (props) => {
   // }, [])
   // ------------------------------------------------------------------------------------------
 
-  // -----------------------------Select ALL page from first edition -------------------------------------------
   useEffect(() => {
-    // On page load when firstEdition is empty, perform axios call to get queried edition
+    // On page load, when firstEdition is empty, perform axios call to get queried edition
     if (firstEdition.length === 0) {
-      //   Props... looks like, https://chroniclingamerica.loc.gov/lccn/sn86069872.json
+      // Passed URL will look like this: https://chroniclingamerica.loc.gov/lccn/sn86069872.json
       axios(props.location.state.url)
-        // Find all first editions of the query
+        // Find  first edition of the query
         .then(response => setFirstEdition(response.data.issues.shift()))
-    // Else check if pageIndex has not been populated, then get all the pages in firstEdition
+    // Check if pageIndex has not been populated, then get all the pages in firstEdition
     } else if (pagesIndex.length === 0) {
       axios(firstEdition.url)
+        // Iterate through all the pages in the firstEdition
         .then(response => response.data.pages.forEach(result => (
           axios(result.url)
           .then(response => setPagesIndex(searches => [...searches, response.data]))
         )))
     }
   })
-  // ----------------------------------------------------------------------------------------------------
-
+  
   console.log('fristEditions', firstEdition)
   console.log('pagesIndex is', pagesIndex)
+  
   // Transform search into a list of pdf links
   const searchJsx = pagesIndex.map(data =>
     <div key={data.sequence}>
@@ -63,21 +63,5 @@ const Search = (props) => {
     </div>
   )
 }
-
-  // ======================================tami
-    // useEffect(() => {
-  //   if (firstEditions.length === 0) {
-  //     axios(props.location.state.url)
-  //       // Find all first editions of the query
-  //       .then(response => setFirstEditions(response.data.issues.pop()))
-  //   } else {
-  //     const promises = []
-  //     axios(firstEditions.url)
-  //       .then(response => response.data.pages.forEach(result => {
-  //         promises.push(axios(result.url))
-  //         axios.all(promises).then(response => setPagesIndex(searches => [...searches, response.pdf]))
-  //       }))
-  //   }
-  // })
 
 export default Search

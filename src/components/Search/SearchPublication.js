@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 
-const SearchForm = () => {
+const SearchPublications = () => {
   const [search, setSearch] = useState({
     keyword1: ''
   })
@@ -67,7 +67,7 @@ const SearchForm = () => {
 
   return (
     <div style={{textAlign:'center'}}>
-      <h1>Search by Publication title</h1>
+      <h1>Search by Publication Title</h1>
       <p>Note: some publications return blank. If this occurs, select a new term.</p>
       <p>Note: use &quot;+&quot; rather than a space.</p>
       <p>Example searches: &quot;Washington&quot; or &quot;Bourbon+News&quot;</p>
@@ -88,4 +88,4 @@ const SearchForm = () => {
   )
 }
 
-export default SearchForm
+export default SearchPublications
