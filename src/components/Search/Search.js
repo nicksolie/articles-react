@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Card from 'react-bootstrap/card'
 import ListGroup from 'react-bootstrap/ListGroup'
+// import Row from 'react-bootstrap/Row'
+import Container from 'react-bootstrap/Container'
+import CardColumns from 'react-bootstrap/CardColumns'
+import Button from 'react-bootstrap/Button'
+import ToggleButton from 'react-bootstrap/ToggleButton'
 
 // import CardDeck from 'react-bootstrap/CardDeck'
 
@@ -54,17 +59,18 @@ const Search = (props) => {
         axios(props.location.state.url)
           .then(response => setEditions(response.data.issues))
       }
+
     })
 
 console.log(editions)
 
   const editionsJsx = editions.map(data =>
-    <Card key={data.url} style={{ width: '18rem' }}>
-      <Card.Header>{data.date_issued}</Card.Header>
-      <ListGroup variant="flush">
-        <ListGroup.Item><a href={data.url}>View</a></ListGroup.Item>
-      </ListGroup>
-    </Card>
+      <Card key={data.url} style={{margin:'5px', marginBottom:'20px', padding:'0', width:'18rem'}}>
+        <Card.Header style={{fontWeight:'bold'}}>Date Issued: {data.date_issued}</Card.Header>
+        <ListGroup variant="flush">
+          <ListGroup.Item><Button type="submit" href={data.url} size="sm">Select</Button></ListGroup.Item>
+        </ListGroup>
+      </Card>
   )
   
   // console.log('fristEditions', firstEdition)
@@ -79,11 +85,15 @@ console.log(editions)
   // )
 
   return (
-    <div>
+    <div style={{textAlign:'center'}}>
       <h1>Search</h1>
       <p>Please allow up to a minute for all pages to load.</p>
       <p>Below are the results of your search!</p>
-      {editionsJsx}
+      <Container>
+        <CardColumns>
+          {editionsJsx}
+        </CardColumns>
+      </Container>
     </div>
   )
 }

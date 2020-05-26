@@ -115,10 +115,10 @@ class App extends Component {
           <AuthenticatedRoute user={user} exact path='/home' render={() => (
             <Home msgAlert={this.msgAlert} user={user} />
           )} />
-          <Route path='/search' user={user} render={({ match, location }) => (
+          <AuthenticatedRoute path='/search' user={user} render={({ match, location }) => (
             <Search user={user} match={match} location={location} msgAlert={this.msgAlert} />
           )} />
-          <Route path='/search-publication' user={user} render={({ match }) => (
+          <AuthenticatedRoute path='/search-publication' user={user} render={({ match }) => (
             <SearchPublication user={user} match={match} msgAlert={this.msgAlert} />
           )} />
         </main>
