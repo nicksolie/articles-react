@@ -1,1 +1,11 @@
 @import '~bootstrap/scss/bootstrap';
+
+body {
+    background-color: rgb(233, 230, 230);
+    min-height: 100%;
+    // margin: 0;
+}
+
+.pdf {
+    max-width: 80vh;
+}

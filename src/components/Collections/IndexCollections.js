@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-import apiUrl from '../../apiConfig'
-// import Layout from '../shared/Layout'
+import apiUrl from './../../apiConfig'
 
 const IndexCollections = () => {
   const [collections, setCollections] = useState([])

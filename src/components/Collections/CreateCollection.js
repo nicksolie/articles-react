@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
-import apiUrl from '../../apiConfig'
+import apiUrl from './../../apiConfig'
 
-import CollectionForm from '../Shared/CollectionForm'
-import Layout from '../Shared/Layout'
+import CollectionForm from './../Shared/CollectionForm'
+import Layout from './../Shared/Layout'
 
 const CreateCollection = (props) => {
   const [collection, setCollection] = useState({

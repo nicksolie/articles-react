@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Route, withRouter } from 'react-router-dom'
+import styles from './../../index.scss'
 
 // Template imports
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
@@ -7,27 +8,28 @@ import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
 import Header from '../Shared/Header'
 
 // Auth imports
-import SignUp from '../Routes/Auth/SignUp'
-import SignIn from '../Routes/Auth/SignIn'
-import SignOut from '../Routes/Auth/SignOut'
-import ChangePassword from '../Routes/Auth/ChangePassword'
+import SignUp from '../Auth/SignUp'
+import SignIn from '../Auth/SignIn'
+import SignOut from '../Auth/SignOut'
+import ChangePassword from '../Auth/ChangePassword'
 
 // Collection imports
-import CreateCollection from '../Routes/CreateCollection'
-import ShowCollection from '../Routes/ShowCollection'
-import IndexCollections from '../Routes/IndexCollections'
-import Welcome from '../Routes/Welcome/Welcome'
-import EditCollection from '../Routes/EditCollection'
+import CreateCollection from '../Collections/CreateCollection'
+import ShowCollection from '../Collections/ShowCollection'
+import IndexCollections from '../Collections/IndexCollections'
+import Welcome from '../Welcome/Welcome'
+import EditCollection from '../Collections/EditCollection'
 
 // Entry imports
-import CreateEntry from '../Routes/CreateEntry'
-import IndexEntries from '../Routes/IndexEntries'
-import ShowEntry from '../Routes/ShowEntry'
-import EditEntry from '../Routes/EditEntry'
+import CreateEntry from '../Entries/CreateEntry'
+import IndexEntries from '../Entries/IndexEntries'
+import ShowEntry from '../Entries/ShowEntry'
+import EditEntry from '../Entries/EditEntry'
 
 // Search imports
-import Search from '../Routes/Search'
-import SearchForm from '../Routes/SearchForm'
+import Home from './../Home'
+import Search from '../Search/Search'
+import SearchPublication from '../Search/SearchPublication'
 
 class App extends Component {
   constructor () {
@@ -61,7 +63,7 @@ class App extends Component {
             message={msgAlert.message}
           />
         ))}
-        <main className="container">
+        <main style={styles} className="container">
           {/* Unauthenticated auth routes */}
           <Route exact path='/' render={() => (
             <Welcome />
@@ -81,12 +83,10 @@ class App extends Component {
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
 
-          {/* Unauthenticated collection routes */}
+          {/* Authenticated collection routes */}
           <AuthenticatedRoute user={user} exact path='/collections' render={() => (
             <IndexCollections msgAlert={this.msgAlert} user={user} />
           )} />
-
-          {/* Authenticated collection routes */}
           <AuthenticatedRoute user={user} exact path='/collections-create' render={() => (
             <CreateCollection user={user} />
           )} />
@@ -112,11 +112,14 @@ class App extends Component {
           )} />
 
           {/* Authenticated search routes */}
-          <AuthenticatedRoute path='/search' user={user} render={({ match, location }) => (
+          <AuthenticatedRoute user={user} exact path='/home' render={() => (
+            <Home msgAlert={this.msgAlert} user={user} />
+          )} />
+          <Route path='/search' user={user} render={({ match, location }) => (
             <Search user={user} match={match} location={location} msgAlert={this.msgAlert} />
           )} />
-          <Route path='/search-form' user={user} render={({ match }) => (
-            <SearchForm user={user} match={match} msgAlert={this.msgAlert} />
+          <Route path='/search-publication' user={user} render={({ match }) => (
+            <SearchPublication user={user} match={match} msgAlert={this.msgAlert} />
           )} />
         </main>
       </Fragment>
