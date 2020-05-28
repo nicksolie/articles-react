@@ -1,20 +1,47 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Redirect } from 'react-router-dom'
-import Button from 'react-bootstrap/Button'
-import Jumbotron from 'react-bootstrap/Jumbotron'
-import Row from 'react-bootstrap/Row'
-import Container from 'react-bootstrap/Container'
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
+// import { Redirect } from 'react-router-dom'
+// import Button from 'react-bootstrap/Button'
+// import Jumbotron from 'react-bootstrap/Jumbotron'
+// import Row from 'react-bootstrap/Row'
+// import Container from 'react-bootstrap/Container'
+// import Col from 'react-bootstrap/Col'
+// import Form from 'react-bootstrap/Form'
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import { TextField } from '@material-ui/core'
 
+
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+    background: 'grey',
+    color: 'white',
+    marginBottom: '10px',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+  searchButton: {
+    textAlign: 'center',
+  },
+})
 
 const SearchPublications = () => {
   const [search, setSearch] = useState({
     keyword1: ''
   })
   const [publicationsList, setPublicationsList] = useState([])
-  const [publication, setPublication] = useState()
+  const [publications, setPublications] = useState([])
+  const classes = useStyles()
 
   // const [url] = useState([])
   const handleChange = event => {
@@ -23,7 +50,7 @@ const SearchPublications = () => {
     setSearch(search => (event.target.value))
   }
 
-  const handleSubmit = event => {
+  const handleSearchSubmit = event => {
     event.preventDefault()
     setPublicationsList([])
     // Add search term to query
@@ -38,6 +65,7 @@ const SearchPublications = () => {
       ))
       .catch(console.error)
   }
+  console.log(search)
 
   // Filter out publications with no issues.
   const newList = publicationsList.filter((publicationsList) =>
@@ -45,26 +73,28 @@ const SearchPublications = () => {
   )
 
   const filteredListJsx = newList.map((issues, index) =>
-  <Jumbotron key={index}>
-      <h1>{issues.name}</h1>
-      <p>Start Year: {issues.start_year}</p>
-      <p>End Year: {issues.end_year}</p>
-      <p>Place of publication: {issues.place_of_publication}</p>
-      <p>
-        <Button variant="secondary" onClick={() => setPublication(issues.url)}>View</Button>
-      </p>
-    </Jumbotron>
+  <Card key={index} className={classes.root}>
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            {issues.name}
+          </Typography>
+          <Divider />
+          <Typography className={classes.pos} color="textSecondary">
+            {issues.place_of_publication}
+          </Typography>
+          <Typography variant="body1" component="p">
+            {issues.start_year}
+            <br />
+            {issues.end_year}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" onClick={() => setPublications(prevArray => [...prevArray, issues.url])}>View</Button>
+        </CardActions>
+      </Card>
   )
-  console.log(publication)
-
-
-  // If user selects a publication - redirect
-  if (publication) {
-    return <Redirect to={{
-      pathname: '/search',
-      state: { url: publication }
-    }} />
-  }
+  
+  console.log(publications)
 
   return (
     <div style={{textAlign:'center'}}>
@@ -72,19 +102,12 @@ const SearchPublications = () => {
       <p>Note: some publications return blank. If this occurs, select a new term.</p>
       <p>Note: use &quot;+&quot; rather than a space.</p>
       <p>Example searches: &quot;Washington&quot; or &quot;Bourbon+News&quot;</p>
-      <Container>
-       <Form onSubmit={handleSubmit}>
-         <Row>
-           <Col md="10">
-             <Form.Control placeholder="term1+term2" name="word1"  onChange={handleChange} />
-           </Col>
-           <Col>
-             <Button variant="secondary" type="submit">Submit</Button>
-           </Col>
-         </Row>
-       </Form>
-     </Container>
+        <form onSubmit={handleSearchSubmit}>
+          <TextField label="Enter Search Terms" helperText="term1+term2" name="word1"  onChange={handleChange} />
+          <Button className={classes.searchButton} type="submit">Submit</Button>
+        </form>
       <div style={{textItems:'center'}}>
+        <h5>Results for &quot;{search.toString()}&quot;</h5>
         <h3 style={{marginBottom:'20px'}}>Available Publications:</h3>
         {filteredListJsx}
       </div>
@@ -107,6 +130,14 @@ const SearchPublications = () => {
   // </Container>
   // -------------------------------------------------------------------------------------------------------
 
+//   <Jumbotron key={index}>
+//   <h1>{issues.name}</h1>
+//   <p>Start Year: {issues.start_year}</p>
+//   <p>End Year: {issues.end_year}</p>
+//   <p>Place of publication: {issues.place_of_publication}</p>
+//   <Button variant="secondary" onClick={() => setPublications(prevArray => [...prevArray, issues.url])}>View</Button>
+//   </Jumbotron>
+
   // // Filtered publication list that is rendered on page
   // const filteredListJsx = newList.map(issues =>
   //   // Url is the only unique ID in object
@@ -118,5 +149,13 @@ const SearchPublications = () => {
   //     <button onClick={() => setPublication(issues.url)}>View</button>
   //   </div>
   // )
+
+  // If user selects a publication - redirect
+  // if (publication) {
+  //   return <Redirect to={{
+  //     pathname: '/search',
+  //     state: { url: publication }
+  //   }} />
+  // }
 
 export default SearchPublications
