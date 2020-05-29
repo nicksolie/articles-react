@@ -58,7 +58,6 @@ class SignIn extends Component {
           <Form onSubmit={this.onSignIn}>
             <Form.Group controlId="email">
               <TextField
-                required
                 id="standard-full-width"
                 type="email"
                 name="email"
@@ -73,7 +72,6 @@ class SignIn extends Component {
             </Form.Group>
             <Form.Group controlId="password">
               <TextField
-                required
                 id="standard-password-input"
                 name="password"
                 label="Password"

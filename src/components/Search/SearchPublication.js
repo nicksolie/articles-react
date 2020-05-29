@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 // import Button from 'react-bootstrap/Button'
 // import Jumbotron from 'react-bootstrap/Jumbotron'
 // import Row from 'react-bootstrap/Row'
@@ -15,33 +15,38 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { TextField } from '@material-ui/core'
+import Paper from '@material-ui/core/Paper';
 
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    background: 'grey',
-    color: 'white',
     marginBottom: '10px',
   },
   title: {
     fontSize: 14,
   },
-  pos: {
+  pop: {
     marginBottom: 12,
   },
   searchButton: {
     textAlign: 'center',
   },
+  showResults: {
+    margin:'20px',
+  },
+  publicationButton: {
+    justifyContent:'center'
+  }
 })
 
 const SearchPublications = () => {
-  const [search, setSearch] = useState({
-    keyword1: ''
-  })
+  const [search, setSearch] = useState('')
   const [publicationsList, setPublicationsList] = useState([])
   const [publications, setPublications] = useState([])
   const classes = useStyles()
+  const [submittedSearch, setSubmittedSearch] = useState(false)
+  const [submittedSelected, setSubmittedSelected] = useState(false)
 
   // const [url] = useState([])
   const handleChange = event => {
@@ -52,6 +57,7 @@ const SearchPublications = () => {
 
   const handleSearchSubmit = event => {
     event.preventDefault()
+    setSubmittedSearch(search)
     setPublicationsList([])
     // Add search term to query
     axios(`https://chroniclingamerica.loc.gov/search/titles/results/?terms=${search}&format=json`)
@@ -65,7 +71,6 @@ const SearchPublications = () => {
       ))
       .catch(console.error)
   }
-  console.log(search)
 
   // Filter out publications with no issues.
   const newList = publicationsList.filter((publicationsList) =>
@@ -79,13 +84,13 @@ const SearchPublications = () => {
             {issues.name}
           </Typography>
           <Divider />
-          <Typography className={classes.pos} color="textSecondary">
+          <Typography className={classes.pop} color="textSecondary">
             {issues.place_of_publication}
           </Typography>
           <Typography variant="body1" component="p">
-            {issues.start_year}
+            Start Year: <i>{issues.start_year}</i>
             <br />
-            {issues.end_year}
+            End Year: <i>{issues.end_year}</i>
           </Typography>
         </CardContent>
         <CardActions>
@@ -95,6 +100,13 @@ const SearchPublications = () => {
   )
   
   console.log(publications)
+  //  If user selects a publication - redirect
+  if (submittedSelected) {
+    return <Redirect to={{
+      pathname: '/search',
+      state: { url: publications }
+    }} />
+  }
 
   return (
     <div style={{textAlign:'center'}}>
@@ -104,11 +116,13 @@ const SearchPublications = () => {
       <p>Example searches: &quot;Washington&quot; or &quot;Bourbon+News&quot;</p>
         <form onSubmit={handleSearchSubmit}>
           <TextField label="Enter Search Terms" helperText="term1+term2" name="word1"  onChange={handleChange} />
-          <Button className={classes.searchButton} type="submit">Submit</Button>
+          <Button className={classes.searchButton} type="submit">Search</Button>
         </form>
       <div style={{textItems:'center'}}>
-        <h5>Results for &quot;{search.toString()}&quot;</h5>
-        <h3 style={{marginBottom:'20px'}}>Available Publications:</h3>
+        <Paper elevation={1}>
+          {(submittedSearch && <h3 style={{marginBottom:'20px'}}>Showing Results for: &quot;{submittedSearch}&quot;</h3>)}
+        </Paper>
+        <Button onClick={() => setSubmittedSelected(true)} className={classes.publicationButton}>Submit Selected</Button>
         {filteredListJsx}
       </div>
     </div>
