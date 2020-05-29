@@ -1,12 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
-// import Button from 'react-bootstrap/Button'
-// import Jumbotron from 'react-bootstrap/Jumbotron'
-// import Row from 'react-bootstrap/Row'
-// import Container from 'react-bootstrap/Container'
-// import Col from 'react-bootstrap/Col'
-// import Form from 'react-bootstrap/Form'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -16,6 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { TextField } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper';
+import CheckIcon from '@material-ui/icons/Check';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+// import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 
 const useStyles = makeStyles({
@@ -31,13 +28,22 @@ const useStyles = makeStyles({
   },
   searchButton: {
     textAlign: 'center',
+    justifyContent:'center',
   },
   showResults: {
     margin:'20px',
   },
   publicationButton: {
     justifyContent:'center'
-  }
+  },
+  submitPublicationButton: {
+    justifyContent:'center',
+    marginBottom:'20;x'
+  },
+  highlighted: {
+    background:'red'
+  },
+  unselected:'blue'
 })
 
 const SearchPublications = () => {
@@ -47,6 +53,8 @@ const SearchPublications = () => {
   const classes = useStyles()
   const [submittedSearch, setSubmittedSearch] = useState(false)
   const [submittedSelected, setSubmittedSelected] = useState(false)
+  const [selected, setSelected] = useState([]);
+
 
   // const [url] = useState([])
   const handleChange = event => {
@@ -94,7 +102,24 @@ const SearchPublications = () => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={() => setPublications(prevArray => [...prevArray, issues.url])}>View</Button>
+          <ToggleButton
+            value="check"
+            selected={selected.includes(index)}
+            onChange={() => {
+              if (selected.includes(index)) {
+                selected.pop(index)
+              } else {
+              setSelected(prevArray => [...prevArray, index])
+              }
+              if (publications.includes(issues.url)) {
+                publications.pop(issues.url)
+              } else {
+                setPublications(prevArray => [...prevArray, issues.url])
+              }
+            }}
+          >
+            <CheckIcon />
+          </ToggleButton>
         </CardActions>
       </Card>
   )
@@ -108,6 +133,7 @@ const SearchPublications = () => {
     }} />
   }
 
+  console.log(selected)
   return (
     <div style={{textAlign:'center'}}>
       <h1>Search by Publication Title</h1>
@@ -115,14 +141,14 @@ const SearchPublications = () => {
       <p>Note: use &quot;+&quot; rather than a space.</p>
       <p>Example searches: &quot;Washington&quot; or &quot;Bourbon+News&quot;</p>
         <form onSubmit={handleSearchSubmit}>
-          <TextField label="Enter Search Terms" helperText="term1+term2" name="word1"  onChange={handleChange} />
-          <Button className={classes.searchButton} type="submit">Search</Button>
+          <TextField xs={3} label="Enter Search Terms" helperText="term1+term2" name="word1"  onChange={handleChange} />
+          <Button className={classes.searchButton} variant="contained" disableElevation type="submit">Search</Button>
         </form>
       <div style={{textItems:'center'}}>
-        <Paper elevation={1}>
-          {(submittedSearch && <h3 style={{marginBottom:'20px'}}>Showing Results for: &quot;{submittedSearch}&quot;</h3>)}
+        <Paper elevation={1} className={classes.showResults}>
+          {(submittedSearch && <h3>Showing Results for: &quot;{submittedSearch}&quot;</h3> )}
+          {(submittedSearch && <Button onClick={() => setSubmittedSelected(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected</Button>)}
         </Paper>
-        <Button onClick={() => setSubmittedSelected(true)} className={classes.publicationButton}>Submit Selected</Button>
         {filteredListJsx}
       </div>
     </div>
