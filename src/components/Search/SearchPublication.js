@@ -12,8 +12,6 @@ import { TextField } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper';
 import CheckIcon from '@material-ui/icons/Check';
 import ToggleButton from '@material-ui/lab/ToggleButton';
-// import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-
 
 const useStyles = makeStyles({
   root: {
@@ -85,6 +83,8 @@ const SearchPublications = () => {
     publicationsList.issues.length !== 0
   )
 
+  
+  // Map the return of publications from search query
   const filteredListJsx = newList.map((issues, index) =>
   <Card key={index} className={classes.root}>
         <CardContent>
@@ -102,6 +102,7 @@ const SearchPublications = () => {
           </Typography>
         </CardContent>
         <CardActions>
+          <Button variant="contained" color="secondary" onClick={() => setPublications(prevArray => [...prevArray, issues.url])}>View</Button>
           <ToggleButton
             value="check"
             selected={selected.includes(index)}
@@ -111,11 +112,11 @@ const SearchPublications = () => {
               } else {
               setSelected(prevArray => [...prevArray, index])
               }
-              if (publications.includes(issues.url)) {
-                publications.pop(issues.url)
-              } else {
-                setPublications(prevArray => [...prevArray, issues.url])
-              }
+              // if (publications.includes(issues.url)) {
+              //   publications.pop(issues.url)
+              // } else {
+              //   setPublications(prevArray => [...prevArray, issues.url])
+              // }
             }}
           >
             <CheckIcon />
@@ -124,7 +125,6 @@ const SearchPublications = () => {
       </Card>
   )
   
-  console.log(publications)
   //  If user selects a publication - redirect
   if (submittedSelected) {
     return <Redirect to={{
@@ -133,7 +133,9 @@ const SearchPublications = () => {
     }} />
   }
 
+  console.log(publications)
   console.log(selected)
+
   return (
     <div style={{textAlign:'center'}}>
       <h1>Search by Publication Title</h1>

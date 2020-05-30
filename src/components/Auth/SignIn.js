@@ -55,6 +55,7 @@ class SignIn extends Component {
       <div className="row">
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
           <h3>Sign In</h3>
+          <h6>Note: login can sometimes take a moment.</h6>
           <Form onSubmit={this.onSignIn}>
             <Form.Group controlId="email">
               <TextField
