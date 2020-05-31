@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
   card: {
@@ -66,23 +67,27 @@ const Search = (props) => {
 
         {/* Index of all issues in plublication */}
         <Typography className={classes.issues} variant="body2" component="p">
+        <Grid container spacing={3}>
           {publication.issues.map((item, index) => (
-            <Card key={index} className={classes.root}>
-              <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  Issue: {index}
-                </Typography>
-                <Typography variant="h5" component="h2">
-                  Issue Date: {item.date_issued}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Select</Button>
-              </CardActions>
-            </Card>
+            <Grid key={index} item xs={12} sm={6} md={4}>
+              <Card  className={classes.root}>
+                <CardContent>
+                  <Typography className={classes.title} color="textSecondary" gutterBottom>
+                    Issue: {index}
+                  </Typography>
+                  <Typography variant="h5" component="h2">
+                    Issue Date: {item.date_issued}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">Select</Button>
+                </CardActions>
+              </Card>
+            </Grid>
           ))}
           <br />
           {'"a benevolent smile"'}
+          </Grid>
         </Typography>
 
       </CardContent>
@@ -96,21 +101,13 @@ const Search = (props) => {
 
   return (
     <div>
-      <h1>Search</h1>
-      <p>Please allow up to a minute for all pages to load.</p>
-      <p>Below are the results of your search!</p>
+      <h1>Availible Issues</h1>
+      <p>Below are the issues corresponding to your submission! Select from the presented issues to view their records. </p>
       {publicationsJsx}
     </div>
   )
 }
 
-// ----------------------------------BOOTSTRAP---------------------------------------------------------
-{/* <Card key={index} style={{margin:'5px', marginBottom:'20px', padding:'0', width:'18rem'}}>
-<Card.Header style={{fontWeight:'bold'}}>Date Issued: {data.date_issued}</Card.Header>
-<ListGroup variant="flush">
-  <ListGroup.Item><Button type="submit" href={data.url} size="sm">Select</Button></ListGroup.Item>
-</ListGroup>
-</Card> */}
 
   // --------------------------------FIRST EDITION----------------------------------------------------------
   // useEffect(() => {

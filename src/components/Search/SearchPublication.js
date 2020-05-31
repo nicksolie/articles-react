@@ -10,7 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { TextField } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper';
-import CheckIcon from '@material-ui/icons/Check';
+// import CheckIcon from '@material-ui/icons/Check';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 
 const useStyles = makeStyles({
@@ -37,11 +38,7 @@ const useStyles = makeStyles({
   submitPublicationButton: {
     justifyContent:'center',
     marginBottom:'20;x'
-  },
-  highlighted: {
-    background:'red'
-  },
-  unselected:'blue'
+  }
 })
 
 const SearchPublications = () => {
@@ -105,21 +102,22 @@ const SearchPublications = () => {
           <Button variant="contained" color="secondary" onClick={() => setPublications(prevArray => [...prevArray, issues.url])}>View</Button>
           <ToggleButton
             value="check"
-            selected={selected.includes(index)}
+            selected={(selected.includes(index))}
             onChange={() => {
+              // mappedIndex is "index"
+              // If Selected array includes mappedIndex
               if (selected.includes(index)) {
-                selected.pop(index)
+                // Find mappedIndex's index within Selected array
+                const i = selected.indexOf(index)
+                // Remove mappedIndex from Selected array by slicing before mappedIndex and after mappedIndex
+                setSelected(prevArray => [...prevArray.slice(0, i), ...prevArray.slice(i + 1)])
               } else {
-              setSelected(prevArray => [...prevArray, index])
+                // Otherwise, added mappedIndex to Selected
+                setSelected(prevArray => [...prevArray, index])
               }
-              // if (publications.includes(issues.url)) {
-              //   publications.pop(issues.url)
-              // } else {
-              //   setPublications(prevArray => [...prevArray, issues.url])
-              // }
             }}
           >
-            <CheckIcon />
+            <AddBoxIcon style={{ fontSize: 40 }}/>
           </ToggleButton>
         </CardActions>
       </Card>
@@ -128,7 +126,7 @@ const SearchPublications = () => {
   //  If user selects a publication - redirect
   if (submittedSelected) {
     return <Redirect to={{
-      pathname: '/search',
+      pathname: '/search-publication-issues',
       state: { url: publications }
     }} />
   }

@@ -1,35 +1,35 @@
 import React, { Component, Fragment } from 'react'
 import { Route, withRouter } from 'react-router-dom'
-import styles from './../../index.scss'
+import styles from './../index.scss'
 
 // Template imports
-import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
-import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
-import Header from '../Shared/Header'
+import AuthenticatedRoute from './AuthenticatedRoute/AuthenticatedRoute'
+import AutoDismissAlert from './AutoDismissAlert/AutoDismissAlert'
+import Header from './Shared/Header'
 
 // Auth imports
-import SignUp from '../Auth/SignUp'
-import SignIn from '../Auth/SignIn'
-import SignOut from '../Auth/SignOut'
-import ChangePassword from '../Auth/ChangePassword'
+import SignUp from './Auth/SignUp'
+import SignIn from './Auth/SignIn'
+import SignOut from './Auth/SignOut'
+import ChangePassword from './Auth/ChangePassword'
 
 // Collection imports
-import CreateCollection from '../Collections/CreateCollection'
-import ShowCollection from '../Collections/ShowCollection'
-import IndexCollections from '../Collections/IndexCollections'
-import Welcome from '../Welcome/Welcome'
-import EditCollection from '../Collections/EditCollection'
+import CreateCollection from './Collections/CreateCollection'
+import ShowCollection from './Collections/ShowCollection'
+import IndexCollections from './Collections/IndexCollections'
+import Welcome from './Welcome'
+import EditCollection from './Collections/EditCollection'
 
 // Entry imports
-import CreateEntry from '../Entries/CreateEntry'
-import IndexEntries from '../Entries/IndexEntries'
-import ShowEntry from '../Entries/ShowEntry'
-import EditEntry from '../Entries/EditEntry'
+import CreateEntry from './Entries/CreateEntry'
+import IndexEntries from './Entries/IndexEntries'
+import ShowEntry from './Entries/ShowEntry'
+import EditEntry from './Entries/EditEntry'
 
 // Search imports
-import Home from './../Home'
-import Search from '../Search/Search'
-import SearchPublication from '../Search/SearchPublication'
+import Home from './Home'
+import SearchPublicationIssues from './Search/SearchPublicationIssues'
+import SearchPublication from './Search/SearchPublication'
 
 class App extends Component {
   constructor () {
@@ -115,8 +115,8 @@ class App extends Component {
           <AuthenticatedRoute user={user} exact path='/home' render={() => (
             <Home msgAlert={this.msgAlert} user={user} />
           )} />
-          <AuthenticatedRoute path='/search' user={user} render={({ match, location }) => (
-            <Search user={user} match={match} location={location} msgAlert={this.msgAlert} />
+          <AuthenticatedRoute path='/search-publication-issues' user={user} render={({ match, location }) => (
+            <SearchPublicationIssues user={user} match={match} location={location} msgAlert={this.msgAlert} />
           )} />
           <AuthenticatedRoute path='/search-publication' user={user} render={({ match }) => (
             <SearchPublication user={user} match={match} msgAlert={this.msgAlert} />
