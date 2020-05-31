@@ -30,6 +30,7 @@ import EditEntry from './Entries/EditEntry'
 import Home from './Home'
 import SearchPublicationIssues from './Search/SearchPublicationIssues'
 import SearchPublication from './Search/SearchPublication'
+import SearchPublicationAllResults from './Search/SearchPublicationAllResults'
 
 class App extends Component {
   constructor () {
@@ -115,11 +116,14 @@ class App extends Component {
           <AuthenticatedRoute user={user} exact path='/home' render={() => (
             <Home msgAlert={this.msgAlert} user={user} />
           )} />
+          <AuthenticatedRoute path='/search-publication' user={user} render={({ match }) => (
+            <SearchPublication user={user} match={match} msgAlert={this.msgAlert} />
+          )} />
           <AuthenticatedRoute path='/search-publication-issues' user={user} render={({ match, location }) => (
             <SearchPublicationIssues user={user} match={match} location={location} msgAlert={this.msgAlert} />
           )} />
-          <AuthenticatedRoute path='/search-publication' user={user} render={({ match }) => (
-            <SearchPublication user={user} match={match} msgAlert={this.msgAlert} />
+          <AuthenticatedRoute path='/search-publication-all-results' user={user} render={({ match, location }) => (
+            <SearchPublicationAllResults user={user} match={match} location={location} msgAlert={this.msgAlert} />
           )} />
         </main>
       </Fragment>

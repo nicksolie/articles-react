@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,6 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { Grid } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
   card: {
@@ -26,12 +28,15 @@ const useStyles = makeStyles({
     justifyContent:'center',
     marginBottom:'10px',
   },
+  showResults: {
+    bottomMargin:'20px',
+  }
 })
 
 const Search = (props) => {
   const classes = useStyles()
   const [publications, setPublications] = useState([])
-  // const [indexPublication, setIndexPublication] = useState([])
+  const [submittedSelectAll, setSubmittedSelectAll] = useState(false)
 
   useEffect(() => {
     // On page load, perform axios call to get queried publications
@@ -66,10 +71,10 @@ const Search = (props) => {
         <Divider light />
 
         {/* Index of all issues in plublication */}
-        <Typography className={classes.issues} variant="body2" component="p">
+        <Typography className={classes.issues} variant="body2" component="div">
         <Grid container spacing={3}>
           {publication.issues.map((item, index) => (
-            <Grid key={index} item xs={12} sm={6} md={4}>
+            <Grid key={index} item xs={12} sm={6}>
               <Card  className={classes.root}>
                 <CardContent>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -99,15 +104,27 @@ const Search = (props) => {
 
   console.log(publications)
 
+  if (submittedSelectAll) {
+    return <Redirect to={{
+      pathname: '/search-publication-all-results',
+      state: { url: publications }
+    }} />
+  }
+
   return (
     <div>
       <h1>Availible Issues</h1>
       <p>Below are the issues corresponding to your submission! Select from the presented issues to view their records. </p>
+      <div className={classes.showResults}>
+        <Paper elevation={1}>
+          {/* {(submittedSearch && <h3>Showing Results for: &quot;{submittedSearch}&quot;</h3> )} */}
+          {(publications && <Button onClick={() => setSubmittedSelectAll(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit All</Button>)}
+        </Paper>
+      </div>
       {publicationsJsx}
     </div>
   )
 }
-
 
   // --------------------------------FIRST EDITION----------------------------------------------------------
   // useEffect(() => {

@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 // import CheckIcon from '@material-ui/icons/Check';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -38,6 +39,9 @@ const useStyles = makeStyles({
   submitPublicationButton: {
     justifyContent:'center',
     marginBottom:'20;x'
+  },
+  ToggleButton: {
+    justifyContent:'center'
   }
 })
 
@@ -83,23 +87,23 @@ const SearchPublications = () => {
   
   // Map the return of publications from search query
   const filteredListJsx = newList.map((issues, index) =>
-  <Card key={index} className={classes.root}>
-        <CardContent>
-          <Typography variant="h5" component="h2">
-            {issues.name}
-          </Typography>
-          <Divider />
-          <Typography className={classes.pop} color="textSecondary">
-            {issues.place_of_publication}
-          </Typography>
-          <Typography variant="body1" component="p">
-            Start Year: <i>{issues.start_year}</i>
-            <br />
-            End Year: <i>{issues.end_year}</i>
-          </Typography>
-        </CardContent>
+  <Grid key={index} item xs={12} sm={6} md={6}>
+    <Card className={classes.root}>
+      <CardContent>
+        <Typography variant="h5" component="h2">
+          {issues.name}
+        </Typography>
+        <Divider />
+        <Typography className={classes.pop} color="textSecondary">
+          {issues.place_of_publication}
+        </Typography>
+        <Typography variant="body1" component="p">
+          Start Year: <i>{issues.start_year}</i>
+          <br />
+          End Year: <i>{issues.end_year}</i>
+        </Typography>
+      </CardContent>
         <CardActions>
-          <Button variant="contained" color="secondary" onClick={() => setPublications(prevArray => [...prevArray, issues.url])}>View</Button>
           <ToggleButton
             value="check"
             selected={(selected.includes(index))}
@@ -109,11 +113,14 @@ const SearchPublications = () => {
               if (selected.includes(index)) {
                 // Find mappedIndex's index within Selected array
                 const i = selected.indexOf(index)
+                const p = publications.indexOf(issues.url)
                 // Remove mappedIndex from Selected array by slicing before mappedIndex and after mappedIndex
                 setSelected(prevArray => [...prevArray.slice(0, i), ...prevArray.slice(i + 1)])
+                setPublications(prevArray => [...prevArray.slice(0, p), ...prevArray.slice(p + 1)])
               } else {
                 // Otherwise, added mappedIndex to Selected
                 setSelected(prevArray => [...prevArray, index])
+                setPublications(prevArray => [...prevArray, issues.url])
               }
             }}
           >
@@ -121,6 +128,7 @@ const SearchPublications = () => {
           </ToggleButton>
         </CardActions>
       </Card>
+    </Grid>
   )
   
   //  If user selects a publication - redirect
@@ -149,8 +157,10 @@ const SearchPublications = () => {
           {(submittedSearch && <h3>Showing Results for: &quot;{submittedSearch}&quot;</h3> )}
           {(submittedSearch && <Button onClick={() => setSubmittedSelected(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected</Button>)}
         </Paper>
-        {filteredListJsx}
       </div>
+      <Grid container spacing={3}>
+          {filteredListJsx}
+        </Grid>
     </div>
   )
 }
