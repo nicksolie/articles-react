@@ -51,7 +51,7 @@ const SearchPublications = () => {
   const [publications, setPublications] = useState([])
   const classes = useStyles()
   const [submittedSearch, setSubmittedSearch] = useState(false)
-  const [submittedSelected, setSubmittedSelected] = useState(false)
+  const [submittedAll, setSubmittedAll] = useState(false)
   const [selected, setSelected] = useState([]);
 
 
@@ -132,15 +132,12 @@ const SearchPublications = () => {
   )
   
   //  If user selects a publication - redirect
-  if (submittedSelected) {
+  if (submittedAll) {
     return <Redirect to={{
       pathname: '/search-publication-issues',
       state: { url: publications }
     }} />
   }
-
-  console.log(publications)
-  console.log(selected)
 
   return (
     <div style={{textAlign:'center'}}>
@@ -155,7 +152,7 @@ const SearchPublications = () => {
       <div style={{textItems:'center'}}>
         <Paper elevation={1} className={classes.showResults}>
           {(submittedSearch && <h3>Showing Results for: &quot;{submittedSearch}&quot;</h3> )}
-          {(submittedSearch && <Button onClick={() => setSubmittedSelected(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected</Button>)}
+          {(submittedSearch && <Button onClick={() => setSubmittedAll(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected</Button>)}
         </Paper>
       </div>
       <Grid container spacing={3}>

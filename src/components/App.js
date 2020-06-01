@@ -31,6 +31,7 @@ import Home from './Home'
 import SearchPublicationIssues from './Search/SearchPublicationIssues'
 import SearchPublication from './Search/SearchPublication'
 import SearchPublicationAllResults from './Search/SearchPublicationAllResults'
+import SearchPublicationSelectedResults from './Search/SearchPublicationSelectedResults'
 
 class App extends Component {
   constructor () {
@@ -124,6 +125,9 @@ class App extends Component {
           )} />
           <AuthenticatedRoute path='/search-publication-all-results' user={user} render={({ match, location }) => (
             <SearchPublicationAllResults user={user} match={match} location={location} msgAlert={this.msgAlert} />
+          )} />
+          <AuthenticatedRoute path='/search-publication-selected-results' user={user} render={({ match, location }) => (
+            <SearchPublicationSelectedResults user={user} match={match} location={location} msgAlert={this.msgAlert} />
           )} />
         </main>
       </Fragment>
