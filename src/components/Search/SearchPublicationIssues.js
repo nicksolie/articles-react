@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
@@ -12,8 +12,17 @@ import { Grid } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import AddBoxIcon from '@material-ui/icons/AddBox'
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { withStyles } from '@material-ui/core/styles';
+import Skeleton from '@material-ui/lab/Skeleton'
+// import SearchSharpIcon from '@material-ui/icons/SearchSharp';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   card: {
     minWidth: 275,
     marginBottom:'30px',
@@ -32,27 +41,86 @@ const useStyles = makeStyles({
   },
   showResults: {
     bottomMargin:'20px',
+  },
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
   }
-})
+}))
+
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
 
 const Search = (props) => {
   const classes = useStyles()
   const [publications, setPublications] = useState([])
-  const [submittedSelectAll, setSubmittedSelectAll] = useState(false)
+  // const [submittedSelectAll, setSubmittedSelectAll] = useState(false)
   const [submittedSelected, setSubmittedSelected] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState([])
   const [selectedIssues, setSelectedIssues] = useState([])
-  const [readyIssues, setReadyIssues] = useState([])
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    // On page load, perform axios call to get queried publications
-    if (publications.length === 0) {
-      props.location.state.url.forEach(item => (
-        axios(item)
-          .then(response => setPublications(result => [...result, response.data]))
-      ))
-    }
-  })
+  // On page load, perform axios call to get queried publications
+  if (publications.length === 0) {
+    props.location.state.url.forEach(item => (
+      axios(item)
+        .then(response => setPublications(result => [...result, response.data]))
+    ))
+  } else if (loading === true) {
+    setLoading(false)
+  }
+
+
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const DialogContent = withStyles((theme) => ({
+    root: {
+      padding: theme.spacing(2),
+    },
+  }))(MuiDialogContent);
+
+  const DialogActions = withStyles((theme) => ({
+    root: {
+      margin: 0,
+      padding: theme.spacing(1),
+    },
+  }))(MuiDialogActions);
+
+  const DialogTitle = withStyles(styles)((props) => {
+    const { children, classes, onClose, ...other } = props;
+    return (
+      <MuiDialogTitle disableTypography className={classes.root} {...other}>
+        <Typography variant="h6">{children}</Typography>
+        {onClose ? (
+          <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </MuiDialogTitle>
+    );
+  });
 
   const publicationsJsx = publications.map((publication, index) => (
     <Card key={index} className={classes.card}>
@@ -91,7 +159,146 @@ const Search = (props) => {
                   </Typography>
                 </CardContent>
                 <CardActions>
+
+                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                  View
+                </Button>
+
+                  {/* select toggle */}
                   <ToggleButton
+                    value="check"
+                    selected={(selectedIndex.includes(index))}
+                    onChange={() => {
+                      // mappedIndex is "index"
+                      // If Selected array includes mappedIndex
+                      if (selectedIndex.includes(index)) {
+                        // Find mappedIndex's index within Selected array
+                        const i = selectedIndex.indexOf(index)
+                        const p = publications.indexOf(item)
+                        // Remove mappedIndex from Selected array by slicing before mappedIndex and after mappedIndex
+                        setSelectedIndex(prevArray => [...prevArray.slice(0, i), ...prevArray.slice(i + 1)])
+                        setSelectedIssues(prevArray => [...prevArray.slice(0, p), ...prevArray.slice(p + 1)])
+                      } else {
+                        // Otherwise, added mappedIndex to Selected
+                        setSelectedIndex(prevArray => [...prevArray, index])
+                        setSelectedIssues(prevArray => [...prevArray, item])
+                      }
+                    }}
+                  >
+                    <AddBoxIcon style={{ fontSize: 40 }}/>
+                  </ToggleButton>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+          </Grid>
+        </Typography>
+
+      </CardContent>
+    </Card>
+  ))
+
+  console.log('selectedIndex are', selectedIndex )
+  console.log('selectedIssues are', selectedIssues)
+
+  // Redirect if selected issues is clicked
+  if (submittedSelected) {
+    return <Redirect to={{
+      pathname: '/search-publication-selected-results',
+      state: { url: selectedIssues }
+    }} />
+  }
+
+  // Redirect if Submit all is clicked
+  // if (submittedSelectAll) {
+  //   return <Redirect to={{
+  //     pathname: '/search-publication-all-results',
+  //     state: { url: publications }
+  //   }} />
+  // }
+
+  return (
+    <div>
+       <div>
+        <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Modal title
+          </DialogTitle>
+          <DialogContent dividers>
+            <Typography gutterBottom>
+              <embed src="https://chroniclingamerica.loc.gov/data/batches/kyu_one_ver01/data/sn86069873/00100479266/1904041201/0240.pdf" type="application/pdf" height="600" width="80%" />
+            </Typography>
+            <Typography gutterBottom>
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+              lacus vel augue laoreet rutrum faucibus dolor auctor.
+            </Typography>
+            <Typography gutterBottom>
+              Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+              scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+              auctor fringilla.
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleClose} color="primary">
+              Add
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+      <h1>Availible Issues</h1>
+      <p>Below are the issues corresponding to your submission! Select from the presented issues to view their records. </p>
+      <div className={classes.showResults}>
+        {/* <Paper elevation={1}>
+          {(publications && <Button onClick={() => setSubmittedSelectAll(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>View All (BROKEN)</Button>)}
+        </Paper> */}
+        <Paper elevation={1}>
+        {(selectedIssues && <Button onClick={() => setSubmittedSelected(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected</Button>)}
+        </Paper>
+      </div>
+      <Grid container spacing={3}>
+
+        {/* If loading, render skeletons */}
+        {loading ? (
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} md={6}>
+              <Skeleton height={200} className={classes.skeleton} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Skeleton height={200} className={classes.skeleton} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Skeleton height={200} className={classes.skeleton} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Skeleton height={200} className={classes.skeleton} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Skeleton height={200} className={classes.skeleton} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Skeleton height={200} className={classes.skeleton} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Skeleton height={200} className={classes.skeleton} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Skeleton height={200} className={classes.skeleton} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Skeleton height={200} className={classes.skeleton} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Skeleton height={200} className={classes.skeleton} />
+            </Grid>
+          </Grid>
+        ) : publicationsJsx}
+        </Grid>
+    </div>
+  )
+}
+
+// -------------------------------------------Old toggle button. sends publication *link*----------------------------------------------
+{/* <ToggleButton
                     value="check"
                     selected={(selectedIndex.includes(index))}
                     onChange={() => {
@@ -112,74 +319,8 @@ const Search = (props) => {
                     }}
                   >
                     <AddBoxIcon style={{ fontSize: 40 }}/>
-                  </ToggleButton>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-          <br />
-          {'"a benevolent smile"'}
-          </Grid>
-        </Typography>
-
-      </CardContent>
-    </Card>
-  ))
-
-  // Display the publication infomation in a partition
-  // Index all issues in a publication within a card
-
-  console.log('publications are', publications)
-  console.log('selectedIndex are', selectedIndex )
-  console.log('selectedIssues are', selectedIssues)
-
-  // if ready issues is different that selected issues
-  if (readyIssues.length !== selectedIssues.length) {
-   selectedIssues.filter(issue => !readyIssues(issue))
-  }  
-
-  // DOES NOT INCLUDE
-  if (readyIssues.length !== selectedIssues.length) {
-    selectedIssues.map(selectedIssue => (
-      axios(selectedIssue)
-        .then(response => response.data.issues.map(issue => (
-          axios(issue.url)
-            .then(response => setReadyIssues(selectedIssue => [...selectedIssue, response.data]))
-        )))
-    ))
-
-  // Redirect if Submit all is clicked
-  if (submittedSelectAll) {
-    return <Redirect to={{
-      pathname: '/search-publication-all-results',
-      state: { url: publications }
-    }} />
-  }
-
-  // Redirect if selected issues is clicked
-  if (submittedSelected) {
-    return <Redirect to={{
-      pathname: '/search-publication-Selected-results',
-      state: { url: readyIssues }
-    }} />
-  }
-
-  return (
-    <div>
-      <h1>Availible Issues</h1>
-      <p>Below are the issues corresponding to your submission! Select from the presented issues to view their records. </p>
-      <div className={classes.showResults}>
-        <Paper elevation={1}>
-          {(publications && <Button onClick={() => setSubmittedSelectAll(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit All (DANGER)</Button>)}
-        </Paper>
-        <Paper elevation={1}>
-        {(selectedIssues && <Button onClick={() => setSubmittedSelected(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected</Button>)}
-        </Paper>
-      </div>
-      {publicationsJsx}
-    </div>
-  )
-}
+                  </ToggleButton> */}
+// ------------------------------------------------------------------------------------------
 
   // --------------------------------FIRST EDITION----------------------------------------------------------
   // useEffect(() => {
@@ -200,5 +341,23 @@ const Search = (props) => {
   //   }
   // })
   // ------------------------------------------------------------------------------------------
+
+  // const [readyIssues, setReadyIssues] = useState([])
+    // if ready issues is different that selected issues
+  // if (readyIssues.length !== selectedIssues.length) {
+  //   selectedIssues.filter((item) => {
+  //     setReadyIssues(!readyIssues.includes(item))
+  //   })
+  // }  
+
+  // DOES NOT INCLUDE
+  // if (readyIssues.length !== selectedIssues.length) {
+  //   selectedIssues.map(selectedIssue => (
+  //     axios(selectedIssue)
+  //       .then(response => response.data.issues.map(issue => (
+  //         axios(issue.url)
+  //           .then(response => setReadyIssues(selectedIssue => [...selectedIssue, response.data]))
+  //       )))
+  //   ))
 
 export default Search
