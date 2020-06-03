@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -9,9 +9,9 @@ import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import { Grid } from '@material-ui/core'
-import Paper from '@material-ui/core/Paper'
-import ToggleButton from '@material-ui/lab/ToggleButton'
-import AddBoxIcon from '@material-ui/icons/AddBox'
+// import Paper from '@material-ui/core/Paper'
+// import ToggleButton from '@material-ui/lab/ToggleButton'
+// import AddBoxIcon from '@material-ui/icons/AddBox'
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -68,12 +68,12 @@ const styles = (theme) => ({
 const Search = (props) => {
   const classes = useStyles()
   const [publications, setPublications] = useState([])
-  // const [submittedSelectAll, setSubmittedSelectAll] = useState(false)
-  const [submittedSelected, setSubmittedSelected] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState([])
-  const [selectedIssues, setSelectedIssues] = useState([])
+  // const [submittedSelected, setSubmittedSelected] = useState(false)
+  // const [selectedIndex, setSelectedIndex] = useState([])
+  // const [selectedIssues, setSelectedIssues] = useState([])
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(true)
+  // const [currentViewIssue, setCurrentView] = useState([])
 
   // On page load, perform axios call to get queried publications
   if (publications.length === 0) {
@@ -84,8 +84,6 @@ const Search = (props) => {
   } else if (loading === true) {
     setLoading(false)
   }
-
-
 
   const handleClose = () => {
     setOpen(false)
@@ -160,12 +158,13 @@ const Search = (props) => {
                 </CardContent>
                 <CardActions>
 
-                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                {/* Modal/Dialog View Button*/}
+                <Button variant="outlined" color="primary" onClick={handleClickOpen} >
                   View
                 </Button>
 
                   {/* select toggle */}
-                  <ToggleButton
+                  {/* <ToggleButton
                     value="check"
                     selected={(selectedIndex.includes(index))}
                     onChange={() => {
@@ -186,7 +185,7 @@ const Search = (props) => {
                     }}
                   >
                     <AddBoxIcon style={{ fontSize: 40 }}/>
-                  </ToggleButton>
+                  </ToggleButton> */}
                 </CardActions>
               </Card>
             </Grid>
@@ -198,27 +197,19 @@ const Search = (props) => {
     </Card>
   ))
 
-  console.log('selectedIndex are', selectedIndex )
-  console.log('selectedIssues are', selectedIssues)
+  // console.log('currentViewIssue is', currentViewIssue )
 
-  // Redirect if selected issues is clicked
-  if (submittedSelected) {
-    return <Redirect to={{
-      pathname: '/search-publication-selected-results',
-      state: { url: selectedIssues }
-    }} />
-  }
-
-  // Redirect if Submit all is clicked
-  // if (submittedSelectAll) {
+  // // Redirect if selected issues is clicked
+  // if (submittedSelected) {
   //   return <Redirect to={{
-  //     pathname: '/search-publication-all-results',
-  //     state: { url: publications }
+  //     pathname: '/search-publication-selected-results',
+  //     state: { url: selectedIssues }
   //   }} />
   // }
 
   return (
     <div>
+
        <div>
         <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
@@ -245,16 +236,14 @@ const Search = (props) => {
           </DialogActions>
         </Dialog>
       </div>
+
       <h1>Availible Issues</h1>
       <p>Below are the issues corresponding to your submission! Select from the presented issues to view their records. </p>
-      <div className={classes.showResults}>
+      {/* <div className={classes.showResults}> */}
         {/* <Paper elevation={1}>
-          {(publications && <Button onClick={() => setSubmittedSelectAll(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>View All (BROKEN)</Button>)}
-        </Paper> */}
-        <Paper elevation={1}>
         {(selectedIssues && <Button onClick={() => setSubmittedSelected(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected</Button>)}
-        </Paper>
-      </div>
+        </Paper> */}
+      {/* </div> */}
       <Grid container spacing={3}>
 
         {/* If loading, render skeletons */}
@@ -296,68 +285,5 @@ const Search = (props) => {
     </div>
   )
 }
-
-// -------------------------------------------Old toggle button. sends publication *link*----------------------------------------------
-{/* <ToggleButton
-                    value="check"
-                    selected={(selectedIndex.includes(index))}
-                    onChange={() => {
-                      // mappedIndex is "index"
-                      // If Selected array includes mappedIndex
-                      if (selectedIndex.includes(index)) {
-                        // Find mappedIndex's index within Selected array
-                        const i = selectedIndex.indexOf(index)
-                        const p = publications.indexOf(publication.url)
-                        // Remove mappedIndex from Selected array by slicing before mappedIndex and after mappedIndex
-                        setSelectedIndex(prevArray => [...prevArray.slice(0, i), ...prevArray.slice(i + 1)])
-                        setSelectedIssues(prevArray => [...prevArray.slice(0, p), ...prevArray.slice(p + 1)])
-                      } else {
-                        // Otherwise, added mappedIndex to Selected
-                        setSelectedIndex(prevArray => [...prevArray, index])
-                        setSelectedIssues(prevArray => [...prevArray, publication.url])
-                      }
-                    }}
-                  >
-                    <AddBoxIcon style={{ fontSize: 40 }}/>
-                  </ToggleButton> */}
-// ------------------------------------------------------------------------------------------
-
-  // --------------------------------FIRST EDITION----------------------------------------------------------
-  // useEffect(() => {
-  //   // On page load, when firstEdition is empty, perform axios call to get queried edition
-  //   if (firstEdition.length === 0) {
-  //     // Passed URL will look like this: https://chroniclingamerica.loc.gov/lccn/sn86069872.json
-  //     axios(props.location.state.url)
-  //       // Find  first edition of the query
-  //       .then(response => setFirstEdition(response.data.issues.shift()))
-  //   // Check if pageIndex has not been populated, then get all the pages in firstEdition
-  //   } else if (pagesIndex.length === 0) {
-  //     axios(firstEdition.url)
-  //       // Iterate through all the pages in the firstEdition
-  //       .then(response => response.data.pages.forEach(result => (
-  //         axios(result.url)
-  //         .then(response => setPagesIndex(searches => [...searches, response.data]))
-  //       )))
-  //   }
-  // })
-  // ------------------------------------------------------------------------------------------
-
-  // const [readyIssues, setReadyIssues] = useState([])
-    // if ready issues is different that selected issues
-  // if (readyIssues.length !== selectedIssues.length) {
-  //   selectedIssues.filter((item) => {
-  //     setReadyIssues(!readyIssues.includes(item))
-  //   })
-  // }  
-
-  // DOES NOT INCLUDE
-  // if (readyIssues.length !== selectedIssues.length) {
-  //   selectedIssues.map(selectedIssue => (
-  //     axios(selectedIssue)
-  //       .then(response => response.data.issues.map(issue => (
-  //         axios(issue.url)
-  //           .then(response => setReadyIssues(selectedIssue => [...selectedIssue, response.data]))
-  //       )))
-  //   ))
 
 export default Search

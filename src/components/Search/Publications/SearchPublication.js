@@ -74,24 +74,25 @@ const SearchPublications = () => {
     // Add search term to query
     axios(`https://chroniclingamerica.loc.gov/search/titles/results/?terms=${search}&format=json`)
       // Filter response to array
-      .then(response => response.data.items)
-      // Iterate through array of items to find urls
-      .then(items => items.forEach(result =>
+      .then(response => response.data.items.forEach(result =>
         // Go to url for publication information
         axios(result.url)
           .then(response => setPublicationsList(searches => [...searches, response.data]))
-          .then(setLoading(false))
       ))
       .catch(console.error)
+      .finally(setLoading(false))
   }
-
   // Filter out publications with no issues.
-  const newList = publicationsList.filter((publicationsList) =>
+  const filteredPublicationList = publicationsList.filter((publicationsList) =>
     publicationsList.issues.length !== 0
   )
 
+  const emptyPublicationList = publicationsList.filter((publicationsList) =>
+    publicationsList.issues.length === 0
+  )
+
   // Map the return of publications from search query
-  const filteredListJsx = newList.map((issues, index) =>
+  const filteredListJsx = filteredPublicationList.map((issues, index) =>
   <Grid key={index} item xs={12} sm={6} md={6}>
     <Card className={classes.root}>
       <CardContent>
@@ -129,13 +130,24 @@ const SearchPublications = () => {
               }
             }}
           >
-            <AddBoxIcon style={{ fontSize: 40 }}/>
+            <AddBoxIcon />
+            Search
           </ToggleButton>
+          {/* <Button variant="outlined" color="secondary">
+            <s>Add to Collection</s> (TBA)
+          </Button> */}
         </CardActions>
       </Card>
     </Grid>
   )
-  
+
+  const Jsx = (
+    <div style={{marginTop:'50px'}}>
+      <h1>There are no results that match your search. Please try again.</h1>
+      <p>This website rejects any responses from Chronicling America that do not contain any PDFs. If you are interested in seeing data aside from PDFs, please notify the owner of this site.</p>
+    </div>
+  )
+
   //  If user selects a publication - redirect
   if (submittedAll) {
     return <Redirect to={{
@@ -143,6 +155,8 @@ const SearchPublications = () => {
       state: { url: publications }
     }} />
   }
+
+  console.log(loading)
 
   return (
     <div style={{textAlign:'center'}}>
@@ -198,6 +212,8 @@ const SearchPublications = () => {
           </Grid>
         ) : filteredListJsx}
         </Grid>
+        {/* <Jsx /> */}
+        {((loading === false && submittedSearch && emptyPublicationList.length === 0) && Jsx )}
     </div>
   )
 }

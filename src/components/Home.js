@@ -66,8 +66,8 @@ const Home = () => {
                             </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button variant="contained" disableElevation size="small">
-                                TBA
+                                <Button variant="contained" disableElevation href="#search-awardees" size="small">
+                                Start Here
                                 </Button>
                             </CardActions>
                         </Card>

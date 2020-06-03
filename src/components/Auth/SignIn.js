@@ -16,8 +16,8 @@ class SignIn extends Component {
     super()
 
     this.state = {
-      email: '',
-      password: ''
+      email: 'nick',
+      password: '1122'
     }
   }
 
@@ -60,11 +60,11 @@ class SignIn extends Component {
             <Form.Group controlId="email">
               <TextField
                 id="standard-full-width"
-                type="email"
+                type="text"
                 name="email"
-                label="Email Address"
+                label="Username"
                 value={email}
-                placeholder="Enter email"
+                placeholder="Enter Username"
                 onChange={this.handleChange}
                 InputLabelProps={{
                   shrink: true,
