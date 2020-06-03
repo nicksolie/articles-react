@@ -10,8 +10,8 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import { Grid } from '@material-ui/core'
 // import Paper from '@material-ui/core/Paper'
-// import ToggleButton from '@material-ui/lab/ToggleButton'
-// import AddBoxIcon from '@material-ui/icons/AddBox'
+import ToggleButton from '@material-ui/lab/ToggleButton'
+import AddBoxIcon from '@material-ui/icons/AddBox'
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -69,11 +69,11 @@ const Search = (props) => {
   const classes = useStyles()
   const [publications, setPublications] = useState([])
   // const [submittedSelected, setSubmittedSelected] = useState(false)
-  // const [selectedIndex, setSelectedIndex] = useState([])
+  const [selectedIndex, setSelectedIndex] = useState([])
   // const [selectedIssues, setSelectedIssues] = useState([])
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(true)
-  // const [currentViewIssue, setCurrentView] = useState([])
+  const [currentViewIssue, setCurrentViewIssue] = useState([])
 
   // On page load, perform axios call to get queried publications
   if (publications.length === 0) {
@@ -124,7 +124,7 @@ const Search = (props) => {
     <Card key={index} className={classes.card}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Publication: {index}
+          Publication: {index + 1}
         </Typography>
         <Typography variant="h5" component="h2">
           {publication.name}
@@ -139,6 +139,11 @@ const Search = (props) => {
         <br />
         End Year: <i>{publication.end_year}</i>
         <br />
+        {/* Modal/Dialog View Button*/}
+        <Button variant="outlined" color="primary" onClick={handleClickOpen} >
+          View Selected
+        </Button>
+
         </Typography>
         <Divider light />
 
@@ -150,7 +155,7 @@ const Search = (props) => {
               <Card  className={classes.root}>
                 <CardContent>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Issue: {index}
+                    Issue: {index + 1}
                   </Typography>
                   <Typography variant="h5" component="h2">
                     Issue Date: {item.date_issued}
@@ -158,13 +163,8 @@ const Search = (props) => {
                 </CardContent>
                 <CardActions>
 
-                {/* Modal/Dialog View Button*/}
-                <Button variant="outlined" color="primary" onClick={handleClickOpen} >
-                  View
-                </Button>
-
                   {/* select toggle */}
-                  {/* <ToggleButton
+                  <ToggleButton
                     value="check"
                     selected={(selectedIndex.includes(index))}
                     onChange={() => {
@@ -173,19 +173,19 @@ const Search = (props) => {
                       if (selectedIndex.includes(index)) {
                         // Find mappedIndex's index within Selected array
                         const i = selectedIndex.indexOf(index)
-                        const p = publications.indexOf(item)
+                        const p = publications.indexOf(item.urk)
                         // Remove mappedIndex from Selected array by slicing before mappedIndex and after mappedIndex
                         setSelectedIndex(prevArray => [...prevArray.slice(0, i), ...prevArray.slice(i + 1)])
-                        setSelectedIssues(prevArray => [...prevArray.slice(0, p), ...prevArray.slice(p + 1)])
+                        setCurrentViewIssue(prevArray => [...prevArray.slice(0, p), ...prevArray.slice(p + 1)])
                       } else {
                         // Otherwise, added mappedIndex to Selected
                         setSelectedIndex(prevArray => [...prevArray, index])
-                        setSelectedIssues(prevArray => [...prevArray, item])
+                        setCurrentViewIssue(prevArray => [...prevArray, item.url])
                       }
                     }}
                   >
                     <AddBoxIcon style={{ fontSize: 40 }}/>
-                  </ToggleButton> */}
+                  </ToggleButton>
                 </CardActions>
               </Card>
             </Grid>
@@ -196,16 +196,9 @@ const Search = (props) => {
       </CardContent>
     </Card>
   ))
+  console.log(selectedIndex)
+  console.log('currentViewIssue is', currentViewIssue )
 
-  // console.log('currentViewIssue is', currentViewIssue )
-
-  // // Redirect if selected issues is clicked
-  // if (submittedSelected) {
-  //   return <Redirect to={{
-  //     pathname: '/search-publication-selected-results',
-  //     state: { url: selectedIssues }
-  //   }} />
-  // }
 
   return (
     <div>

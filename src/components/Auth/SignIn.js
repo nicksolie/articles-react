@@ -84,7 +84,7 @@ class SignIn extends Component {
               />
             </Form.Group>
             <Button type="submit" variant="contained">
-              Primary
+              Submit
             </Button>
           </Form>
         </div>

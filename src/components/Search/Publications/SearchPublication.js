@@ -14,8 +14,23 @@ import AddBoxIcon from '@material-ui/icons/AddBox'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import { Grid } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+const suggestedSearchs = [
+  { search: '' },
+  { search: 'Bourbon+News' },
+  { search: 'Washington' },
+  { search: 'Rebel' },
+  { search: 'Ohio' },
+]
 
 const useStyles = makeStyles({
+  main: {
+    marginTop:'30px',
+    marginBottom:'40px',
+    // width:'75%',
+    justifyContent:'center'
+  },
   root: {
     minWidth: 275,
     marginBottom: '10px',
@@ -57,9 +72,9 @@ const SearchPublications = () => {
   const [submittedAll, setSubmittedAll] = useState(false)
   const [selected, setSelected] = useState([]);
   const [loading, setLoading] = useState(false)
+  const [value, setValue] = useState(suggestedSearchs[0])
+  const [inputValue, setInputValue] = useState('');
 
-
-  // const [url] = useState([])
   const handleChange = event => {
     event.persist()
     // eslint-disable-next-line no-unused-vars
@@ -84,7 +99,7 @@ const SearchPublications = () => {
   }
   // Filter out publications with no issues.
   const filteredPublicationList = publicationsList.filter((publicationsList) =>
-    publicationsList.issues.length !== 0
+    publicationsList.issues.length !== 0,
   )
 
   const emptyPublicationList = publicationsList.filter((publicationsList) =>
@@ -94,7 +109,7 @@ const SearchPublications = () => {
   // Map the return of publications from search query
   const filteredListJsx = filteredPublicationList.map((issues, index) =>
   <Grid key={index} item xs={12} sm={6} md={6}>
-    <Card className={classes.root}>
+    <Card className={classes.main}>
       <CardContent>
         <Typography variant="h5" component="h2">
           {issues.name}
@@ -112,6 +127,7 @@ const SearchPublications = () => {
         <CardActions>
           <ToggleButton
             value="check"
+            className={classes.searchButton}
             selected={(selected.includes(index))}
             onChange={() => {
               // mappedIndex is "index"
@@ -131,7 +147,7 @@ const SearchPublications = () => {
             }}
           >
             <AddBoxIcon />
-            Search
+            Add to Search
           </ToggleButton>
           {/* <Button variant="outlined" color="secondary">
             <s>Add to Collection</s> (TBA)
@@ -156,64 +172,91 @@ const SearchPublications = () => {
     }} />
   }
 
-  console.log(loading)
+  console.log(search)
 
   return (
     <div style={{textAlign:'center'}}>
-      <h1>Search by Publication Title</h1>
-      <p>Note: some publications return blank. If this occurs, select a new term.</p>
-      <p>Note: use &quot;+&quot; rather than a space.</p>
-      <p>Example searches: &quot;Washington&quot; or &quot;Bourbon+News&quot;</p>
-        <form onSubmit={handleSearchSubmit}>
-          <TextField xs={3} label="Enter Search Terms" helperText="term1+term2" name="word1"  onChange={handleChange} />
-          <Button className={classes.searchButton} variant="contained" disableElevation type="submit">Search</Button>
-        </form>
-      <div style={{textItems:'center'}}>
-        <Paper elevation={1} className={classes.showResults}>
-          {(submittedSearch && <h3>Showing Results for: &quot;{submittedSearch}&quot;</h3> )}
-          {(submittedSearch && <Button onClick={() => setSubmittedAll(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected</Button>)}
-        </Paper>
-      </div>
+
+      <Card className={classes.main} variant="outlined">
+        <CardContent>
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
+            Instructions
+          </Typography>
+          <Typography variant="h5" component="h2">
+            Search by Publication Title
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            Note: Spaces are not allowed - Use &quot;+&quot;
+          </Typography>
+
+          {/* Search Form w/ Autocomplete */}
+          <form onSubmit={handleSearchSubmit}>
+            <Autocomplete
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              inputValue={inputValue}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+                setSearch(newInputValue)
+              }}
+                options={suggestedSearchs}
+                getOptionLabel={(option) => option.search}
+                id="search-publications"
+                renderInput={(params) => <TextField {...params} xs={3} label="Enter Search Terms" helperText="term1+term2" margin="normal" onChange={handleChange} />}
+              />
+            <Button className={classes.searchButton} variant="contained" disableElevation type="submit">Search</Button>
+          </form>
+          <Paper elevation={1} className={classes.showResults}>
+            {(submittedSearch && <h3>Showing Results for: &quot;{submittedSearch}&quot;</h3> )}
+          </Paper>
+          <CardActions className={classes.searchButton}>
+            {(submittedSearch && <Button onClick={() => setSubmittedAll(true)} variant="outlined" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected Publications</Button>)}
+          </CardActions>
+        </CardContent>
+      </Card>
+
       <Grid container spacing={3}>
 
-        {/* If loading, render skeletons */}
-        {loading ? (
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
-              <Skeleton height={200} className={classes.skeleton} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Skeleton height={200} className={classes.skeleton} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Skeleton height={200} className={classes.skeleton} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Skeleton height={200} className={classes.skeleton} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Skeleton height={200} className={classes.skeleton} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Skeleton height={200} className={classes.skeleton} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Skeleton height={200} className={classes.skeleton} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Skeleton height={200} className={classes.skeleton} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Skeleton height={200} className={classes.skeleton} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Skeleton height={200} className={classes.skeleton} />
-            </Grid>
+      {/* If loading, render skeletons */}
+      {loading ? (
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={6}>
+            <Skeleton height={200} className={classes.skeleton} />
           </Grid>
-        ) : filteredListJsx}
+          <Grid item xs={12} sm={6} md={6}>
+            <Skeleton height={200} className={classes.skeleton} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <Skeleton height={200} className={classes.skeleton} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <Skeleton height={200} className={classes.skeleton} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <Skeleton height={200} className={classes.skeleton} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <Skeleton height={200} className={classes.skeleton} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <Skeleton height={200} className={classes.skeleton} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <Skeleton height={200} className={classes.skeleton} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <Skeleton height={200} className={classes.skeleton} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <Skeleton height={200} className={classes.skeleton} />
+          </Grid>
         </Grid>
-        {/* <Jsx /> */}
-        {((loading === false && submittedSearch && emptyPublicationList.length === 0) && Jsx )}
+      ) : filteredListJsx}
+      </Grid>
+      {/* <Jsx /> */}
+      {((loading === false && submittedSearch && emptyPublicationList.length === 0) && Jsx )}
     </div>
   )
 }
