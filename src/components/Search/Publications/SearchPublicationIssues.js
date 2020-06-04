@@ -9,7 +9,6 @@ import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import { Grid } from '@material-ui/core'
-// import Paper from '@material-ui/core/Paper'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import Dialog from '@material-ui/core/Dialog';
@@ -175,14 +174,9 @@ const Search = (props) => {
   const dialogJsx = issuePageData.map((page) => (
     <div key={page.data.sequence}>
       {page.data.issue.date_issued}
-      <embed src={page.data.pdf} type="application/pdf" height="600" width="100%" />
+      <embed src={page.data.pdf} type="application/pdf" height="900" width="90%" />
     </div>
-  ))
-
-    // const dialogJsx = (
-    //   console.log(issuePageData)
-    // )
-  
+  )) 
 
   return (
     <div>
