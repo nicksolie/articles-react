@@ -23,12 +23,12 @@ const suggestedSearchs = [
   { search: 'Labor' },
   { search: 'Independent' },
   { search: 'Ohio' },
+  { search: 'Bourbon+News'}
 ]
 
 const useStyles = makeStyles({
   main: {
-    marginTop:'30px',
-    marginBottom:'40px',
+    marginTop:'20px',
     // width:'75%',
     justifyContent:'center'
   },
@@ -43,18 +43,22 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
   searchButton: {
-    textAlign: 'center',
+    textAlign:'center',
+    alignItems:'center',
     justifyContent:'center',
+  },
+  AddPublicationButton: {
+    textAlign:'center',
+    alignItems:'center',
+    justifyContent:'center',
+    marginBottom:'7px'
   },
   showResults: {
     margin:'20px',
   },
-  publicationButton: {
-    justifyContent:'center'
-  },
   submitPublicationButton: {
     justifyContent:'center',
-    marginBottom:'20;x'
+    marginBottom:'20px'
   },
   ToggleButton: {
     justifyContent:'center'
@@ -103,9 +107,9 @@ const SearchPublications = () => {
     publicationsList.issues.length !== 0,
   )
 
-  const emptyPublicationList = publicationsList.filter((publicationsList) =>
-    publicationsList.issues.length === 0
-  )
+  // const emptyPublicationList = publicationsList.filter((publicationsList) =>
+  //   publicationsList.issues.length === 0
+  // )
 
   // Map the return of publications from search query
   const filteredListJsx = filteredPublicationList.map((issues, index) =>
@@ -125,10 +129,10 @@ const SearchPublications = () => {
           End Year: <i>{issues.end_year}</i>
         </Typography>
       </CardContent>
-        <CardActions>
+        {/* <CardActions> */}
           <ToggleButton
             value="check"
-            className={classes.searchButton}
+            className={classes.submitPublicationButton}
             selected={(selected.includes(index))}
             onChange={() => {
               // mappedIndex is "index"
@@ -148,22 +152,24 @@ const SearchPublications = () => {
             }}
           >
             <AddBoxIcon />
-            Add to Search
+            Add to List
           </ToggleButton>
           {/* <Button variant="outlined" color="secondary">
             <s>Add to Collection</s> (TBA)
           </Button> */}
-        </CardActions>
+        {/* </CardActions> */}
       </Card>
     </Grid>
   )
 
-  const Jsx = (
-    <div style={{marginTop:'50px'}}>
-      <h1>There are no results that match your search. Please try again.</h1>
-      <p>This website rejects any responses from Chronicling America that do not contain any PDFs. If you are interested in seeing data aside from PDFs, please notify the owner of this site.</p>
-    </div>
-  )
+  console.log(filteredListJsx)
+
+  // const Jsx = (
+  //   <div style={{marginTop:'50px'}}>
+  //     <h1>There are no results that match your search. Please try again.</h1>
+  //     <p>This website rejects any responses from Chronicling America that do not contain any PDFs. If you are interested in seeing data aside from PDFs, please notify the owner of this site.</p>
+  //   </div>
+  // )
 
   //  If user selects a publication - redirect
   if (submittedAll) {
@@ -172,8 +178,6 @@ const SearchPublications = () => {
       state: { url: publications }
     }} />
   }
-
-  console.log(search)
 
   return (
     <div style={{textAlign:'center'}}>
@@ -209,15 +213,15 @@ const SearchPublications = () => {
               />
             <Button className={classes.searchButton} variant="outlined" color="primary" type="submit">Search</Button>
           </form>
-          <Paper elevation={1} className={classes.showResults}>
+          <Paper elevation={0} className={classes.showResults}>
             {(submittedSearch && <h3>Showing Results for: &quot;{submittedSearch}&quot;</h3> )}
+            {(submittedSearch && <h3>Number of Publications: <i>{filteredPublicationList.length}</i></h3> )}
           </Paper>
           <CardActions className={classes.searchButton}>
             {(submittedSearch && <Button onClick={() => setSubmittedAll(true)} variant="outlined" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected Publications</Button>)}
           </CardActions>
         </CardContent>
       </Card>
-
       <Grid container spacing={3}>
 
       {/* If loading, render skeletons */}
@@ -257,7 +261,7 @@ const SearchPublications = () => {
       ) : filteredListJsx}
       </Grid>
       {/* <Jsx /> */}
-      {((loading === false && submittedSearch && emptyPublicationList.length === 0) && Jsx )}
+      {/* {((loading === false && submittedSearch && emptyPublicationList.length === 0) && Jsx )} */}
     </div>
   )
 }

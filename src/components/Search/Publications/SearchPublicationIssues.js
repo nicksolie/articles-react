@@ -17,6 +17,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Skeleton from '@material-ui/lab/Skeleton'
+import TablePagination from '@material-ui/core/TablePagination';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -52,6 +53,9 @@ const Search = (props) => {
   const [loading, setLoading] = useState(true)
   const [currentViewIssue, setCurrentViewIssue] = useState([])
   const [issuePageData, setIssuePageData] = useState([])
+
+  const [page, setPage] = React.useState(2);
+  const [rowsPerPage, setRowsPerPage] = React.useState(1);
 
   // On page load, perform axios call to get queried publications
   if (publications.length === 0) {
@@ -111,6 +115,9 @@ const Search = (props) => {
         <br />
         End Year: <i>{publication.end_year}</i>
         <br />
+        Number of Issues: <i>{publication.issues.length}</i>
+        <br />
+
         {/* Modal/Dialog View Button*/}
         <Button variant="outlined" color="primary" onClick={handleClickOpen('paper')}>
           View Selected
@@ -178,6 +185,15 @@ const Search = (props) => {
     </div>
   )) 
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  }
+
   return (
     <div>
 
@@ -191,15 +207,23 @@ const Search = (props) => {
           aria-labelledby="issue-dialog-title"
           aria-describedby="issue-dialog-description"
         >
-          <DialogTitle id="issue-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="issue-dialog-title">Availible Pages</DialogTitle>
           <DialogContent dividers={scroll === 'paper'}>
             <DialogContentText
               id="issue-dialog-description"
               ref={descriptionElementRef}
               tabIndex={-1}
-            >
-              {dialogJsx}
+            > 
             </DialogContentText>
+            <TablePagination
+                component="div"
+                count={issuePageData.length}
+                page={page}
+                onChangePage={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            {dialogJsx}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
