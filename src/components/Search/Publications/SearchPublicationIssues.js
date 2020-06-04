@@ -22,12 +22,7 @@ import Skeleton from '@material-ui/lab/Skeleton'
 const useStyles = makeStyles(theme => ({
   card: {
     minWidth: 275,
-    marginBottom:'30px',
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    marginBottom:'20px',
   },
   title: {
     fontSize: 14,
@@ -52,13 +47,12 @@ const useStyles = makeStyles(theme => ({
 const Search = (props) => {
   const classes = useStyles()
   const [publications, setPublications] = useState([])
-  // const [submittedSelected, setSubmittedSelected] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState([])
-  // const [selectedIssues, setSelectedIssues] = useState([])
   const [open, setOpen] = useState(false)
   const [scroll, setScroll] = useState('paper');
   const [loading, setLoading] = useState(true)
   const [currentViewIssue, setCurrentViewIssue] = useState([])
+  const [issuePageData, setIssuePageData] = useState([])
 
   // On page load, perform axios call to get queried publications
   if (publications.length === 0) {
@@ -70,11 +64,20 @@ const Search = (props) => {
     setLoading(false)
   }
 
+  // Dialog open function
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
     setScroll(scrollType);
+    currentViewIssue.map((issue) => (
+      axios(issue)
+        .then(response => response.data.pages.map((issuePage) => (
+          axios(issuePage.url)
+            .then(response => setIssuePageData(page => [...page, response]))
+        )))
+    ))
   };
 
+  // Dialog Close function
   const handleClose = () => {
     setOpen(false);
   };
@@ -89,7 +92,7 @@ const Search = (props) => {
     }
   }, [open]);
 
-
+  // Jsx for mapped issues
   const publicationsJsx = publications.map((publication, index) => (
     <Card key={index} className={classes.card}>
       <CardContent>
@@ -167,15 +170,27 @@ const Search = (props) => {
       </CardContent>
     </Card>
   ))
-  console.log(selectedIndex)
-  console.log('currentViewIssue is', currentViewIssue )
 
+
+  const dialogJsx = issuePageData.map((page) => (
+    <div key={page.data.sequence}>
+      {page.data.issue.date_issued}
+      <embed src={page.data.pdf} type="application/pdf" height="600" width="100%" />
+    </div>
+  ))
+
+    // const dialogJsx = (
+    //   console.log(issuePageData)
+    // )
+  
 
   return (
     <div>
 
        <div>
         <Dialog
+          fullWidth={true}
+          maxWidth="lg"
           open={open}
           onClose={handleClose}
           scroll={scroll}
@@ -189,14 +204,7 @@ const Search = (props) => {
               ref={descriptionElementRef}
               tabIndex={-1}
             >
-              {[...new Array(50)]
-                .map(
-                  () => `Cras mattis consectetur purus sit amet fermentum.
-  Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-  Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
-                )
-                .join('\n')}
+              {dialogJsx}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -211,7 +219,7 @@ const Search = (props) => {
       </div>
 
       <h1>Availible Issues</h1>
-      <p>Below are the issues corresponding to your submission! Select from the presented issues to view their records. </p>
+      <p styling={{marginBottom:'20px'}}>Below are the issues corresponding to your submission! Select from the presented issues to view their records. </p>
       <Grid container spacing={3}>
 
         {/* If loading, render skeletons */}

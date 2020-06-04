@@ -21,7 +21,7 @@ const suggestedSearchs = [
   { search: 'Kansas' },
   { search: 'Washington' },
   { search: 'Labor' },
-  { search: 'Freedom' },
+  { search: 'Independent' },
   { search: 'Ohio' },
 ]
 
