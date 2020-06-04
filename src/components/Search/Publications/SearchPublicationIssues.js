@@ -13,14 +13,11 @@ import { Grid } from '@material-ui/core'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import { withStyles } from '@material-ui/core/styles';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Skeleton from '@material-ui/lab/Skeleton'
-// import SearchSharpIcon from '@material-ui/icons/SearchSharp';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -52,19 +49,6 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const styles = (theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
-});
-
 const Search = (props) => {
   const classes = useStyles()
   const [publications, setPublications] = useState([])
@@ -72,6 +56,7 @@ const Search = (props) => {
   const [selectedIndex, setSelectedIndex] = useState([])
   // const [selectedIssues, setSelectedIssues] = useState([])
   const [open, setOpen] = useState(false)
+  const [scroll, setScroll] = useState('paper');
   const [loading, setLoading] = useState(true)
   const [currentViewIssue, setCurrentViewIssue] = useState([])
 
@@ -85,40 +70,25 @@ const Search = (props) => {
     setLoading(false)
   }
 
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const handleClickOpen = () => {
+  const handleClickOpen = (scrollType) => () => {
     setOpen(true);
+    setScroll(scrollType);
   };
 
-  const DialogContent = withStyles((theme) => ({
-    root: {
-      padding: theme.spacing(2),
-    },
-  }))(MuiDialogContent);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-  const DialogActions = withStyles((theme) => ({
-    root: {
-      margin: 0,
-      padding: theme.spacing(1),
-    },
-  }))(MuiDialogActions);
+  const descriptionElementRef = React.useRef(null);
+  React.useEffect(() => {
+    if (open) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [open]);
 
-  const DialogTitle = withStyles(styles)((props) => {
-    const { children, classes, onClose, ...other } = props;
-    return (
-      <MuiDialogTitle disableTypography className={classes.root} {...other}>
-        <Typography variant="h6">{children}</Typography>
-        {onClose ? (
-          <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </MuiDialogTitle>
-    );
-  });
 
   const publicationsJsx = publications.map((publication, index) => (
     <Card key={index} className={classes.card}>
@@ -140,7 +110,7 @@ const Search = (props) => {
         End Year: <i>{publication.end_year}</i>
         <br />
         {/* Modal/Dialog View Button*/}
-        <Button variant="outlined" color="primary" onClick={handleClickOpen} >
+        <Button variant="outlined" color="primary" onClick={handleClickOpen('paper')}>
           View Selected
         </Button>
 
@@ -173,10 +143,11 @@ const Search = (props) => {
                       if (selectedIndex.includes(index)) {
                         // Find mappedIndex's index within Selected array
                         const i = selectedIndex.indexOf(index)
-                        const p = publications.indexOf(item.urk)
+                        const p = currentViewIssue.indexOf(item.url)
                         // Remove mappedIndex from Selected array by slicing before mappedIndex and after mappedIndex
                         setSelectedIndex(prevArray => [...prevArray.slice(0, i), ...prevArray.slice(i + 1)])
                         setCurrentViewIssue(prevArray => [...prevArray.slice(0, p), ...prevArray.slice(p + 1)])
+                        console.log(item.url)
                       } else {
                         // Otherwise, added mappedIndex to Selected
                         setSelectedIndex(prevArray => [...prevArray, index])
@@ -204,27 +175,36 @@ const Search = (props) => {
     <div>
 
        <div>
-        <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Modal title
-          </DialogTitle>
-          <DialogContent dividers>
-            <Typography gutterBottom>
-              <embed src="https://chroniclingamerica.loc.gov/data/batches/kyu_one_ver01/data/sn86069873/00100479266/1904041201/0240.pdf" type="application/pdf" height="600" width="80%" />
-            </Typography>
-            <Typography gutterBottom>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor.
-            </Typography>
-            <Typography gutterBottom>
-              Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-              scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-              auctor fringilla.
-            </Typography>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          scroll={scroll}
+          aria-labelledby="issue-dialog-title"
+          aria-describedby="issue-dialog-description"
+        >
+          <DialogTitle id="issue-dialog-title">Subscribe</DialogTitle>
+          <DialogContent dividers={scroll === 'paper'}>
+            <DialogContentText
+              id="issue-dialog-description"
+              ref={descriptionElementRef}
+              tabIndex={-1}
+            >
+              {[...new Array(50)]
+                .map(
+                  () => `Cras mattis consectetur purus sit amet fermentum.
+  Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+  Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
+                )
+                .join('\n')}
+            </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleClose} color="primary">
-              Add
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              Add to Collection
             </Button>
           </DialogActions>
         </Dialog>
@@ -232,11 +212,6 @@ const Search = (props) => {
 
       <h1>Availible Issues</h1>
       <p>Below are the issues corresponding to your submission! Select from the presented issues to view their records. </p>
-      {/* <div className={classes.showResults}> */}
-        {/* <Paper elevation={1}>
-        {(selectedIssues && <Button onClick={() => setSubmittedSelected(true)} variant="contained" color="secondary" disableElevation className={classes.submitPublicationButton}>Submit Selected</Button>)}
-        </Paper> */}
-      {/* </div> */}
       <Grid container spacing={3}>
 
         {/* If loading, render skeletons */}

@@ -18,9 +18,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const suggestedSearchs = [
   { search: '' },
-  { search: 'Bourbon+News' },
+  { search: 'Kansas' },
   { search: 'Washington' },
-  { search: 'Rebel' },
+  { search: 'Labor' },
+  { search: 'Freedom' },
   { search: 'Ohio' },
 ]
 
@@ -206,7 +207,7 @@ const SearchPublications = () => {
                 id="search-publications"
                 renderInput={(params) => <TextField {...params} xs={3} label="Enter Search Terms" helperText="term1+term2" margin="normal" onChange={handleChange} />}
               />
-            <Button className={classes.searchButton} variant="contained" disableElevation type="submit">Search</Button>
+            <Button className={classes.searchButton} variant="outlined" color="primary" type="submit">Search</Button>
           </form>
           <Paper elevation={1} className={classes.showResults}>
             {(submittedSearch && <h3>Showing Results for: &quot;{submittedSearch}&quot;</h3> )}
