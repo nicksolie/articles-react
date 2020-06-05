@@ -129,6 +129,7 @@ const Search = (props) => {
         {/* Index of all issues in plublication */}
         <Typography className={classes.issues} variant="body2" component="div">
         <Grid container spacing={3}>
+          
           {publication.issues.map((item, index) => (
             <Grid key={index} item xs={12} sm={6}>
               <Card  className={classes.root}>
