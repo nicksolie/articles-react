@@ -91,7 +91,7 @@ const Welcome = () => {
           <Card className={classes.card}>
               <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  View Examples
+                  ADD
                 </Typography>
                 <Typography variant="h5" component="h2">
                   What does this site provide access to?
@@ -109,13 +109,13 @@ const Welcome = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <ExpansionPanel>
+          <ExpansionPanel square={false}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography className={classes.heading}>Expansion Panel 1</Typography>
+              <Typography className={classes.heading}>Formation of the country</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <Typography>
@@ -124,13 +124,14 @@ const Welcome = () => {
               </Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
+
           <ExpansionPanel>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography className={classes.heading}>Expansion Panel 2</Typography>
+              <Typography className={classes.heading}>The 19th Amendment</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <Typography>
@@ -140,15 +141,150 @@ const Welcome = () => {
               </Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
+
+          {/* <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Harper&apos;s Ferry and John Bown</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+
           <ExpansionPanel>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3a-content"
-              id="panel3a-header"
+              aria-controls="panel1a-content"
+              id="panel1a-header"
             >
-              <Typography className={classes.heading}>Expansion Panel</Typography>
+              <Typography className={classes.heading}>1900 New York Race Riots</Typography>
             </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+            </ExpansionPanelDetails>
           </ExpansionPanel>
+
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Birth of a Nation</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Boston Subway</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Boston Fire</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Zimmermann Telegram</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Aliens</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Extra</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Extra</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel> */}
           {/* <Card className={classes.card}>
             <CardContent>
               <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -173,10 +309,7 @@ const Welcome = () => {
           </Card> */}
         </Grid>
       </Grid>
-      
-      {/* <h1 style={{marginTop:'3%', marginBottom:'2%'}}>Welcome!</h1> */}
-      {/* <h3>Please login to use site!</h3> */}
-      {/* <h5 style={{marginTop:'4%', marginBottom:'2%'}}>Below is an example of a newpaper you can find by querying Chronicling America.</h5> */}
+
       {/* <div className={classes.pagination}>
         <Pagination count={pdfs.length} page={page} onChange={handleChange} />
         <Typography> <embed src={pdfs[page - 1]} type="application/pdf" height="600" width="80%" /></Typography>
