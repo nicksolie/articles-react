@@ -50,6 +50,7 @@ class SignIn extends Component {
 
   render () {
     const { email, password } = this.state
+    document.body.style.backgroundColor = 'blue' 
 
     return (
       <div className="row">

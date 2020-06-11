@@ -7,7 +7,7 @@ const { Meta } = Card;
 
 const rowStyle = {
     // padding:'8px 0',
-    background:'#00a0e9',
+    // background:'#00a0e9',
     // minWidth:'350px'
 }
 
@@ -16,6 +16,7 @@ const divderStyles = {
 }
 
 const Home = () => {
+    document.body.style.backgroundColor = 'red' 
     return (
         <div>
             <Divider style={divderStyles} orientation="left">Search</Divider>      
@@ -30,7 +31,7 @@ const Home = () => {
                         />
                         }
                         actions={[
-                        <Button href="#search-publication" type="text" key="view">View</Button>,
+                        <Button style={{backgroundColor: '#4CAF50'}} href="#search-publication" type="primary" size="large" key="view">View</Button>,
                         ]}
                     >
                         <Meta
@@ -49,7 +50,7 @@ const Home = () => {
                         />
                         }
                         actions={[
-                        <Button type="text" key="view">TBA</Button>,
+                        <Button style={{backgroundColor: '#4CAF50'}} type="primary" key="view">TBA</Button>,
                         ]}
                     >
                         <Meta
@@ -72,8 +73,8 @@ const Home = () => {
                         />
                         }
                         actions={[
-                        <Button href="#collections" type="text" key="view">View</Button>,
-                        <Button href="#collections" type="text" key="view">Create</Button>
+                        <Button href="#collections" style={{backgroundColor: '#4CAF50'}} type="primary" key="view">View</Button>,
+                        <Button href="#collections" style={{backgroundColor: '#4CAF50'}} type="primary" key="view">Create</Button>
                         ]}
                     >
                         <Meta
@@ -92,8 +93,8 @@ const Home = () => {
                         />
                         }
                         actions={[
-                        <Button href="#entries" type="text" key="view">View</Button>,
-                        <Button href="#collections" type="text" key="view">Create</Button>
+                        <Button href="#entries" style={{backgroundColor: '#4CAF50'}} type="primary" key="view">View</Button>,
+                        <Button href="#collections" style={{backgroundColor: '#4CAF50'}} type="primary" key="view">Create</Button>
                         ]}
                     >
                         <Meta
