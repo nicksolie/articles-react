@@ -30,8 +30,6 @@ import EditEntry from './Entries/EditEntry'
 import Home from './Home'
 import SearchPublicationIssues from './Search/Publications/SearchPublicationIssues'
 import SearchPublication from './Search/Publications/SearchPublication'
-import SearchPublicationAllResults from './Search/Publications/SearchPublicationAllResults'
-import SearchPublicationSelectedResults from './Search/Publications/SearchPublicationSelectedResults'
 
 import SearchAwardees from './Search/Awardees/SearchAwardees'
 
@@ -125,13 +123,6 @@ class App extends Component {
           <AuthenticatedRoute path='/search-publication-issues' user={user} render={({ match, location }) => (
             <SearchPublicationIssues user={user} match={match} location={location} msgAlert={this.msgAlert} />
           )} />
-          <AuthenticatedRoute path='/search-publication-all-results' user={user} render={({ match, location }) => (
-            <SearchPublicationAllResults user={user} match={match} location={location} msgAlert={this.msgAlert} />
-          )} />
-          <AuthenticatedRoute path='/search-publication-selected-results' user={user} render={({ match, location }) => (
-            <SearchPublicationSelectedResults user={user} match={match} location={location} msgAlert={this.msgAlert} />
-          )} />
-
           {/* Authenticated Awardee routes */}
           <AuthenticatedRoute user={user} exact path='/search-awardees' render={() => (
             <SearchAwardees msgAlert={this.msgAlert} user={user} />
