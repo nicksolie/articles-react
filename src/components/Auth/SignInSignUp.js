@@ -70,36 +70,15 @@ class SignInSignUp extends Component {
       .then(() => history.push('/home'))
       .catch(() => {
         this.setState({ email: '', password: '', passwordConfirmation: '' }),
-        errorSignUp()
+        errorSignUp(),
+        this.setState({ loading: false})
       })
   }
-
-  // enterLoading = index => {
-  //   this.setState(({ loadings }) => {
-  //     const newLoadings = [...loadings];
-  //     newLoadings[index] = true;
-
-  //     return {
-  //       loadings: newLoadings,
-  //     };
-  //   });
-  //   setTimeout(() => {
-  //     this.setState(({ loadings }) => {
-  //       const newLoadings = [...loadings];
-  //       newLoadings[index] = false;
-
-  //       return {
-  //         loadings: newLoadings,
-  //       };
-  //     });
-  //   }, 6000);
-  // };
 
   render () {
     const { email, password, passwordConfirmation } = this.state
     const { TabPane } = Tabs
     document.body.style.background = 'white'
-    console.log(this.state.loading)
     
     return (
       <div >
@@ -196,7 +175,7 @@ class SignInSignUp extends Component {
                   />
                 </Form.Item>
                 <Form.Item>
-                  <Button style={{marginRight: '7px'}} type="primary" htmlType="submit">Register</Button>
+                  <Button loading={this.state.loading} onClick={() => this.setState({ loading: true })} style={{marginRight: '7px'}} type="primary" htmlType="submit">Register</Button>
                   {/* <Button type="primary" href="#sign-up">Register</Button> */}
                 </Form.Item>
               </Form>
