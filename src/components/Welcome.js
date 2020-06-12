@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button } from 'antd'
+import { Button, Card, Col, Row, Timeline } from 'antd'
+import { Divider } from '@material-ui/core'
 
 const Welcome = () => {
 // Directly changing the dom, material-ui seems to be affecting the ability to change the body
@@ -7,18 +8,36 @@ document.body.style.background = 'url(../../images/library.jpg) no-repeat center
 document.body.style.backgroundSize = 'cover' 
 
 const styles = {
-  // backgroundColor: 'rgb(44, 230, 230)',
-  // backgroundPosition: 'center',
-  // backgroundSize: 'cover',
-  // backgroundRepeat: 'no-repeat',
-  // minHeight: '100%'
+  // textAlign: 'center',
+  marginTop: '15%'
 }
+
+const { Meta } = Card
 
   return (
     <div style={styles}>
-      <h1>Welcome!</h1>
-      <p>Articles is a platform to view archived newspapers and other historical content.</p>
-      <Button type={"primary"} size={"large"} href="#sign-in" >Get Started</Button>
+      <Row justify={"center"} align={"bottom"} >
+        <Col xs={12}>
+          <Card style={{textAlign: 'center'}}>
+            <Meta
+              title="Welcome!"
+              description="Articles is a platform to view archived newspapers and other historical content."
+              style={{textAlign: 'center'}}
+            />
+            <Button style={{marginTop:'20px', alignItems: 'center'}}type={"primary"} size={"large"} href="#sign-in" >Get Started</Button>
+            <Divider style={{marginTop:'25px', marginBottom:'30px'}}></Divider>
+            <p style={{fontWeight: '500', fontSize: '16px'}}>Timeline</p>
+            <Timeline style={{textAlign: 'left'}} mode={'left'}>
+              <Timeline.Item color='green'>Search by Publication Title</Timeline.Item>
+              <Timeline.Item>Generate Entries to Store Publications</Timeline.Item>
+              <Timeline.Item>View and Create Collections of Entries</Timeline.Item>
+              <Timeline.Item color='grey'>Search Publications by State</Timeline.Item>
+              <Timeline.Item color='grey'>Search Archived Photos</Timeline.Item>
+              <Timeline.Item color='grey'>Search Archived Radio Clips</Timeline.Item>
+            </Timeline>
+          </Card>
+        </Col>
+      </Row>
     </div>
   )
 }
