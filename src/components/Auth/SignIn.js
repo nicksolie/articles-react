@@ -1,133 +1,186 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { signIn } from '../../api/auth'
-import messages from '../AutoDismissAlert/messages'
+import { signIn, signUp } from '../../api/auth'
+// import message from '../AutoDismissAlert/messages'
 
-import Form from 'react-bootstrap/Form'
-// import Button from 'react-bootstrap/Button'
+import { Button, Form, Input, message, Tabs } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button';
-
-
-class SignIn extends Component {
+class SignInSignUp extends Component {
   constructor () {
     super()
 
+    // Set the default loggin to my username, till alternative can be found
     this.state = {
       email: 'nick',
-      password: '1122'
+      password: '1122',
+      passwordConfirmation: ''
     }
   }
 
+  // Handle form input changes
   handleChange = event => this.setState({
     [event.target.name]: event.target.value
   })
 
-  onSignIn = event => {
-    event.preventDefault()
+  onSignIn = () => {
+    const { history, setUser } = this.props
 
-    const { msgAlert, history, setUser } = this.props
+    // Loggin success message
+    const success = () => {
+      message.success('You Have Successfully Logged In!', 0.5);
+    }
 
+    // Loggin failure message
+    const error = () => {
+      message.error('Login Failed. Please Try again.');
+    }
+
+    // Sign in API call
     signIn(this.state)
       .then(res => setUser(res.data.user))
-      .then(() => msgAlert({
-        heading: 'Sign In Success',
-        message: messages.signInSuccess,
-        variant: 'success'
-      }))
+      .then(() => success())
       .then(() => history.push('/home'))
-      .catch(error => {
-        this.setState({ email: '', password: '' })
-        msgAlert({
-          heading: 'Sign In Failed with error: ' + error.message,
-          message: messages.signInFailure,
-          variant: 'danger'
-        })
+      .catch(() => {
+        this.setState({ email: '', password: '' }),
+        error()
+      })
+  }
+
+  onSignUp = () => {
+    const { history, setUser } = this.props
+
+    // Sign In success message
+    const successSignUp = () => {
+      message.success('You Have Successfully Signed Up!', 0.5);
+    }
+
+    // Loggin failure message
+    const errorSignUp = () => {
+      message.error('Sign Up Failed. Please Try a Different Username.');
+    }
+
+    signUp(this.state)
+      .then(() => signIn(this.state))
+      .then(res => setUser(res.data.user))
+      .then(() => successSignUp())
+      .then(() => history.push('/home'))
+      .catch(() => {
+        this.setState({ email: '', password: '', passwordConfirmation: '' }),
+        errorSignUp()
       })
   }
 
   render () {
-    const { email, password } = this.state
-    document.body.style.background = '#DCDCDC' 
+    const { email, password, passwordConfirmation } = this.state
+    const { TabPane } = Tabs
+    document.body.style.background = 'white'
     
     return (
-      <div className="row">
-        <div className="col-sm-10 col-md-8 mx-auto mt-5">
-          <h3>Sign In</h3>
-          <h6>Note: login can sometimes take a moment.</h6>
-          <Form onSubmit={this.onSignIn}>
-            <Form.Group controlId="email">
-              <TextField
-                id="standard-full-width"
-                type="text"
-                name="email"
-                label="Username"
-                value={email}
-                placeholder="Enter Username"
-                onChange={this.handleChange}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Form.Group>
-            <Form.Group controlId="password">
-              <TextField
-                id="standard-password-input"
-                name="password"
-                label="Password"
-                value={password}
-                helperText="Do not use your real passowrd"
-                type="password"
-                placeholder="Password"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Button type="submit" variant="contained">
-              Submit
-            </Button>
-          </Form>
-        </div>
+      <div >
+          <Tabs defaultActiveKey="1" onChange={() => this.setState({ email: '', password: '', passwordConfirmation: '' }) }>
+            {/* Login tab */}
+            <TabPane tab="Login" key="1">
+              <h3>Sign In</h3>
+              <h6>Note: login can sometimes take a moment.</h6>
+              <Form
+                name="normal_login"
+                className="login-form"
+                // initialValues={{ email: 'nick', password: '1122' }}
+                onFinish={this.onSignIn}
+              >
+                <Form.Item
+                  value={email}
+                  rules={[{ required: true, message: 'Please input your Username!' }]}
+                >
+                  <Input
+                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    placeholder="Username"
+                    value={email}
+                    name="email"
+                    type="text"
+                    onChange={this.handleChange}
+                  />
+                </Form.Item>
+                <Form.Item
+                  value={password}
+                  rules={[{ required: true, message: 'Please input your Password!' }]}
+                >
+                  <Input
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    name="password"
+                    value={password}
+                    type="password"
+                    placeholder="Password"
+                    onChange={this.handleChange}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Button style={{marginRight: '7px'}} type="primary" htmlType="submit">Log in</Button>
+                  {/* <Button type="primary" href="#sign-up">Register</Button> */}
+                </Form.Item>
+              </Form>
+            </TabPane>
+
+            {/* Register tab */}
+            <TabPane tab="Sign Up" key="2">
+              <h3>Sign Up</h3>
+              <Form
+                name="normal_login"
+                className="login-form"
+                onFinish={this.onSignUp}
+              >
+                <Form.Item
+                  value={email}
+                  rules={[{ required: true, message: 'Please input your Username!' }]}
+                >
+                  <Input
+                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    placeholder="Username"
+                    value={email}
+                    name="email"
+                    type="text"
+                    onChange={this.handleChange}
+                  />
+                </Form.Item>
+                <Form.Item
+                  value={password}
+                  rules={[{ required: true, message: 'Please input your Password!' }]}
+                >
+                  <Input
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    name="password"
+                    value={password}
+                    type="password"
+                    placeholder="Password"
+                    onChange={this.handleChange}
+                  />
+                </Form.Item>
+                <Form.Item
+                  value={password}
+                  rules={[{ required: true, message: 'Please input your Password!' }]}
+                >
+                  <Input
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    name="passwordConfirmation"
+                    value={passwordConfirmation}
+                    type="password"
+                    placeholder="Password"
+                    onChange={this.handleChange}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Button style={{marginRight: '7px'}} type="primary" htmlType="submit">Register</Button>
+                  {/* <Button type="primary" href="#sign-up">Register</Button> */}
+                </Form.Item>
+              </Form>
+            </TabPane>
+
+          </Tabs>
       </div>
     )
   }
 }
 
-{/* <div className="row">
-        <div className="col-sm-10 col-md-8 mx-auto mt-5">
-          <h3>Sign In</h3>
-          <Form onSubmit={this.onSignIn}>
-            <Form.Group controlId="email">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                required
-                type="email"
-                name="email"
-                value={email}
-                placeholder="Enter email"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                name="password"
-                value={password}
-                type="password"
-                placeholder="Password"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Button
-              variant="primary"
-              type="submit"
-            >
-              Submit
-            </Button>
-          </Form>
-        </div>
-      </div> */}
-
-export default withRouter(SignIn)
+export default withRouter(SignInSignUp)
