@@ -74,6 +74,27 @@ class SignInSignUp extends Component {
       })
   }
 
+  // enterLoading = index => {
+  //   this.setState(({ loadings }) => {
+  //     const newLoadings = [...loadings];
+  //     newLoadings[index] = true;
+
+  //     return {
+  //       loadings: newLoadings,
+  //     };
+  //   });
+  //   setTimeout(() => {
+  //     this.setState(({ loadings }) => {
+  //       const newLoadings = [...loadings];
+  //       newLoadings[index] = false;
+
+  //       return {
+  //         loadings: newLoadings,
+  //       };
+  //     });
+  //   }, 6000);
+  // };
+
   render () {
     const { email, password, passwordConfirmation } = this.state
     const { TabPane } = Tabs
@@ -120,7 +141,7 @@ class SignInSignUp extends Component {
                   />
                 </Form.Item>
                 <Form.Item>
-                  <Button onClick={() => this.setState({ loading: true })} style={{marginRight: '7px'}} type="primary" htmlType="submit">Log in</Button>
+                  <Button loading={this.state.loading} onClick={() => this.setState({ loading: true })} style={{marginRight: '7px'}} type="primary" htmlType="submit">Log in</Button>
                   {/* <Button type="primary" href="#sign-up">Register</Button> */}
                 </Form.Item>
               </Form>
