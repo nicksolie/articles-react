@@ -48,7 +48,7 @@ const { Meta } = Card
             />
             <Row style={{marginTop:'20px', alignItems: 'center'}} justify={"center"}>
               <Space>
-                <Button  type="primary" size="large" href="#sign-in" >Get Started</Button>
+                <Button  type="primary" size="large" href="#entry" >Get Started</Button>
                 <Button size="large" onClick={showModal}>View Examples</Button>
               </Space>
             </Row>

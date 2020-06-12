@@ -10,12 +10,10 @@ const authenticatedOptions = (
   </Fragment>
 )
 
-const unauthenticatedOptions = (
-  <Fragment>
-    <Nav.Link href="#sign-up">Register</Nav.Link>
-    <Nav.Link href="#sign-in">Sign In</Nav.Link>
-  </Fragment>
-)
+// const unauthenticatedOptions = (
+//   <Fragment>
+//   </Fragment>
+// )
 
 const Header = ({ user }) => (
   <Navbar bg="dark" variant="dark" expand="md">
@@ -26,7 +24,8 @@ const Header = ({ user }) => (
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ml-auto">
         { user && <span className="navbar-text mr-2">Welcome, {user.email}</span>}
-        { user ? authenticatedOptions : unauthenticatedOptions }
+        {/* Make ternary w/ unauthenticatedOptions */}
+        { user && authenticatedOptions }
       </Nav>
     </Navbar.Collapse>
   </Navbar>

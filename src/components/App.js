@@ -8,8 +8,7 @@ import AutoDismissAlert from './AutoDismissAlert/AutoDismissAlert'
 import Header from './Shared/Header'
 
 // Auth imports
-import SignUp from './Auth/SignUp'
-import SignIn from './Auth/SignIn'
+import SignInSignUp from './Auth/SignInSignUp'
 import SignOut from './Auth/SignOut'
 import ChangePassword from './Auth/ChangePassword'
 
@@ -70,11 +69,8 @@ class App extends Component {
           <Route exact path='/' render={() => (
             <Welcome />
           )} />
-          <Route path='/sign-up' render={() => (
-            <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
-          )} />
-          <Route path='/sign-in' render={() => (
-            <SignIn msgAlert={this.msgAlert} setUser={this.setUser} />
+          <Route path='/entry' render={() => (
+            <SignInSignUp setUser={this.setUser} />
           )} />
 
           {/* Authenticated auth routes */}

@@ -15,7 +15,8 @@ class SignInSignUp extends Component {
     this.state = {
       email: 'nick',
       password: '1122',
-      passwordConfirmation: ''
+      passwordConfirmation: '',
+      loading: false
     }
   }
 
@@ -44,7 +45,8 @@ class SignInSignUp extends Component {
       .then(() => history.push('/home'))
       .catch(() => {
         this.setState({ email: '', password: '' }),
-        error()
+        error(),
+        this.setState({ loading: false})
       })
   }
 
@@ -76,14 +78,15 @@ class SignInSignUp extends Component {
     const { email, password, passwordConfirmation } = this.state
     const { TabPane } = Tabs
     document.body.style.background = 'white'
+    console.log(this.state.loading)
     
     return (
       <div >
-          <Tabs defaultActiveKey="1" onChange={() => this.setState({ email: '', password: '', passwordConfirmation: '' }) }>
+          <Tabs defaultActiveKey="1" onChange={() => this.setState({ email: '', password: '', passwordConfirmation: '' })}>
             {/* Login tab */}
             <TabPane tab="Login" key="1">
               <h3>Sign In</h3>
-              <h6>Note: login can sometimes take a moment.</h6>
+              <p>Note: login can sometimes take a moment.</p>
               <Form
                 name="normal_login"
                 className="login-form"
@@ -117,7 +120,7 @@ class SignInSignUp extends Component {
                   />
                 </Form.Item>
                 <Form.Item>
-                  <Button style={{marginRight: '7px'}} type="primary" htmlType="submit">Log in</Button>
+                  <Button onClick={() => this.setState({ loading: true })} style={{marginRight: '7px'}} type="primary" htmlType="submit">Log in</Button>
                   {/* <Button type="primary" href="#sign-up">Register</Button> */}
                 </Form.Item>
               </Form>
@@ -126,6 +129,7 @@ class SignInSignUp extends Component {
             {/* Register tab */}
             <TabPane tab="Sign Up" key="2">
               <h3>Sign Up</h3>
+              <p>Note: login can sometimes take a moment.</p>
               <Form
                 name="normal_login"
                 className="login-form"
