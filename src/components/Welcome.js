@@ -38,7 +38,7 @@ const onPaginationChange = page => {
 const { Meta } = Card
 
   return (
-      <Row type="flex" justify="center"  style={{ alignItems: "center", height:'100vh' }}>
+      <Row type="flex" justify="center" style={{ alignItems: "center", height:'100vh' }}>
         <Col xs={24} md={12}>
           <Card style={{textAlign: 'center'}}>
             <Meta

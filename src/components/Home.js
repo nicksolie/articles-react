@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Col, Divider, Row } from 'antd';
+import { Breadcrumb, Button, Card, Col, Divider, Row } from 'antd';
 import 'antd/dist/antd.css';
 
 const { Meta } = Card;
@@ -17,6 +17,9 @@ const divderStyles = {
 const Home = () => {
     return (
         <div>
+            <Breadcrumb style>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+            </Breadcrumb>
             <Divider style={divderStyles} orientation="left">Search</Divider>      
             <Row justify={"center"} gutter={{xs: 8, sm: 16, md: 24}}>
                 <Col className={rowStyle} xs={24} sm={12} order={1}>

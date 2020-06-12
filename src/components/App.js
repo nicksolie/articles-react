@@ -5,7 +5,7 @@ import styles from './../index.scss'
 // Template imports
 import AuthenticatedRoute from './AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from './AutoDismissAlert/AutoDismissAlert'
-import Header from './Shared/Header'
+import Header from './Header'
 
 // Auth imports
 import SignInSignUp from './Auth/SignInSignUp'
