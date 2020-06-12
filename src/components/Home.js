@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Card, Col, Divider, Row } from 'antd';
-// import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 const { Meta } = Card;
@@ -16,7 +15,6 @@ const divderStyles = {
 }
 
 const Home = () => {
-    document.body.style.background = 'white' 
     return (
         <div>
             <Divider style={divderStyles} orientation="left">Search</Divider>      

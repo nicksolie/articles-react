@@ -1,22 +1,36 @@
-import React from 'react'
-import { Button, Card, Col, Row, Timeline } from 'antd'
+import React, { useState } from 'react'
+import { Button, Card, Col, Modal, Row, Space, Timeline } from 'antd'
 import { Divider } from '@material-ui/core'
 
 const Welcome = () => {
 // Directly changing the dom, material-ui seems to be affecting the ability to change the body
-document.body.style.background = 'url(https://source.unsplash.com/GWOTvo3qq7U/) no-repeat center center'
-document.body.style.backgroundSize = 'cover' 
+document.body.style.background = 'url(https://source.unsplash.com/dsvJgiBJTOs/) no-repeat center center'
+document.body.style.backgroundSize = 'cover'
+const [visible, setVisible] = useState(false)
 
+// Styles for div container
 const styles = {
-  // textAlign: 'center',
   marginTop: '15%'
 }
 
+const showModal = () => {
+  setVisible(true)
+}
+
+const handleOk = () => {
+  setVisible(false)
+}
+
+const handleCancel = () => {
+  setVisible(false)
+}
+
+// Meta content for Card
 const { Meta } = Card
 
   return (
     <div style={styles}>
-      <Row justify={"center"} align={"bottom"} >
+      <Row justify={"center"}>
         <Col xs={12}>
           <Card style={{textAlign: 'center'}}>
             <Meta
@@ -24,7 +38,12 @@ const { Meta } = Card
               description="Articles is a platform to view archived newspapers and other historical content."
               style={{textAlign: 'center'}}
             />
-            <Button style={{marginTop:'20px', alignItems: 'center'}}type={"primary"} size={"large"} href="#sign-in" >Get Started</Button>
+            <Row style={{marginTop:'20px', alignItems: 'center'}} justify={"center"}>
+              <Space>
+                <Button  type="primary" size="large" href="#sign-in" >Get Started</Button>
+                <Button style={{backgroundColor: '#4CAF50'}} size="large" type="primary" onClick={showModal}>View Examples</Button>
+              </Space>
+            </Row>
             <Divider style={{marginTop:'25px', marginBottom:'30px'}}></Divider>
             <p style={{fontWeight: '500', fontSize: '16px'}}>Timeline</p>
             <Timeline style={{textAlign: 'left'}} mode={'left'}>
@@ -38,6 +57,16 @@ const { Meta } = Card
           </Card>
         </Col>
       </Row>
+      <Modal
+          title="Basic Modal"
+          visible={visible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </Modal>
     </div>
   )
 }
