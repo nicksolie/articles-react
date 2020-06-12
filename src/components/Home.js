@@ -16,7 +16,7 @@ const divderStyles = {
 }
 
 const Home = () => {
-    document.body.style.backgroundColor = 'red' 
+    document.body.style.background = 'white' 
     return (
         <div>
             <Divider style={divderStyles} orientation="left">Search</Divider>      

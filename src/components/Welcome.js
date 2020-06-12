@@ -4,7 +4,7 @@ import { Divider } from '@material-ui/core'
 
 const Welcome = () => {
 // Directly changing the dom, material-ui seems to be affecting the ability to change the body
-document.body.style.background = 'url(https://source.unsplash.com/GWOTvo3qq7U/) no-repeat center center fixed'
+document.body.style.background = 'url(https://source.unsplash.com/GWOTvo3qq7U/) no-repeat center center'
 document.body.style.backgroundSize = 'cover' 
 
 const styles = {
