@@ -15,6 +15,8 @@ import ToggleButton from '@material-ui/lab/ToggleButton'
 import { Grid } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import Autocomplete from '@material-ui/lab/Autocomplete';
+// import { AutoComplete } from 'antd';
+
 
 const suggestedSearchs = [
   { search: '' },
@@ -78,12 +80,18 @@ const SearchPublications = () => {
   const [selected, setSelected] = useState([]);
   const [loading, setLoading] = useState(false)
   const [value, setValue] = useState(suggestedSearchs[0])
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('')
+  const [autoCompleteOptions] = useState([])
 
   const handleChange = event => {
     event.persist()
     // eslint-disable-next-line no-unused-vars
     setSearch(search => (event.target.value))
+  }
+
+  if (autoCompleteOptions.length === 0) {
+    axios('https://chroniclingamerica.loc.gov/newspapers.json')
+      .then(response => console.log(response))
   }
 
   const handleSearchSubmit = event => {
@@ -163,13 +171,6 @@ const SearchPublications = () => {
   )
 
   console.log(filteredListJsx)
-
-  // const Jsx = (
-  //   <div style={{marginTop:'50px'}}>
-  //     <h1>There are no results that match your search. Please try again.</h1>
-  //     <p>This website rejects any responses from Chronicling America that do not contain any PDFs. If you are interested in seeing data aside from PDFs, please notify the owner of this site.</p>
-  //   </div>
-  // )
 
   //  If user selects a publication - redirect
   if (submittedAll) {

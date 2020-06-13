@@ -86,7 +86,7 @@ class SignInSignUp extends Component {
             {/* Login tab */}
             <TabPane tab="Login" key="1">
               <h3>Sign In</h3>
-              <p>Note: login can sometimes take a moment.</p>
+              <p>Note: login can take a moment.</p>
               <Form
                 name="normal_login"
                 className="login-form"
@@ -129,7 +129,7 @@ class SignInSignUp extends Component {
             {/* Register tab */}
             <TabPane tab="Sign Up" key="2">
               <h3>Sign Up</h3>
-              <p>Note: login can sometimes take a moment.</p>
+              <p>Note: login can take a moment.</p>
               <Form
                 name="normal_login"
                 className="login-form"
