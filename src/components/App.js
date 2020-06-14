@@ -30,8 +30,6 @@ import Home from './Home'
 import SearchPublicationIssues from './Search/Publications/SearchPublicationIssues'
 import SearchPublication from './Search/Publications/SearchPublication'
 
-import SearchAwardees from './Search/Awardees/SearchAwardees'
-
 class App extends Component {
   constructor () {
     super()
@@ -75,15 +73,15 @@ class App extends Component {
 
           {/* Authenticated auth routes */}
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
-            <SignOut msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
+            <SignOut clearUser={this.clearUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
-            <ChangePassword msgAlert={this.msgAlert} user={user} />
+            <ChangePassword user={user} />
           )} />
 
           {/* Authenticated collection routes */}
           <AuthenticatedRoute user={user} exact path='/collections' render={() => (
-            <IndexCollections msgAlert={this.msgAlert} user={user} />
+            <IndexCollections  user={user} />
           )} />
           <AuthenticatedRoute user={user} exact path='/collections-create' render={() => (
             <CreateCollection user={user} />
@@ -111,18 +109,15 @@ class App extends Component {
 
           {/* Authenticated search routes */}
           <AuthenticatedRoute user={user} exact path='/home' render={() => (
-            <Home msgAlert={this.msgAlert} user={user} />
+            <Home user={user} />
           )} />
           <AuthenticatedRoute path='/search-publication' user={user} render={({ match }) => (
-            <SearchPublication user={user} match={match} msgAlert={this.msgAlert} />
+            <SearchPublication user={user} match={match} />
           )} />
-          <AuthenticatedRoute path='/search-publication-issues' user={user} render={({ match, location }) => (
-            <SearchPublicationIssues user={user} match={match} location={location} msgAlert={this.msgAlert} />
+          <AuthenticatedRoute path='/search-publication-issues' user={user} render={({ location }) => (
+            <SearchPublicationIssues user={user} location={location} />
           )} />
           {/* Authenticated Awardee routes */}
-          <AuthenticatedRoute user={user} exact path='/search-awardees' render={() => (
-            <SearchAwardees msgAlert={this.msgAlert} user={user} />
-          )} />
         </main>
       </Fragment>
     )

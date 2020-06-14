@@ -13,8 +13,8 @@ const suggestedSearches = [
 const SearchPublications = () => {
   const [search, setSearch] = useState('')
   const [publicationsList, setPublicationsList] = useState([])
-  const [publication, setPublication] = useState({})
-  const [submitted, setSubmitted] = useState(false)
+  const [publication, setPublication] = useState([])
+  // const [submitted, setSubmitted] = useState(false)
   // const [submittedAll, setSubmittedAll] = useState(false)
   // const [selected, setSelected] = useState([]);
   // const [loading, setLoading] = useState(false)
@@ -50,17 +50,17 @@ const SearchPublications = () => {
   //   publicationsList.issues.length === 0
   // )
 
-  const handleSubmit = (publication) => {
-    setPublication(publication),
-    setSubmitted(true)
-  }
+  // const handleSubmit = (publication) => {
+  //   setPublication(publication),
+  //   setSubmitted(true)
+  // }
 
   // don't forget to add a row contrainer
   const filteredListJsx = filteredPublicationList.map((publication, index) =>
     <Col key={index} xs={24} sm={12} order={index}>
       <Card title={publication.name}
       actions={[
-        <Button onClick={handleSubmit(publication)} key="view">View</Button>,
+        <Button onClick={() => setPublication(publication)} key="view">View</Button>,
         ]}
       style={{marginBottom: '30px', border: 'black solid 0.1px'}}
       >
@@ -71,15 +71,14 @@ const SearchPublications = () => {
     </Col>
   )
 
-  console.log('filteredListJsx is:', filteredListJsx)
   console.log('search:', search)
   console.log('publication', publication)
 
   //  If user selects a publication - redirect
-  if (submitted) {
+  if (publication.length !== 0) {
     return <Redirect to={{
       pathname: '/search-publication-issues',
-      state: { url: publication }
+      state: { publication: publication }
     }} />
   }
 
@@ -100,7 +99,7 @@ const SearchPublications = () => {
             title="Search by Publication Name"
             description="Note: Spaces are not allowed - Use &quot;+&quot;"
           />
-          <Form onFinish={handleSearchSubmit}>
+          <Form onFinish={() => handleSearchSubmit()}>
             <Form.Item>
               <AutoComplete
                 style={{ width: 300 }}
