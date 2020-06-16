@@ -32,7 +32,7 @@ const Home = () => {
                         />
                         }
                         actions={[
-                        <Button style={{backgroundColor: '#4CAF50'}} href="#search-publication" type="primary" size="large" key="view">View</Button>,
+                        <Button href="#search-publication" type="primary" size="large" key="view">View</Button>,
                         ]}
                     >
                         <Meta
@@ -51,7 +51,7 @@ const Home = () => {
                         />
                         }
                         actions={[
-                        <Button style={{backgroundColor: '#4CAF50'}} type="primary" key="view">TBA</Button>,
+                        <Button type="primary" key="view">TBA</Button>,
                         ]}
                     >
                         <Meta
@@ -74,8 +74,8 @@ const Home = () => {
                         />
                         }
                         actions={[
-                        <Button href="#collections" style={{backgroundColor: '#4CAF50'}} type="primary" key="view">View</Button>,
-                        <Button href="#collections" style={{backgroundColor: '#4CAF50'}} type="primary" key="view">Create</Button>
+                        <Button href="#collections" type="primary" key="view">View</Button>,
+                        <Button href="#collections" type="primary" key="view">Create</Button>
                         ]}
                     >
                         <Meta
@@ -94,8 +94,8 @@ const Home = () => {
                         />
                         }
                         actions={[
-                        <Button href="#entries" style={{backgroundColor: '#4CAF50'}} type="primary" key="view">View</Button>,
-                        <Button href="#collections" style={{backgroundColor: '#4CAF50'}} type="primary" key="view">Create</Button>
+                        <Button href="#entries" type="primary" key="view">View</Button>,
+                        <Button href="#collections" type="primary" key="view">Create</Button>
                         ]}
                     >
                         <Meta

@@ -4,7 +4,6 @@ import styles from './../index.scss'
 
 // Template imports
 import AuthenticatedRoute from './AuthenticatedRoute/AuthenticatedRoute'
-import AutoDismissAlert from './AutoDismissAlert/AutoDismissAlert'
 import Header from './Header'
 
 // Auth imports
@@ -44,24 +43,12 @@ class App extends Component {
 
   clearUser = () => this.setState({ user: null })
 
-  msgAlert = ({ heading, message, variant }) => {
-    this.setState({ msgAlerts: [...this.state.msgAlerts, { heading, message, variant }] })
-  }
-
   render () {
-    const { msgAlerts, user } = this.state
+    const { user } = this.state
 
     return (
       <Fragment>
         <Header user={user} />
-        {msgAlerts.map((msgAlert, index) => (
-          <AutoDismissAlert
-            key={index}
-            heading={msgAlert.heading}
-            variant={msgAlert.variant}
-            message={msgAlert.message}
-          />
-        ))}
         <main style={styles} className="container">
           {/* Unauthenticated auth routes */}
           <Route exact path='/' render={() => (

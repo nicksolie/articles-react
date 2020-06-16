@@ -163,7 +163,7 @@ class SignInSignUp extends Component {
                 </Form.Item>
                 <Form.Item
                   value={password}
-                  rules={[{ required: true, message: 'Please input your Password!' }]}
+                  rules={[{ required: true, message: 'Please confirm your Password!' }]}
                 >
                   <Input
                     prefix={<LockOutlined className="site-form-item-icon" />}

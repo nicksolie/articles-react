@@ -70,7 +70,7 @@ const { Meta } = Card
           onOk={handleOk}
           onCancel={handleCancel}
           keyboard={true}
-          mas={true}
+          mask={true}
         >
           <div style={{ overflow: 'scroll' }}>
             <Pagination current={current} onChange={onPaginationChange} total={50} />

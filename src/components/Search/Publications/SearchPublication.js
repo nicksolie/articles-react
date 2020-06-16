@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 
-import { AutoComplete, Button, Card, Col, Form, Row } from 'antd';
+import { AutoComplete, Breadcrumb, Button, Card, Col, Form, Row } from 'antd';
 
 const suggestedSearches = [
   { value: 'Washington' },
@@ -92,6 +92,10 @@ const SearchPublications = () => {
 
   return (
     <div>
+      <Breadcrumb>
+        <Breadcrumb.Item><a href="#home">Home</a></Breadcrumb.Item>
+        <Breadcrumb.Item>Search Publications</Breadcrumb.Item>
+      </Breadcrumb>
       <Row justify="center">
         <Col xs={24}>
         <Card style={{border: 'black solid 0.1px', marginBottom: '20px'}}>

@@ -1,20 +1,57 @@
-import React from 'react'
+import React, { useState, useEffect }from 'react'
 // import axios from 'axios'
-import { Button, Card, Col, Row } from 'antd';
+import { Breadcrumb, Button, Card, Col, Modal, Row } from 'antd';
+import Axios from 'axios';
+// import Axios from 'axios';
 
 
 
 const SearchPublicationIssues = (props) => {
   const publication = props.location.state.publication
   const issues = props.location.state.publication.issues
+  const [visible, setVisible] = useState(false)
+  const [selectedIssue, setSelectedIssue] = useState([])
+  const [issueData, setIssueData] = useState([])
+  const [selected, setSelected] = useState(false)
+  const [loading, setLoading] =useState(false)
+  
+  useEffect(() => {
+    if (selectedIssue.length !== 0) {
+    Axios(selectedIssue.url)
+      .then(response => response.data.pages.map(page => (
+        Axios(page.url)
+          .then(response => setIssueData(page => [...page, response.data]))
+          .then(setSelectedIssue([]))
+      )))
+     setSelected(true)
+     setLoading(false)
+    }
+  })
 
+  const showModal = () => {
+    setVisible(true)
+  }
+  
+  const handleOk = () => {
+    setVisible(false),
+    setSelectedIssue([])
+    setIssueData([]),
+    setLoading(false)
+  }
+  
+  const handleCancel = () => {
+    setVisible(false),
+    setSelectedIssue([])
+    setIssueData([]),
+    setLoading(false)
+  }
 
   // Jsx for mapped issues
   const issuesJsx = issues.map((issue, index) => (
     <Col key={index}>
       <Card
       actions={[
-        <Button size="small" key="view">View</Button>
+        <Button size="small" key="index" onClick={() => {setSelectedIssue(issue), showModal(), setLoading(true)}}>View</Button>
       ]}
       >
         {issue.date_issued}
@@ -23,11 +60,27 @@ const SearchPublicationIssues = (props) => {
     
   ))
 
-  console.log('publication:', publication)
-  console.log('issues:', issues)
+  if (issueData)
+
+  // console.log('publication:', publication)
+  // console.log('issues:', issues)
+  // console.log('visible:', visible)
+  console.log('selectedIssue', selectedIssue)
+  console.log('issueData', issueData)
+  console.log('selected', selected)
+  console.log('loading', loading)
+
+  // set the issue when clicked
+  // have useEffect fetch the data and save to state
+  // modal data will populate on fetch completion
 
   return (
     <div>
+      <Breadcrumb>
+        <Breadcrumb.Item><a href="#home">Home</a></Breadcrumb.Item>
+        <Breadcrumb.Item><a href="#search-publication">Search Publications</a></Breadcrumb.Item>
+        <Breadcrumb.Item>View Issues</Breadcrumb.Item>
+      </Breadcrumb>
       <h1>Availible Issues</h1>
       <p>Below are the issues corresponding to your submission! Select from the presented issues to view their records.</p>
       <Card title={publication.name}>
@@ -35,6 +88,15 @@ const SearchPublicationIssues = (props) => {
         <p>Start year: {publication.start_year}</p>
         <p>End Year: {publication.end_year}</p>
         <Row>
+        <Modal
+          title="Basic Modal"
+          visible={visible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          destroyOnClose={true}
+        >
+          <p>There are {issueData.length} archived pages.</p>
+        </Modal>
           {issuesJsx}
         </Row>
       </Card>
