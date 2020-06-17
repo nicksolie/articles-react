@@ -12,18 +12,16 @@ const SearchPublicationIssues = (props) => {
   const [visible, setVisible] = useState(false)
   const [selectedIssue, setSelectedIssue] = useState([])
   const [issueData, setIssueData] = useState([])
-  const [selected, setSelected] = useState(false)
   const [loading, setLoading] =useState(false)
   
   useEffect(() => {
-    if (selectedIssue.length !== 0) {
+    if (issueData.length === 0) {
     Axios(selectedIssue.url)
       .then(response => response.data.pages.map(page => (
         Axios(page.url)
           .then(response => setIssueData(page => [...page, response.data]))
           .then(setSelectedIssue([]))
       )))
-     setSelected(true)
      setLoading(false)
     }
   })
@@ -60,14 +58,19 @@ const SearchPublicationIssues = (props) => {
     
   ))
 
-  if (issueData)
+  const modalJsx = issueData.map((page, index) => (
+    <Card key={index}>
+      <p>{page.issue.date_issued}</p>
+      <embed src={page.pdf} type="application/pdf" height="900" width="90%" />
 
-  // console.log('publication:', publication)
+    </Card>
+  ))
+
+  console.log('publication:', publication)
   // console.log('issues:', issues)
   // console.log('visible:', visible)
   console.log('selectedIssue', selectedIssue)
   console.log('issueData', issueData)
-  console.log('selected', selected)
   console.log('loading', loading)
 
   // set the issue when clicked
@@ -96,6 +99,7 @@ const SearchPublicationIssues = (props) => {
           destroyOnClose={true}
         >
           <p>There are {issueData.length} archived pages.</p>
+          {modalJsx}
         </Modal>
           {issuesJsx}
         </Row>
