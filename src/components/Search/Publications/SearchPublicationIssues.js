@@ -46,7 +46,7 @@ const SearchPublicationIssues = (props) => {
 
   // Jsx for mapped issues
   const issuesJsx = issues.map((issue, index) => (
-    <Col key={index}>
+    <Col key={index} xs={12} sm={8} md={4}>
       <Card
       actions={[
         <Button size="small" key="index" onClick={() => {setSelectedIssue(issue), showModal(), setLoading(true)}}>View</Button>
@@ -61,7 +61,7 @@ const SearchPublicationIssues = (props) => {
   const modalJsx = issueData.map((page, index) => (
     <Card key={index}>
       <p>{page.issue.date_issued}</p>
-      <embed src={page.pdf} type="application/pdf" height="900" width="90%" />
+      <embed src={page.pdf} type="application/pdf" height="700" width="100%" />
 
     </Card>
   ))
@@ -86,24 +86,24 @@ const SearchPublicationIssues = (props) => {
       </Breadcrumb>
       <h1>Availible Issues</h1>
       <p>Below are the issues corresponding to your submission! Select from the presented issues to view their records.</p>
-      <Card title={publication.name}>
+        <h6>{publication.name}</h6>
         <p>Origin: {publication.place_of_publication}</p>
         <p>Start year: {publication.start_year}</p>
         <p>End Year: {publication.end_year}</p>
-        <Row>
+        <Row gutter={[16, 16]}>
         <Modal
           title="Basic Modal"
           visible={visible}
           onOk={handleOk}
           onCancel={handleCancel}
           destroyOnClose={true}
+          width={"90%"}
         >
           <p>There are {issueData.length} archived pages.</p>
           {modalJsx}
         </Modal>
           {issuesJsx}
         </Row>
-      </Card>
     </div>
   )
 }

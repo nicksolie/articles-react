@@ -20,7 +20,7 @@ const Home = () => {
             <Breadcrumb >
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
             </Breadcrumb>
-            <Divider style={divderStyles} orientation="left">Search</Divider>      
+            <Divider style={divderStyles} orientation="left">Search</Divider> 
             <Row justify={"center"} gutter={{xs: 8, sm: 16, md: 24}}>
                 <Col className={rowStyle} xs={24} sm={12} order={1}>
                     <Card
