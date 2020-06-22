@@ -1,7 +1,7 @@
-import React, { useState, useEffect }from 'react'
+import React, { useState }from 'react'
 // import axios from 'axios'
 import { Breadcrumb, Button, Card, Col, Modal, Row } from 'antd';
-import Axios from 'axios';
+import axios from 'axios';
 // import Axios from 'axios';
 
 
@@ -14,17 +14,15 @@ const SearchPublicationIssues = (props) => {
   const [issueData, setIssueData] = useState([])
   const [loading, setLoading] =useState(false)
   
-  useEffect(() => {
-    if (issueData.length === 0) {
-    Axios(selectedIssue.url)
-      .then(response => response.data.pages.map(page => (
-        Axios(page.url)
-          .then(response => setIssueData(page => [...page, response.data]))
-          .then(setSelectedIssue([]))
-      )))
-     setLoading(false)
-    }
-  })
+  if (loading) {
+    axios(selectedIssue.url)
+    .then(response => response.data.pages.map(page => (
+      axios(page.url)
+        .then(response => setIssueData(page => [...page, response.data]))
+        .then(setSelectedIssue([]))
+    )))
+    setLoading(false)
+  }
 
   const showModal = () => {
     setVisible(true)
