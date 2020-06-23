@@ -59,8 +59,8 @@ const SearchPublicationIssues = (props) => {
   const modalJsx = issueData.map((page, index) => (
     <Card key={index}>
       <p>{page.issue.date_issued}</p>
-      <embed src={page.pdf} type="application/pdf" height="700" width="100%" />
-
+      {/* <embed src={page.pdf} type="application/pdf" height="700" width="100%" /> */}
+      <iframe src={page.pdf} type="application/pdf" height="500" width="100%" frameBorder="0" />
     </Card>
   ))
 
@@ -77,7 +77,7 @@ const SearchPublicationIssues = (props) => {
 
   return (
     <div>
-      <Breadcrumb>
+      <Breadcrumb style={{margin: '30px'}} >
         <Breadcrumb.Item><a href="#home">Home</a></Breadcrumb.Item>
         <Breadcrumb.Item><a href="#search-publication">Search Publications</a></Breadcrumb.Item>
         <Breadcrumb.Item>View Issues</Breadcrumb.Item>

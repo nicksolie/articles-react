@@ -43,7 +43,7 @@ const { Meta } = Card
           <Card style={{textAlign: 'center'}}>
             <Meta
               title="Welcome!"
-              description="Articles is a platform to view archived newspapers and other historical content from the Library of Congress. Currently incompatible with Safari."
+              description="Articles is a platform to view archived newspapers and other historical content from the Library of Congress."
               style={{textAlign: 'center'}}
             />
             <Row style={{marginTop:'20px', alignItems: 'center'}} justify={"center"}>
@@ -74,7 +74,7 @@ const { Meta } = Card
         >
           <div style={{ overflow: 'scroll' }}>
             <Pagination current={current} onChange={onPaginationChange} total={50} />
-            <embed src={urls[current-1]} type="application/pdf" height="600" width="100%" />
+            <iframe src={urls[current-1]} type="application/pdf" frameBorder="0" height="600" width="100%" />
             {/* <p><embed src="https://chroniclingamerica.loc.gov/data/batches/kyu_one_ver01/data/sn86069873/00100479266/1904041201/0240.pdf" type="application/pdf" height="600" width="100%" /></p> */}
             <p>Some contents...</p>
             <p>Some contents...</p>

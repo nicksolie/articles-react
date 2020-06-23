@@ -92,30 +92,30 @@ const SearchPublications = () => {
 
   return (
     <div>
-      <Breadcrumb>
+      <Breadcrumb style={{margin: '30px'}}>
         <Breadcrumb.Item><a href="#home">Home</a></Breadcrumb.Item>
         <Breadcrumb.Item>Search Publications</Breadcrumb.Item>
       </Breadcrumb>
       <Row justify="center">
-        <Col xs={24}>
-        <Card style={{border: 'black solid 0.1px', marginBottom: '20px'}}>
-          <Meta
-            title="Search by Publication Name"
-            description="Note: Spaces are not allowed - Use &quot;+&quot;"
-          />
-          <Form onFinish={() => handleSearchSubmit()}>
-            <Form.Item>
-              <AutoComplete
-                style={{ width: 300 }}
-                placeholder="Example: term1+term2"
-                options={suggestedSearches}
-                onSelect={onSelect}
-                onSearch={handleSearch}
-              />
-               <Button type="primary" htmlType="submit">Search</Button>
-            </Form.Item>
-          </Form>
-        </Card>
+        <Col xs={24}>         
+          <Card style={{border: 'black solid 0.1px', marginBottom: '10px', textAlign: 'center' }}>
+            <Meta
+              title="Search by Publication Name"
+              description="Note: Spaces are not allowed - Use &quot;+&quot;"
+            />
+            <Form onFinish={() => handleSearchSubmit()} style={{marginTop: '5px'}}>
+              <Form.Item>
+                <AutoComplete
+                  style={{ width: 300, marginRight: '10px' }}
+                  placeholder="Example: term1+term2"
+                  options={suggestedSearches}
+                  onSelect={onSelect}
+                  onSearch={handleSearch}
+                />
+                <Button style={{marginTop: '5px'}} type="primary" htmlType="submit">Search</Button>
+              </Form.Item>
+            </Form>
+          </Card>
         </Col>
       </Row>
       <Row style={{textAlign: 'center'}} justify="space-around" gutter={{xs: 8, sm: 16, md: 24}}>
