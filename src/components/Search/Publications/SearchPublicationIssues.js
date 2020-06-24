@@ -1,4 +1,4 @@
-import React, { useState }from 'react'
+import React, { useState, useEffect }from 'react'
 // import axios from 'axios'
 import { Breadcrumb, Button, Card, Col, Modal, Row } from 'antd';
 import axios from 'axios';
@@ -12,13 +12,14 @@ const SearchPublicationIssues = (props) => {
   const [visible, setVisible] = useState(false)
   const [selectedIssue, setSelectedIssue] = useState([])
   const [issueData, setIssueData] = useState([])
+  const [sortedIssueData, setSortedIssueData] = useState([])
   const [loading, setLoading] =useState(false)
   
   if (loading) {
     axios(selectedIssue.url)
     .then(response => response.data.pages.map(page => (
       axios(page.url)
-        .then(response => setIssueData(page => [...page, response.data]))
+        .then(response => setIssueData(page => [...page, response.data])) 
         .then(setSelectedIssue([]))
     )))
     setLoading(false)
@@ -56,11 +57,15 @@ const SearchPublicationIssues = (props) => {
     
   ))
 
-  const modalJsx = issueData.map((page, index) => (
-    <Card key={index}>
-      <p>{page.issue.date_issued}</p>
+  useEffect(() => (
+    setSortedIssueData(issueData.sort((a, b) => a.sequence - b.sequence))
+  ))
+
+  const modalJsx = sortedIssueData.map((page, index) => (
+    <Card key={index} title={page.issue.date_issued}>
+      <p>{page.sequence}</p>
       {/* <embed src={page.pdf} type="application/pdf" height="700" width="100%" /> */}
-      <iframe src={page.pdf} type="application/pdf" height="500" width="100%" frameBorder="0" />
+      <iframe src={page.pdf} type="application/pdf" height="800" width="100%" frameBorder="0" />
     </Card>
   ))
 
@@ -70,6 +75,7 @@ const SearchPublicationIssues = (props) => {
   console.log('selectedIssue', selectedIssue)
   console.log('issueData', issueData)
   console.log('loading', loading)
+  console.log('sorted', sortedIssueData)
 
   // set the issue when clicked
   // have useEffect fetch the data and save to state
@@ -90,7 +96,6 @@ const SearchPublicationIssues = (props) => {
         <p>End Year: {publication.end_year}</p>
         <Row gutter={[16, 16]}>
         <Modal
-          title="Basic Modal"
           visible={visible}
           onOk={handleOk}
           onCancel={handleCancel}
