@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
-
-import { AutoComplete, Breadcrumb, Button, Card, Col, Form, Row } from 'antd';
+import { AutoComplete, Breadcrumb, Button, Card, Col, Form, Row } from 'antd'
+import newspaperIndex from '../../newspaperIndex'
 
 const suggestedSearches = [
   { value: 'Washington' },
   { value: 'Toiler' },
   { value: 'Bourbon+News' }
 ]
+
+console.log('papers', newspaperIndex)
 
 const SearchPublications = () => {
   const [search, setSearch] = useState('')
@@ -45,15 +47,6 @@ const SearchPublications = () => {
   const filteredPublicationList = publicationsList.filter((publicationsList) =>
     publicationsList.issues.length !== 0,
   )
-
-  // const emptyPublicationList = publicationsList.filter((publicationsList) =>
-  //   publicationsList.issues.length === 0
-  // )
-
-  // const handleSubmit = (publication) => {
-  //   setPublication(publication),
-  //   setSubmitted(true)
-  // }
 
   // don't forget to add a row contrainer
   const filteredListJsx = filteredPublicationList.map((publication, index) =>
