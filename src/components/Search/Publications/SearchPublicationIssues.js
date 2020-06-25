@@ -1,10 +1,6 @@
 import React, { useState, useEffect }from 'react'
-// import axios from 'axios'
 import { Breadcrumb, Button, Card, Col, Modal, Row } from 'antd';
 import axios from 'axios';
-// import Axios from 'axios';
-
-
 
 const SearchPublicationIssues = (props) => {
   const publication = props.location.state.publication
@@ -14,8 +10,10 @@ const SearchPublicationIssues = (props) => {
   const [issueData, setIssueData] = useState([])
   const [sortedIssueData, setSortedIssueData] = useState([])
   const [loading, setLoading] =useState(false)
+  const [firstIssueDate, setFirstIssueDate] = useState({})
   
   if (loading) {
+    setFirstIssueDate(selectedIssue)
     axios(selectedIssue.url)
     .then(response => response.data.pages.map(page => (
       axios(page.url)
@@ -62,24 +60,19 @@ const SearchPublicationIssues = (props) => {
   ))
 
   const modalJsx = sortedIssueData.map((page, index) => (
-    <Card key={index} title={page.issue.date_issued}>
-      <p>{page.sequence}</p>
-      {/* <embed src={page.pdf} type="application/pdf" height="700" width="100%" /> */}
+    <Card key={index}>
+      <p>Page: {page.sequence}</p>
       <iframe src={page.pdf} type="application/pdf" height="800" width="100%" frameBorder="0" />
     </Card>
   ))
 
+  const pageLength = issueData.length > 0 ? <p>There are {issueData.length} archived pages.</p> : <p></p>
+
   console.log('publication:', publication)
-  // console.log('issues:', issues)
-  // console.log('visible:', visible)
-  console.log('selectedIssue', selectedIssue)
   console.log('issueData', issueData)
   console.log('loading', loading)
   console.log('sorted', sortedIssueData)
-
-  // set the issue when clicked
-  // have useEffect fetch the data and save to state
-  // modal data will populate on fetch completion
+  console.log('firstIssueDate', firstIssueDate)
 
   return (
     <div>
@@ -102,7 +95,8 @@ const SearchPublicationIssues = (props) => {
           destroyOnClose={true}
           width={"90%"}
         >
-          <p>There are {issueData.length} archived pages.</p>
+          {({firstIssueDate} && <h6>Issue: {firstIssueDate.date_issued}</h6>)}
+          {pageLength}
           {modalJsx}
         </Modal>
           {issuesJsx}
