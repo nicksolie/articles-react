@@ -2,15 +2,16 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import { AutoComplete, Breadcrumb, Button, Card, Col, Form, Row } from 'antd'
-import newspaperIndex from '../../newspaperIndex'
+// import newspaperIndex from '../../newspaperIndex'
 
 const suggestedSearches = [
   { value: 'Washington' },
   { value: 'Toiler' },
+  { value: 'New+York'},
+  { value: 'Ohio'},
+  { value: 'New+Mexico'},
   { value: 'Bourbon+News' }
 ]
-
-console.log('papers', newspaperIndex)
 
 const SearchPublications = () => {
   const [search, setSearch] = useState('')
