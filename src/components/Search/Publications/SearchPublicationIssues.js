@@ -57,8 +57,8 @@ const SearchPublicationIssues = (props) => {
   ))
 
   const modalJsx = sortedIssueData.map((page, index) => (
-    <Card key={index}>
-      {sortedIssueData ? (<p>Page: {page.sequence}</p>, <iframe src={page.pdf} type="application/pdf" height="800" width="100%" frameBorder="0" />) : <Skeleton/> }
+    <Card key={index} style={{textAlign:'center'}}>
+      {sortedIssueData ? (<p>Page: {page.sequence}</p>, <iframe src={page.pdf} type="application/pdf" height="800" width="90%" frameBorder="0" />) : <Skeleton/> }
       {/* // <p>Page: {page.sequence}</p> */}
       {/* // <iframe src={page.pdf} type="application/pdf" height="800" width="100%" frameBorder="0" /> */}
     </Card>
@@ -94,7 +94,7 @@ const SearchPublicationIssues = (props) => {
           destroyOnClose={true}
           width={"90%"}
         >
-          {({firstIssueDate} && <h6>Issue: {firstIssueDate.date_issued}</h6>)}
+          {({firstIssueDate} && <h6><u>Issue: {firstIssueDate.date_issued}</u></h6>)}
           {pageLength}
           {skeletonJsx}
           {modalJsx}

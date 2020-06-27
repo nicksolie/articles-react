@@ -71,14 +71,13 @@ const { Meta } = Card
           onCancel={handleCancel}
           keyboard={true}
           mask={true}
+          width={"90%"}
+          style={{textAlign: 'center'}}
         >
           <div style={{ overflow: 'scroll' }}>
-            <Pagination current={current} onChange={onPaginationChange} total={50} />
-            <iframe src={urls[current-1]} type="application/pdf" frameBorder="0" height="600" width="100%" />
+            <Pagination current={current} onChange={onPaginationChange} total={50} style={{marginBottom:'7px'}}/>
+            <iframe src={urls[current-1]} type="application/pdf" frameBorder="0" height="600" width="90%" style={{marginTop: '7px'}}/>
             {/* <p><embed src="https://chroniclingamerica.loc.gov/data/batches/kyu_one_ver01/data/sn86069873/00100479266/1904041201/0240.pdf" type="application/pdf" height="600" width="100%" /></p> */}
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            {/* <BackTop visibilityHeight={20}/> */}
           </div>
         </Modal>
       </Row>
