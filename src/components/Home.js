@@ -17,7 +17,7 @@ const divderStyles = {
 const Home = () => {
     return (
         <div>
-            <Breadcrumb >
+            <Breadcrumb style={{marginTop: '20px', marginBottom: '20px'}}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
             </Breadcrumb>
             <Divider style={divderStyles} orientation="left">Search</Divider> 

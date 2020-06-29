@@ -1,6 +1,7 @@
 import React, { useState, useEffect }from 'react'
 import { Breadcrumb, Button, Card, Col, Modal, Row, Skeleton } from 'antd';
 import axios from 'axios';
+import IndexCollections from './../../Collections/IndexCollections.js'
 
 const SearchPublicationIssues = (props) => {
   const publication = props.location.state.publication
@@ -24,15 +25,17 @@ const SearchPublicationIssues = (props) => {
     setLoading(false)
   }
 
+  // Triggle modal display
   const showModal = () => {
     setVisible(true)
   }
   
-  const handleOk = () => {
-    setVisible(false),
-    setIssueData([])
+  // Modal add setting
+  const handleAdd = () => {
+    // setVisible(false)
   }
   
+  // Close modal
   const handleCancel = () => {
     setVisible(false),
     setIssueData([])
@@ -40,10 +43,10 @@ const SearchPublicationIssues = (props) => {
 
   // Jsx for mapped issues
   const issuesJsx = issues.map((issue, index) => (
-    <Col key={index} xs={12} sm={8} md={4}>
+    <Col key={index} xs={12} sm={8} md={4} style={{textAlign: 'center'}}>
       <Card
       actions={[
-        <Button size="small" key="index" onClick={() => {setSelectedIssue(issue), showModal(), setLoading(true)}}>View</Button>
+        <Button size="small" key="index" onClick={() => {setSelectedIssue(issue), showModal(), setLoading(true)}}>View</Button>,
       ]}
       >
         {issue.date_issued}
@@ -57,19 +60,23 @@ const SearchPublicationIssues = (props) => {
   ))
 
   const modalJsx = sortedIssueData.map((page, index) => (
-    <Card key={index} style={{textAlign:'center'}}>
-      {sortedIssueData ? (<p>Page: {page.sequence}</p>, <iframe src={page.pdf} type="application/pdf" height="800" width="90%" frameBorder="0" />) : <Skeleton/> }
-      {/* // <p>Page: {page.sequence}</p> */}
-      {/* // <iframe src={page.pdf} type="application/pdf" height="800" width="100%" frameBorder="0" /> */}
+    <Card key={index} style={{textAlign:'center', marginBottom:'15px'}}>
+      <p>Page: {page.sequence}</p>
+      {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px'}} frameBorder="0" />)}
+      <Button type="primary" style={{marginTop:'5px'}}>Add to Collection</Button>
     </Card>
   ))
 
+  // Show page length at top of card when data is done loading
   const pageLength = issueData.length > 0 ? <p>There are {issueData.length} archived pages.</p> : <p></p>
+  // Load skeleton while data is loading
   const skeletonJsx = (issueData.length === 0 && (<p>Loading..</p>, <Skeleton paragraph={{ rows: 10 }} active/>))
+
+  // store the selected issue in state
+  //
 
   console.log('publication:', publication)
   console.log('issueData', issueData)
-  console.log('loading', loading)
   console.log('sorted', sortedIssueData)
   console.log('firstIssueDate', firstIssueDate)
 
@@ -89,10 +96,18 @@ const SearchPublicationIssues = (props) => {
         <Row gutter={[16, 16]}>
         <Modal
           visible={visible}
-          onOk={handleOk}
+          onOk={handleAdd}
           onCancel={handleCancel}
           destroyOnClose={true}
           width={"90%"}
+          footer={[
+            <Button key="back" onClick={handleCancel}>
+              Back
+            </Button>,
+            <Button type="primary" key="add" onClick={handleAdd}>
+              Add All to Collection
+            </Button>
+          ]}
         >
           {({firstIssueDate} && <h6><u>Issue: {firstIssueDate.date_issued}</u></h6>)}
           {pageLength}

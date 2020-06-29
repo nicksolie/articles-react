@@ -84,7 +84,7 @@ const SearchPublications = () => {
 
   return (
     <div>
-      <Breadcrumb style={{margin: '30px'}}>
+      <Breadcrumb style={{marginTop: '20px', marginBottom: '20px'}}>
         <Breadcrumb.Item><a href="#home">Home</a></Breadcrumb.Item>
         <Breadcrumb.Item>Search Publications</Breadcrumb.Item>
       </Breadcrumb>
