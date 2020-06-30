@@ -112,6 +112,7 @@ const SearchPublicationIssues = (props) => {
           {({firstIssueDate} && <h6><u>Issue: {firstIssueDate.date_issued}</u></h6>)}
           {pageLength}
           {skeletonJsx}
+          {IndexCollections()}
           {modalJsx}
         </Modal>
           {issuesJsx}
