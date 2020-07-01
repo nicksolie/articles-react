@@ -1,7 +1,7 @@
 import React, { useState, useEffect }from 'react'
 import { Breadcrumb, Button, Card, Col, Modal, Row, Skeleton } from 'antd';
 import axios from 'axios';
-import IndexCollections from './../../Collections/IndexCollections.js'
+// import IndexCollections from './../../Collections/IndexCollections.js'
 
 const SearchPublicationIssues = (props) => {
   const publication = props.location.state.publication
@@ -112,7 +112,6 @@ const SearchPublicationIssues = (props) => {
           {({firstIssueDate} && <h6><u>Issue: {firstIssueDate.date_issued}</u></h6>)}
           {pageLength}
           {skeletonJsx}
-          {IndexCollections()}
           {modalJsx}
         </Modal>
           {issuesJsx}

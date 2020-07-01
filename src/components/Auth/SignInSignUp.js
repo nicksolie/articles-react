@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { signIn, signUp } from '../../api/auth'
-// import message from '../AutoDismissAlert/messages'
 
 import { Button, Form, Input, message, Tabs } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -129,6 +128,7 @@ class SignInSignUp extends Component {
             {/* Register tab */}
             <TabPane tab="Sign Up" key="2">
               <h3>Sign Up</h3>
+              <p>A default account is provided for you.</p>
               <p>Note: login can take a moment.</p>
               <Form
                 name="normal_login"

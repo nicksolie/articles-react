@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
-import { AutoComplete, Breadcrumb, Button, Card, Col, Form, Row } from 'antd'
+import { AutoComplete, Breadcrumb, Button, Card, Col, Empty, Form, Row, Skeleton } from 'antd'
 // import newspaperIndex from '../../newspaperIndex'
 
 const suggestedSearches = [
@@ -18,9 +18,11 @@ const SearchPublications = () => {
   const [emptySearchResponse, setEmptySearchResponse] = useState(false)
   const [publicationsList, setPublicationsList] = useState([])
   const [publication, setPublication] = useState([])
+  const [loading, setLoading] = useState(false)
   const { Meta } = Card;
 
   const handleSearchSubmit = () => {
+    setLoading(true)
     if (search === '') {
       return
     }
@@ -40,6 +42,7 @@ const SearchPublications = () => {
           )
       }})
       .catch(console.error)
+      .finally(setLoading(false))
   }
 
   // Filter out publications with no issues.
@@ -47,20 +50,34 @@ const SearchPublications = () => {
     publicationsList.issues.length !== 0,
   )
 
-  // don't forget to add a row contrainer
-  const filteredListJsx = filteredPublicationList.map((publication, index) =>
-    <Col key={index} xs={24} sm={12} order={index}>
-      <Card title={publication.name}
-      actions={[
-        <Button onClick={() => setPublication(publication)} key="view">View</Button>,
-        ]}
-      style={{marginBottom: '30px', border: 'black solid 0.1px'}}
-      >
-        <p>{publication.place_of_publication}</p>
-        <p>{publication.start_year}</p>
-        <p>{publication.end_year}</p>
-      </Card>
-    </Col>
+  // const filteredListJsx = filteredPublicationList.map((publication, index) =>
+  //   <Col key={index} xs={24} sm={12} order={index}>
+  //     <Card title={publication.name}
+  //     actions={[
+  //       <Button onClick={() => setPublication(publication)} key="view">View</Button>,
+  //       ]}
+  //     style={{marginTop: '30px', border: 'black solid 0.1px'}}
+  //     >
+  //       <p>{publication.place_of_publication}</p>
+  //       <p>Start Year:{publication.start_year}</p>
+  //       <p>End Year: {publication.end_year}</p>
+  //     </Card>
+  //   </Col>
+  // )
+
+  const filteredListJsx = loading ? <Skeleton /> : filteredPublicationList.map((publication, index) =>
+  <Col key={index} xs={24} sm={12} order={index}>
+    <Card title={publication.name}
+    actions={[
+      <Button onClick={() => setPublication(publication)} key="view">View</Button>,
+      ]}
+    style={{marginTop: '30px', border: 'black solid 0.1px'}}
+    >
+      <p>{publication.place_of_publication}</p>
+      <p>Start Year:{publication.start_year}</p>
+      <p>End Year: {publication.end_year}</p>
+    </Card>
+  </Col>
   )
 
   console.log('search:', search)
@@ -82,6 +99,8 @@ const SearchPublications = () => {
     setSearch(value)
   };
 
+  // const skeletonJsx = (filteredPublicationList && <Skeleton />)
+
   return (
     <div>
       <Breadcrumb style={{marginTop: '20px', marginBottom: '20px'}}>
@@ -90,7 +109,7 @@ const SearchPublications = () => {
       </Breadcrumb>
       <Row justify="center">
         <Col xs={24}>         
-          <Card style={{border: 'black solid 0.1px', marginBottom: '10px', textAlign: 'center' }}>
+          <Card style={{border: 'black solid 0.1px', textAlign: 'center' }}>
             <Meta
               title="Search by Publication Name"
               description="Note: Spaces are not allowed - Use &quot;+&quot;"
@@ -111,8 +130,10 @@ const SearchPublications = () => {
         </Col>
       </Row>
       <Row style={{textAlign: 'center'}} justify="space-around" gutter={{xs: 8, sm: 16, md: 24}}>
+          {/* {skeletonJsx} */}
           {filteredListJsx}
-          {(emptySearchResponse && <p>No results found. Please try again.</p>)}
+          {/* {(emptySearchResponse && <p>No results found. Please try again.</p>)} */}
+          {(emptySearchResponse && <Empty style={{marginTop: '30px'}} />)}
       </Row>
     </div>
   )

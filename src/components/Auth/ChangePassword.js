@@ -5,6 +5,7 @@ import { changePassword } from '../../api/auth'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import { message } from 'antd'
 
 class ChangePassword extends Component {
   constructor () {
@@ -25,10 +26,20 @@ class ChangePassword extends Component {
 
     const { history, user } = this.props
 
+    const success = () => {
+      message.success('You Have Successfully Changed Your Password!')
+    }
+
+    const error = () => {
+      message.error('Change Password Failed. Please Try again.');
+    }
+
     changePassword(this.state, user)
       .then(() => history.push('/'))
+      .then(() => success())
       .catch(() => {
-        this.setState({ oldPassword: '', newPassword: '' })
+        this.setState({ oldPassword: '', newPassword: '' }),
+        error()
       })
   }
 
