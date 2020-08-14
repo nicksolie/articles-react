@@ -18,7 +18,7 @@ const SearchPublications = () => {
   const [emptySearchResponse, setEmptySearchResponse] = useState(false)
   const [publicationsList, setPublicationsList] = useState([])
   const [publication, setPublication] = useState([])
-  const { Meta } = Card;
+  const { Meta } = Card
 
   const handleSearchSubmit = () => {
     if (search === '') {
@@ -29,32 +29,41 @@ const SearchPublications = () => {
     // Add search term to query
     axios(`https://chroniclingamerica.loc.gov/search/titles/results/?terms=${search}&format=json`)
       .then((response) => {
-        // Check if the response is empty and set error message
+        console.log(response)
+        // Check if the response is empty or if there is other data w/o pdfs
         if (response.data.items.length === 0) {
           setEmptySearchResponse(true)
         } else {
-          response.data.items.map(result =>
+          response.data.items.map((result) => {
             // Go to url for publication information
             axios(result.url)
-              // .then(response => console.log(response.data.issues))
-              .then((publication) => {
-                if (publication.data.issues.length === 0) {
-                  return
-                } else {
-                  setPublicationsList(publications => [...publications, publication.data])
-                }
-              })
-          )
+
+            .then((publication) => {
+              if (publication.data.issues.length === 0) {
+                return
+              } else {
+                setPublicationsList(publications => [...publications, publication.data])
+              }
+            })
+
+              // .then((publications) => {
+              //   console.log('publication: ', publications)
+              //   // filter out publications that don't have issues
+              //   if (publications.data.issues.length > 0) {
+              //     setPublicationsList(publication => [...publication, publication.data])
+              //     console.log('inside')
+              //   } else {
+              //     setEmptySearchResponse(true)
+              //   }
+              // })
+            })
       }})
       .catch(console.error)
   }
 
-  // Filter out publications with no issues.
-  const filteredPublicationList = publicationsList.filter((publicationsList) =>
-    publicationsList.issues.length !== 0,
-  )
+  console.log('publicationslist is...', publicationsList)
 
-  const filteredListJsx = filteredPublicationList.map((publication, index) =>
+  const publicationsListJsx = publicationsList.map((publication, index) =>
     <Col key={index} xs={24} sm={12} order={index}>
       <Card title={publication.name}
       actions={[
@@ -63,14 +72,11 @@ const SearchPublications = () => {
       style={{marginTop: '30px', border: 'black solid 0.1px'}}
       >
         <p>{publication.place_of_publication}</p>
-        <p>Start Year:{publication.start_year}</p>
+        <p>Start Year: {publication.start_year}</p>
         <p>End Year: {publication.end_year}</p>
       </Card>
     </Col>
   )
-
-
-  console.log('publicationsList', publicationsList)
 
   //  If user selects a publication - redirect
   if (publication.length !== 0) {
@@ -80,15 +86,20 @@ const SearchPublications = () => {
     }} />
   }
 
+  // Store the user's search input
   const handleSearch = (value) => {
     setSearch(value)
-  };
+  }
 
+  // Store the user's selected search input
   const onSelect = (value) => {
     setSearch(value)
-  };
+  }
 
-  // const skeletonJsx = (filteredPublicationList && <Skeleton />)
+  const noReturn = (emptySearchResponse && <p>Not all of the publications achived by the Library of Congress have PDFs. Try another similar word.</p>)
+
+  // console.log('empty', emptySearchResponse)
+  console.log(publicationsList.length)
 
   return (
     <div>
@@ -103,6 +114,8 @@ const SearchPublications = () => {
               title="Search by Publication Name"
               description="Note: Spaces are not allowed - Use &quot;+&quot;"
             />
+
+            {/* Search form */}
             <Form onFinish={() => handleSearchSubmit()} style={{marginTop: '5px'}}>
               <Form.Item>
                 <AutoComplete
@@ -115,14 +128,14 @@ const SearchPublications = () => {
                 <Button style={{marginTop: '5px'}} type="primary" htmlType="submit">Search</Button>
               </Form.Item>
             </Form>
+
           </Card>
         </Col>
       </Row>
       <Row style={{textAlign: 'center'}} justify="space-around" gutter={{xs: 8, sm: 16, md: 24}}>
-          {/* {skeletonJsx} */}
-          {filteredListJsx}
-          {/* {(emptySearchResponse && <p>No results found. Please try again.</p>)} */}
+          {publicationsListJsx}
           {(emptySearchResponse && <Empty style={{marginTop: '30px'}} />)}
+          {noReturn}
       </Row>
     </div>
   )
