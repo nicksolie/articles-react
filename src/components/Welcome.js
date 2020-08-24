@@ -43,7 +43,7 @@ const { Meta } = Card
           <Card style={{textAlign: 'center'}}>
             <Meta
               title="Welcome!"
-              description="Articles is a platform to view archived newspapers and other historical content from the Library of Congress."
+              description="Articles is a platform to view archived newspapers and other historical content from the Library of Congress. Please note, this website it optimized for Chrome."
               style={{textAlign: 'center'}}
             />
             <Row style={{marginTop:'20px', alignItems: 'center'}} justify={"center"}>

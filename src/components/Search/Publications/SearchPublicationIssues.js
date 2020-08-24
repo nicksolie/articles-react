@@ -1,5 +1,5 @@
 import React, { useState, useEffect }from 'react'
-import { Breadcrumb, Button, Card, Col, Modal, Row, Skeleton } from 'antd';
+import { Breadcrumb, Button, Card, Col, Dropdown, Menu, Modal, Row, Skeleton } from 'antd';
 import axios from 'axios';
 // import IndexCollections from './../../Collections/IndexCollections.js'
 
@@ -12,6 +12,7 @@ const SearchPublicationIssues = (props) => {
   const [sortedIssueData, setSortedIssueData] = useState([])
   const [loading, setLoading] =useState(false)
   const [firstIssueDate, setFirstIssueDate] = useState({})
+  const [addToCollection, setAddToCollection] = useState([])
   
   if (loading) {
     setFirstIssueDate(selectedIssue)
@@ -41,6 +42,24 @@ const SearchPublicationIssues = (props) => {
     setIssueData([])
   }
 
+  // Start for function to send selected url to selected colleciton
+  // const handleCollection = url => {
+  //   return axios({
+  //     url: apiUrl + '/collections',
+  //     method: 'POST',
+  //     data: {
+  //       credentials: {
+  //         email: credentials.email,
+  //         password: credentials.password
+  //       }
+  //     }
+  //   })
+  // }
+
+  // click button
+  // show list of collections
+
+
   // Jsx for mapped issues
   const issuesJsx = issues.map((issue, index) => (
     <Col key={index} xs={12} sm={8} md={4} style={{textAlign: 'center'}}>
@@ -59,14 +78,31 @@ const SearchPublicationIssues = (props) => {
     setSortedIssueData(issueData.sort((a, b) => a.sequence - b.sequence))
   ))
 
+  const menu = (
+    <Menu>
+      <Menu.Item key="1" >
+        1st menu item
+      </Menu.Item>
+      <Menu.Item key="2" >
+        2nd menu item
+      </Menu.Item>
+      <Menu.Item key="3" >
+        3rd menu item
+      </Menu.Item>
+    </Menu>
+  );
+
   const modalJsx = sortedIssueData.map((page, index) => (
     <Card key={index} style={{textAlign:'center', marginBottom:'15px'}}>
       <p>Page: {page.sequence}</p>
       {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px'}} frameBorder="0" />)}
-      <Button type="primary" style={{marginTop:'5px'}}>Add to Collection</Button>
+      {/* <Button type="primary" onClick={() => setAddToCollection(page.pdf)} style={{marginTop:'5px'}}>Add to Collection</Button> */}
+      <Dropdown overlay={menu}>
+        <Button type="primary" onClick={() => setAddToCollection(page.pdf)} style={{marginTop:'5px'}}>Add to Collection</Button>
+      </Dropdown>
     </Card>
   ))
-
+9
   // Show page length at top of card when data is done loading
   const pageLength = issueData.length > 0 ? <p>There are {issueData.length} archived pages.</p> : <p></p>
   // Load skeleton while data is loading
@@ -75,10 +111,18 @@ const SearchPublicationIssues = (props) => {
   // store the selected issue in state
   //
 
-  console.log('publication:', publication)
-  console.log('issueData', issueData)
-  console.log('sorted', sortedIssueData)
-  console.log('firstIssueDate', firstIssueDate)
+  // console.log('publication:', publication)
+  // console.log('issueData', issueData)
+  // console.log('sorted', sortedIssueData)
+  // console.log('firstIssueDate', firstIssueDate)
+  console.log('To add to collection...', addToCollection)
+
+  // ------------------------------------------
+    // grab the selected issue's url address
+    // Pass the URL to a function
+    // Present the possible collections created by user
+    // After selecting the collection, pass the issue & collection to API for backend saving
+  // ------------------------------------------
 
   return (
     <div>

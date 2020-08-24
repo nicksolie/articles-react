@@ -10,7 +10,8 @@ const suggestedSearches = [
   { value: 'New+York'},
   { value: 'Ohio'},
   { value: 'New+Mexico'},
-  { value: 'Bourbon+News' }
+  { value: 'Bourbon+News' },
+  { value: 'West'}
 ]
 
 const SearchPublications = () => {
