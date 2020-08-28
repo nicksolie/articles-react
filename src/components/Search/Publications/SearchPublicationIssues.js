@@ -1,6 +1,7 @@
 import React, { useState, useEffect }from 'react'
 import { Breadcrumb, Button, Card, Col, Dropdown, Menu, Modal, Row, Skeleton } from 'antd';
 import axios from 'axios';
+import apiUrl from './../../../apiConfig'
 // import IndexCollections from './../../Collections/IndexCollections.js'
 
 const SearchPublicationIssues = (props) => {
@@ -13,6 +14,7 @@ const SearchPublicationIssues = (props) => {
   const [loading, setLoading] =useState(false)
   const [firstIssueDate, setFirstIssueDate] = useState({})
   const [addToCollection, setAddToCollection] = useState([])
+  const [indexedCollectionMenu, setIndexCollectionMenu] = useState([])
   
   if (loading) {
     setFirstIssueDate(selectedIssue)
@@ -56,10 +58,6 @@ const SearchPublicationIssues = (props) => {
   //   })
   // }
 
-  // click button
-  // show list of collections
-
-
   // Jsx for mapped issues
   const issuesJsx = issues.map((issue, index) => (
     <Col key={index} xs={12} sm={8} md={4} style={{textAlign: 'center'}}>
@@ -78,27 +76,43 @@ const SearchPublicationIssues = (props) => {
     setSortedIssueData(issueData.sort((a, b) => a.sequence - b.sequence))
   ))
 
+  const handleIndexMenu = () => {
+    axios(`${apiUrl}/collections`)
+      .then(res => setIndexCollectionMenu(res.data.collections))
+  }
+
+  // const menu = (
+  //   <Menu>
+  //     <Menu.Item key="1" >
+  //       1st menu item
+  //     </Menu.Item>
+  //     <Menu.Item key="2" >
+  //       2nd menu item
+  //     </Menu.Item>
+  //     <Menu.Item key="3" >
+  //       3rd menu item
+  //     </Menu.Item>
+  //   </Menu>
+  // )
+
+  const menuIndexed = indexedCollectionMenu.map((collection, index) => (
+      <Menu.Item key={index} >
+        {collection.name}
+      </Menu.Item>
+  ))
+  
   const menu = (
     <Menu>
-      <Menu.Item key="1" >
-        1st menu item
-      </Menu.Item>
-      <Menu.Item key="2" >
-        2nd menu item
-      </Menu.Item>
-      <Menu.Item key="3" >
-        3rd menu item
-      </Menu.Item>
+      {menuIndexed}
     </Menu>
-  );
+  )
 
   const modalJsx = sortedIssueData.map((page, index) => (
     <Card key={index} style={{textAlign:'center', marginBottom:'15px'}}>
       <p>Page: {page.sequence}</p>
       {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px', marginBottom:'10px'}} frameBorder="0" />)}
-      {/* <Button type="primary" onClick={() => setAddToCollection(page.pdf)} style={{marginTop:'5px'}}>Add to Collection</Button> */}
-      <Dropdown overlay={menu}>
-        <Button type="primary" onClick={() => setAddToCollection(page.pdf)}>Add to Collection</Button>
+      <Dropdown overlay={menu} onClick={() => setAddToCollection(page.pdf)} trigger={['click']}>
+        <Button type="primary" onClick={() => handleIndexMenu}>Add to Collection</Button>
       </Dropdown>
     </Card>
   ))
@@ -108,14 +122,12 @@ const SearchPublicationIssues = (props) => {
   // Load skeleton while data is loading
   const skeletonJsx = (issueData.length === 0 && (<p>Loading..</p>, <Skeleton paragraph={{ rows: 10 }} active/>))
 
-  // store the selected issue in state
-  //
-
   // console.log('publication:', publication)
   // console.log('issueData', issueData)
   // console.log('sorted', sortedIssueData)
   // console.log('firstIssueDate', firstIssueDate)
   console.log('To add to collection...', addToCollection)
+  console.log(indexedCollectionMenu)
 
   // ------------------------------------------
     // grab the selected issue's url address
