@@ -95,10 +95,10 @@ const SearchPublicationIssues = (props) => {
   const modalJsx = sortedIssueData.map((page, index) => (
     <Card key={index} style={{textAlign:'center', marginBottom:'15px'}}>
       <p>Page: {page.sequence}</p>
-      {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px'}} frameBorder="0" />)}
+      {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px', marginBottom:'10px'}} frameBorder="0" />)}
       {/* <Button type="primary" onClick={() => setAddToCollection(page.pdf)} style={{marginTop:'5px'}}>Add to Collection</Button> */}
-      <Dropdown overlay={menu} style={{marginTop:'10px'}}>
-        <Button type="primary" onClick={() => setAddToCollection(page.pdf)} style={{marginTop:'10px'}}>Add to Collection</Button>
+      <Dropdown overlay={menu}>
+        <Button type="primary" onClick={() => setAddToCollection(page.pdf)}>Add to Collection</Button>
       </Dropdown>
     </Card>
   ))
