@@ -97,8 +97,8 @@ const SearchPublicationIssues = (props) => {
       <p>Page: {page.sequence}</p>
       {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px'}} frameBorder="0" />)}
       {/* <Button type="primary" onClick={() => setAddToCollection(page.pdf)} style={{marginTop:'5px'}}>Add to Collection</Button> */}
-      <Dropdown overlay={menu}>
-        <Button type="primary" onClick={() => setAddToCollection(page.pdf)} style={{marginTop:'5px'}}>Add to Collection</Button>
+      <Dropdown overlay={menu} style={{marginTop:'10px'}}>
+        <Button type="primary" onClick={() => setAddToCollection(page.pdf)} style={{marginTop:'10px'}}>Add to Collection</Button>
       </Dropdown>
     </Card>
   ))
@@ -148,7 +148,7 @@ const SearchPublicationIssues = (props) => {
             <Button key="back" onClick={handleCancel}>
               Back
             </Button>,
-            <Button type="primary" style={{marginTop:'10px'}} key="add" onClick={handleAdd}>
+            <Button type="primary" key="add" onClick={handleAdd}>
               Add All to Collection
             </Button>
           ]}
