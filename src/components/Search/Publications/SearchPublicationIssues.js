@@ -148,7 +148,7 @@ const SearchPublicationIssues = (props) => {
             <Button key="back" onClick={handleCancel}>
               Back
             </Button>,
-            <Button type="primary" key="add" onClick={handleAdd}>
+            <Button type="primary" style={{marginTop:'10px'}} key="add" onClick={handleAdd}>
               Add All to Collection
             </Button>
           ]}
