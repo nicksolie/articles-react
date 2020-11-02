@@ -75,44 +75,48 @@ const SearchPublicationIssues = (props) => {
   useEffect(() => (
     setSortedIssueData(issueData.sort((a, b) => a.sequence - b.sequence))
   ))
-
-  const handleIndexMenu = () => {
+  
+  if(issueData.length > 0 && indexedCollectionMenu.length === 0) {
     axios(`${apiUrl}/collections`)
-      .then(res => setIndexCollectionMenu(res.data.collections))
+    .then(res => setIndexCollectionMenu(res.data.collections))
   }
 
-  // const menu = (
-  //   <Menu>
-  //     <Menu.Item key="1" >
-  //       1st menu item
-  //     </Menu.Item>
-  //     <Menu.Item key="2" >
-  //       2nd menu item
-  //     </Menu.Item>
-  //     <Menu.Item key="3" >
-  //       3rd menu item
-  //     </Menu.Item>
-  //   </Menu>
-  // )
+  const handleIndexMenu = () => {
+    console.log('bang')
+  }
 
-  const menuIndexed = indexedCollectionMenu.map((collection, index) => (
-      <Menu.Item key={index} >
-        {collection.name}
-      </Menu.Item>
-  ))
-  
   const menu = (
     <Menu>
-      {menuIndexed}
+      <Menu.Item key="1" >
+        {indexedCollectionMenu[0].name}
+      </Menu.Item>
+      <Menu.Item key="2" >
+        2nd menu item
+      </Menu.Item>
+      <Menu.Item key="3" >
+        3rd menu item
+      </Menu.Item>
     </Menu>
   )
+
+  // const menuIndexed = indexedCollectionMenu.map((collection, index) => (
+  //     <Menu.Item key={index} >
+  //       {collection.name}
+  //     </Menu.Item>
+  // ))
+  
+  // const menu = (
+  //   <Menu>
+  //     {menuIndexed}
+  //   </Menu>
+  // )
 
   const modalJsx = sortedIssueData.map((page, index) => (
     <Card key={index} style={{textAlign:'center', marginBottom:'15px'}}>
       <p>Page: {page.sequence}</p>
-      {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px', marginBottom:'10px'}} frameBorder="0" />)}
-      <Dropdown overlay={menu} onClick={() => setAddToCollection(page.pdf)} trigger={['click']}>
-        <Button type="primary" onClick={() => handleIndexMenu}>Add to Collection</Button>
+      {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px'}} frameBorder="0" />)}
+      <Dropdown overlay={menu} onClick={() => setAddToCollection(page.pdf)}>
+        <Button type="primary" onClick={() => handleIndexMenu()}>Add to Collection</Button>
       </Dropdown>
     </Card>
   ))
@@ -127,7 +131,8 @@ const SearchPublicationIssues = (props) => {
   // console.log('sorted', sortedIssueData)
   // console.log('firstIssueDate', firstIssueDate)
   console.log('To add to collection...', addToCollection)
-  console.log(indexedCollectionMenu)
+  console.log('indexed collection', indexedCollectionMenu)
+  // console.log('selectedIssue is', selectedIssue)
 
   // ------------------------------------------
     // grab the selected issue's url address

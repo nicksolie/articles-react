@@ -30,7 +30,7 @@ const SearchPublications = () => {
     // Add search term to query
     axios(`https://chroniclingamerica.loc.gov/search/titles/results/?terms=${search}&format=json`)
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         // Check if the response is empty or if there is other data w/o pdfs
         if (response.data.items.length === 0) {
           setEmptySearchResponse(true)
@@ -61,8 +61,6 @@ const SearchPublications = () => {
       }})
       .catch(console.error)
   }
-
-  console.log('publicationslist is...', publicationsList)
 
   const publicationsListJsx = publicationsList.map((publication, index) =>
     <Col key={index} xs={24} sm={12} order={index}>
@@ -100,7 +98,8 @@ const SearchPublications = () => {
   const noReturn = (emptySearchResponse && <p>Not all of the publications achived by the Library of Congress have PDFs. Try another similar word.</p>)
 
   // console.log('empty', emptySearchResponse)
-  console.log(publicationsList.length)
+  // console.log(publicationsList.length)
+  // console.log('publicationslist is...', publicationsList)
 
   return (
     <div>
