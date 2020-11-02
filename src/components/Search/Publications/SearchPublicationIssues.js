@@ -85,31 +85,31 @@ const SearchPublicationIssues = (props) => {
     console.log('bang')
   }
 
-  const menu = (
-    <Menu>
-      <Menu.Item key="1" >
-        {indexedCollectionMenu[0].name}
-      </Menu.Item>
-      <Menu.Item key="2" >
-        2nd menu item
-      </Menu.Item>
-      <Menu.Item key="3" >
-        3rd menu item
-      </Menu.Item>
-    </Menu>
-  )
-
-  // const menuIndexed = indexedCollectionMenu.map((collection, index) => (
-  //     <Menu.Item key={index} >
-  //       {collection.name}
-  //     </Menu.Item>
-  // ))
-  
   // const menu = (
   //   <Menu>
-  //     {menuIndexed}
+  //     <Menu.Item key="1" >
+  //       1st
+  //     </Menu.Item>
+  //     <Menu.Item key="2" >
+  //       2nd menu item
+  //     </Menu.Item>
+  //     <Menu.Item key="3" >
+  //       3rd menu item
+  //     </Menu.Item>
   //   </Menu>
   // )
+
+  const menuIndexed = indexedCollectionMenu.map((collection, index) => (
+      <Menu.Item key={index} >
+        {collection.name}
+      </Menu.Item>
+  ))
+  
+  const menu = (
+    <Menu>
+      {menuIndexed}
+    </Menu>
+  )
 
   const modalJsx = sortedIssueData.map((page, index) => (
     <Card key={index} style={{textAlign:'center', marginBottom:'15px'}}>

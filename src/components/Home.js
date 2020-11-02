@@ -75,7 +75,7 @@ const Home = () => {
                         }
                         actions={[
                         <Button href="#collections" type="primary" key="view">View</Button>,
-                        <Button href="#collections" type="primary" key="view">Create</Button>
+                        <Button href="#collections-create" type="primary" key="view">Create</Button>
                         ]}
                     >
                         <Meta
