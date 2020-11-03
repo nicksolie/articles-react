@@ -76,6 +76,7 @@ const SearchPublicationIssues = (props) => {
     setSortedIssueData(issueData.sort((a, b) => a.sequence - b.sequence))
   ))
   
+  // prevents infinite loop of queries for collections
   if(issueData.length > 0 && indexedCollectionMenu.length === 0) {
     axios(`${apiUrl}/collections`)
     .then(res => setIndexCollectionMenu(res.data.collections))
@@ -85,39 +86,31 @@ const SearchPublicationIssues = (props) => {
     console.log('bang')
   }
 
-  // const menu = (
-  //   <Menu>
-  //     <Menu.Item key="1" >
-  //       1st
-  //     </Menu.Item>
-  //     <Menu.Item key="2" >
-  //       2nd menu item
-  //     </Menu.Item>
-  //     <Menu.Item key="3" >
-  //       3rd menu item
-  //     </Menu.Item>
-  //   </Menu>
-  // )
-
+  // takes indexed collections from backend and maps into an array of Menu.item compenents 
   const menuIndexed = indexedCollectionMenu.map((collection, index) => (
       <Menu.Item key={index} >
         {collection.name}
       </Menu.Item>
   ))
   
+  // place indexed collections into JSX for the dropdown
   const menu = (
     <Menu>
       {menuIndexed}
     </Menu>
   )
 
+  // JSX for issue PDFs
   const modalJsx = sortedIssueData.map((page, index) => (
-    <Card key={index} style={{textAlign:'center', marginBottom:'15px'}}>
+    <Card key={index} style={{textAlign:'center', marginBottom:'15px', position:'relative'}}>
       <p>Page: {page.sequence}</p>
-      {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px'}} frameBorder="0" />)}
-      <Dropdown overlay={menu} onClick={() => setAddToCollection(page.pdf)}>
+      <Dropdown overlay={menu} onClick={() => setAddToCollection(page.pdf) }>
         <Button type="primary" onClick={() => handleIndexMenu()}>Add to Collection</Button>
       </Dropdown>
+      <Card style={{textAlign:'center', height:'200px'}}>
+        <p>Test</p>
+      </Card>
+      {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px'}} frameBorder="0" />)}
     </Card>
   ))
 9
@@ -133,13 +126,6 @@ const SearchPublicationIssues = (props) => {
   console.log('To add to collection...', addToCollection)
   console.log('indexed collection', indexedCollectionMenu)
   // console.log('selectedIssue is', selectedIssue)
-
-  // ------------------------------------------
-    // grab the selected issue's url address
-    // Pass the URL to a function
-    // Present the possible collections created by user
-    // After selecting the collection, pass the issue & collection to API for backend saving
-  // ------------------------------------------
 
   return (
     <div>
@@ -180,6 +166,16 @@ const SearchPublicationIssues = (props) => {
     </div>
   )
 }
+
+// const modalJsx = sortedIssueData.map((page, index) => (
+//   <Card key={index} style={{textAlign:'center', marginBottom:'15px'}}>
+//     <p>Page: {page.sequence}</p>
+//     <Dropdown overlay={menu} onClick={() => setAddToCollection(page.pdf) }>
+//       <Button type="primary" onClick={() => handleIndexMenu()}>Add to Collection</Button>
+//     </Dropdown>
+//     {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px'}} frameBorder="0" />)}
+//   </Card>
+// ))
 
 export default SearchPublicationIssues
 
