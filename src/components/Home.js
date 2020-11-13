@@ -24,7 +24,6 @@ const Home = () => {
             <Row justify={"center"} gutter={{xs: 8, sm: 16, md: 24}}>
                 <Col className={rowStyle} xs={24} sm={12} order={1}>
                     <Card
-                        hoverable
                         cover={
                         <img
                             alt="example"
@@ -43,7 +42,6 @@ const Home = () => {
                 </Col>
                 <Col className={rowStyle} xs={24} sm={12} order={2}>
                     <Card
-                        hoverable
                         cover={
                         <img
                             alt="example"
@@ -66,7 +64,6 @@ const Home = () => {
             <Row justify={"center"} gutter={{xs: 8, sm: 16, md: 24}} style={{marginBottom:'20px'}}>
                 <Col className={rowStyle} xs={24} sm={12} order={1}>
                     <Card
-                        hoverable
                         cover={
                         <img
                             alt="example"
@@ -86,7 +83,6 @@ const Home = () => {
                 </Col>
                 <Col className={rowStyle} xs={24} sm={12} order={2}>
                     <Card
-                        hoverable
                         cover={
                         <img
                             alt="example"

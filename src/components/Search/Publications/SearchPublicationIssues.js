@@ -15,6 +15,7 @@ const SearchPublicationIssues = (props) => {
   const [firstIssueDate, setFirstIssueDate] = useState({})
   const [addToCollection, setAddToCollection] = useState([])
   const [indexedCollectionMenu, setIndexCollectionMenu] = useState([])
+  const [createCollectionToggle, setCreateCollectionToggle] = useState(false)
   
   if (loading) {
     setFirstIssueDate(selectedIssue)
@@ -44,19 +45,6 @@ const SearchPublicationIssues = (props) => {
     setIssueData([])
   }
 
-  // Start for function to send selected url to selected colleciton
-  // const handleCollection = url => {
-  //   return axios({
-  //     url: apiUrl + '/collections',
-  //     method: 'POST',
-  //     data: {
-  //       credentials: {
-  //         email: credentials.email,
-  //         password: credentials.password
-  //       }
-  //     }
-  //   })
-  // }
 
   // Jsx for mapped issues
   const issuesJsx = issues.map((issue, index) => (
@@ -82,9 +70,11 @@ const SearchPublicationIssues = (props) => {
     .then(res => setIndexCollectionMenu(res.data.collections))
   }
 
-  const handleIndexMenu = () => {
-    console.log('bang')
-  }
+  // const handleIndexMenu = () => {
+  //   console.log('bang')
+  // }
+
+  // const showCreateCollection = () => setCreateCollectionToggle(true)
 
   // takes indexed collections from backend and maps into an array of Menu.item compenents 
   const menuIndexed = indexedCollectionMenu.map((collection, index) => (
@@ -100,16 +90,23 @@ const SearchPublicationIssues = (props) => {
     </Menu>
   )
 
+  const createCollection = (
+    <Dropdown overlay={menu}>
+      <Button type="primary" onClick={() => setCreateCollectionToggle(true)}>Select a Collection</Button>
+    </Dropdown>
+  )
+
   // JSX for issue PDFs
   const modalJsx = sortedIssueData.map((page, index) => (
     <Card key={index} style={{textAlign:'center', marginBottom:'15px', position:'relative'}}>
       <p>Page: {page.sequence}</p>
-      <Dropdown overlay={menu} onClick={() => setAddToCollection(page.pdf) }>
-        <Button type="primary" onClick={() => handleIndexMenu()}>Add to Collection</Button>
-      </Dropdown>
-      <Card style={{textAlign:'center', height:'200px'}}>
-        <p>Test</p>
-      </Card>
+      <div style={{textAlign:'center'}}>
+        <Button type="primary" onClick={() => setCreateCollectionToggle(true)}>Add to a Collection</Button>
+        <Dropdown overlay={menu} onClick={() => setAddToCollection(page.pdf)}>
+          <Button type="primary" onClick={() => setCreateCollectionToggle(true)}>Select a Collection</Button>
+        </Dropdown>
+        {createCollectionToggle ? createCollection : <p></p>}
+      </div>
       {(sortedIssueData && <iframe src={page.pdf} type="application/pdf" height="900" width="90%" style={{marginTop:'10px'}} frameBorder="0" />)}
     </Card>
   ))
@@ -124,8 +121,9 @@ const SearchPublicationIssues = (props) => {
   // console.log('sorted', sortedIssueData)
   // console.log('firstIssueDate', firstIssueDate)
   console.log('To add to collection...', addToCollection)
-  console.log('indexed collection', indexedCollectionMenu)
+  // console.log('indexed collection', indexedCollectionMenu)
   // console.log('selectedIssue is', selectedIssue)
+  console.log('createCollectionToggle', createCollectionToggle)
 
   return (
     <div>

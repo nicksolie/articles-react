@@ -54,7 +54,7 @@ class SignInSignUp extends Component {
 
     // Sign In success message
     const successSignUp = () => {
-      message.success('You Have Successfully Signed Up!', 0.5);
+      message.success('You Have Successfully Signed Up!', 1);
     }
 
     // Loggin failure message
